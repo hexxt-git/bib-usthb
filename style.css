@@ -1,0 +1,113 @@
+*{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    --nav-height: 60px;
+    --side-margin: 50px;
+}
+body{
+    margin: 0px;
+}
+nav{
+    z-index: 1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: var(--nav-height);
+    width: 100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+#nav-left, #nav-right{
+    display: flex;
+    gap: 30px;
+    padding-left: 30px;
+    padding-right: 45px;
+}
+#welcome-page{
+    height: calc(100vh - var(--nav-height));
+    margin-top: 60px;
+    position: relative;
+}
+#welcome-page h1{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin: 0px;
+    user-select: none;
+}
+#welcome-page p{
+    width: 40vw;
+    position: absolute;
+    top: 0px;
+    left: 60%;
+    width: 40%;
+    margin: 0px;
+    padding-top: 50px;
+    padding-right: 20px;
+}
+#welcome-page img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    user-select: none;
+}
+#faculties-page{
+    min-height: calc(100vh - var(--nav-height));
+}
+.faculty-page h2, #faculties-page h2{
+    margin: 0px;
+}
+#faculties-container{
+    margin: 20px var(--side-margin);
+    background-color: gray;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    padding-bottom: 20px;
+}
+.faculty{
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 10px;
+    background: lightblue;
+    cursor: default;
+}
+.faculty span{
+    cursor: pointer;
+}
+.faculty img{
+    height: 100%;
+    transform: translateY(4px);
+    -webkit-transform: translateY(2px);
+    -moz-transform: translateY(2px);
+    -ms-transform: translateY(2px);
+    -o-transform: translateY(2px);
+}
+.faculty-page{
+    min-height: calc(100vh - var(--nav-height));
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+.faculty-navigator{
+    margin: 30px var(--side-margin) 50px var(--side-margin);
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 5fr 3fr 5fr;
+    background-color: gray;
+    gap: 10px;
+}
+.module-selector, .grade-selector, .subject-selector{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.module, .grade, .subject{
+    background-color: lightblue;
+    padding: 10px;
+}
