@@ -3,12 +3,13 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     --nav-height: 70px;
-    --side-margin: 50px;
-    --barnd-green: #61ce36;
-    --barnd-green-darker: #55b442;
+    --side-margin: 70px;
+    --barnd-green: #49c22a;
+    --off-white: #f5f5f5;
+    --off-off-white: #eeeeee;
     --super-strong-shadow: #0006 0px 0px 5px;
     --strong-shadow: #0006 0px 0px 10px;
-    --weak-shadow: #0002 0px 0px 18px;
+    --weak-shadow: #0004 0px 0px 14px;
     --strong-glow: #61ce36 0px 0px 10px;
     --weak-glow: #61ce3688 0px 0px 14px
 }
@@ -114,13 +115,13 @@ nav{
 }
 #welcome-page h1{
     position: absolute;
-    bottom: 20px;
-    left: 40px;
+    bottom: 30px;
+    left: 60px;
     margin: 0px;
     user-select: none;
     color: white;
     font-family: 'Rubik';
-    font-size: 50px;
+    font-size: 60px;
     text-shadow: var(--super-strong-shadow);
 }
 #welcome-page h1 span{
@@ -150,53 +151,81 @@ nav{
     user-select: none;
 }
 #faculties-page{
-    min-height: calc(100vh - var(--nav-height));
+    height: auto;
 }
 .faculty-page h2, #faculties-page h2{
-    margin: 0px;
+    margin: 10px 0px 0px 15px;
+    text-decoration: var(--barnd-green) underline;
+    user-select: none;
+    cursor: pointer;
+    width: fit-content;
+    font-family: 'Rubik';
 }
 #faculties-container{
-    margin: 20px var(--side-margin);
-    background-color: gray;
+    margin: 40px var(--side-margin);
+    background-color: var(--off-white);
+    box-shadow: #4444 2px 5px 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
     padding: 10px;
     padding-bottom: 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 .faculty{
-    height: 50px;
+    height: 65px;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
     padding: 10px;
-    background: lightblue;
     cursor: default;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 18px;
+}
+.faculty:hover{
+    background: var(--off-off-white);
 }
 .faculty span{
     cursor: pointer;
 }
+.faculty span:hover{
+    text-decoration: underline;
+}
 .faculty img{
     height: 100%;
-    transform: translateY(4px);
-    -webkit-transform: translateY(2px);
-    -moz-transform: translateY(2px);
-    -ms-transform: translateY(2px);
-    -o-transform: translateY(2px);
 }
 .faculty-page{
-    min-height: calc(100vh - var(--nav-height));
+    min-height: 200px;
     display: grid;
     grid-template-rows: auto 1fr;
 }
 .faculty-navigator{
     margin: 30px var(--side-margin) 50px var(--side-margin);
     padding: 10px;
+    padding-bottom: 20px;
     display: grid;
     grid-template-columns: 5fr 3fr 5fr;
-    background-color: gray;
+    background-color: var(--off-white);
+    box-shadow: #4444 2px 5px 15px;
     gap: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    font-weight: 500;
 }
 .module-selector, .grade-selector, .subject-selector{
     display: flex;
@@ -204,6 +233,38 @@ nav{
     gap: 5px;
 }
 .module, .grade, .subject{
-    background-color: lightblue;
-    padding: 10px;
+    background-color: var(--off-off-white);
+    padding: 15px 10px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    user-select: none;
+    cursor: pointer;
+}
+.module span, .grade span, .subject span{
+    color: var(--barnd-green);
+    text-decoration: underline;
+}
+.module:hover, .grade:hover, .subject:hover{
+    text-decoration: underline;
+}
+footer{
+    padding: 30px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--off-white);
+    box-shadow: var(--strong-shadow);
+}
+footer a{
+    color: var(--barnd-green);
+    text-decoration: none;
+}
+footer a:hover{
+    text-decoration: underline;
 }
