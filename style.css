@@ -151,10 +151,10 @@ nav{
     user-select: none;
 }
 #faculties-page{
-    height: auto;
+    padding-top: 10px;
 }
 .faculty-page h2, #faculties-page h2{
-    margin: 10px 0px 0px 15px;
+    margin: 10px 0px 0px 20px;
     text-decoration: var(--barnd-green) underline;
     user-select: none;
     cursor: pointer;
