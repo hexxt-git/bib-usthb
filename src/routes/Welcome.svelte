@@ -2,7 +2,7 @@
     <img src="/images/students.jpg" alt="students" /> <!--this image is stolen, we prob should replace it-->
     <h1>Welcome to <span>TresorUSTHB</span>!</h1>
     <p>
-        &nbsp;&nbsp;&nbsp;<a href="https://google.com" target="_blank">TresorUSTHB</a> is the unofficial student hub, made by students for students. It's a place where you can find all study related resources for your succeess. You can find here all the courses, exams, TDs, TPs, and more for all faculties, specialties and semesters at <a href="https://www.usthb.dz/" target="_blank">USTHB</a>. This website is supported and maintained by student <a href="https://google.com" target="_blank">contributions</a> and is free to use. We hope you find it helpful and we are always open to feedback and suggestions. Enjoy your stay! 
+        &nbsp;&nbsp;&nbsp;<a href="https://google.com" target="_blank">TresorUSTHB</a> is the unofficial student hub, made by students for students. It's a place where you can find all study related resources for your succeess. You can find here all the courses, exams, TDs, TPs, and more for all faculties, specialties and semesters at <a href="https://www.usthb.dz/" target="_blank">USTHB</a>. This website is supported and maintained by student <a href="/contribute" target="_blank">contributions</a> and is free to use. We hope you find it helpful and we are always open to feedback and suggestions. Enjoy your stay! 
     </p>
 </main>
 

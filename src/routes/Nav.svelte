@@ -4,12 +4,13 @@
 
 <nav>
     <div id="nav-left">
-        <div id="nav-logo">TresorUSTHB</div>
-        <div class="nav-link" id="nav-faculties">faculties</div>
-        <div class="nav-link" id="nav-creators">creators</div>
+        <a id="nav-logo" href="/">TresorUSTHB</a>
+        <a class="nav-link" href="/#faculties-page" id="nav-faculties">faculties</a>
+        <a class="nav-link" href="/#footer" id="nav-creators">creators</a>
     </div>
     <div id="nav-right">
-        <input type="search" placeholder="search..." id="nav-search">
+        <a class="nav-link" href="/help" id="nav-creators">help</a>
+        <!--<input type="search" placeholder="search..." id="nav-search">-->
         <a id="nav-contribute" href="/contribute">contribute</a>
     </div>
 </nav>
@@ -60,6 +61,7 @@
         -moz-transition: text-shadow 200ms ease-in-out;
         -ms-transition: text-shadow 200ms ease-in-out;
         -o-transition: text-shadow 200ms ease-in-out;
+        text-decoration: none;
     }
     #nav-logo:hover{
         text-shadow: var(--weak-glow);
@@ -90,7 +92,7 @@
     #nav-contribute:hover{
         box-shadow: var(--strong-glow);
     }
-    #nav-search{
+    /*#nav-search{
         width: 150px;
         height: 30px;
         border: #666 solid 1.5px;
@@ -107,15 +109,17 @@
         font-size: 15px;
         font-weight: 500;
         flex-shrink: 1;
-    }
+    }*/
     .nav-link{
         cursor: pointer;
+        text-decoration: none;
+        color: black;
     }
     .nav-link:hover{
         text-decoration: underline;
     }
     @media (max-width: 700px), (orientation: portrait) {
-        #nav-faculties, #nav-creators, #nav-search{
+        #nav-faculties, #nav-creators/*, #nav-search*/{
             display: none;
         }
     }

@@ -86,6 +86,7 @@
         cursor: pointer;
         width: fit-content;
         font-family: 'Rubik';
+        color: #101010;
     }
     #faculties-container{
         margin: 40px var(--side-margin);
