@@ -1,0 +1,312 @@
+export const config = {
+    faculties: [
+        {
+            english_name: 'Biological Sciences',
+            french_name: 'Sciences Biologiques',            
+            abriviation: 'fbiol',
+            modules: []
+        },
+        {
+            english_name: 'Chimestry',
+            french_name: 'Chimie',
+            abriviation: 'fchimie',
+            modules: [],
+        },
+        {
+            english_name: 'Civil Engineering',
+            french_name: 'Génie Civil',
+            abriviation: 'fgc',
+            modules: [],
+        },
+        {
+            english_name: 'Electrical Engineering',
+            french_name: 'Génie Electrique',
+            abriviation: 'fge',
+            modules: [],
+        },
+        {
+            english_name: 'Earth Sciences, Geography and Terrritorial Planning',
+            french_name: 'Sciences de la Terre, Géographie et Aménagement du Territoire',
+            abriviation: 'fst',
+            modules: [],
+        },
+        {
+            english_name: 'Computer Science',
+            french_name: 'Informatique',
+            abriviation: 'finfo',
+            modules: [
+                {
+                    abriviation: 'ALGO',
+                    french_name: 'Algorithmique et structures de données',
+                    english_name: 'Algorithms and Data Structures',
+                    semesters: [
+                        {name: 'S1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S3', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S4', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S5', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S6', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                    ]
+                },
+                {
+                    abriviation: 'ARCHI',
+                    french_name: 'Architecture des ordinateurs',
+                    english_name: 'Computer Architecture',
+                    semesters: [
+                        {name: 'S1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S3', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S4', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S5', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S6', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                    ]
+                },
+                {
+                    abriviation: 'SE',
+                    french_name: "Systèmes d'exploitation",
+                    english_name: 'Operating Systems',
+                    semesters: [
+                        {name: 'S1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S3', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S4', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S5', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S6', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                    ]
+                },
+                {
+                    abriviation: 'TIC',
+                    french_name: "Technologies de l'information et de la communication",
+                    english_name: 'Information and Communication Technologies',
+                    semesters: [
+                        {name: 'S1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S3', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S4', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S5', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'S6', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M1', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                        {name: 'M2', links:[
+                            ['lessons', 'https://google.com'],
+                            ['exam/interogation', 'https://google.com'],
+                            ['TD/correction', 'https://google.com'],
+                            ['TP', 'https://google.com'],
+                            ['Other', 'https://google.com'],
+                        ]},
+                    ]
+                },
+                
+            ]
+        },
+        {
+            english_name: 'Mathematics',
+            french_name: 'Mathématiques',
+            abriviation: 'fmath',
+            modules: [],
+        },
+        {
+            english_name: 'Physics',
+            french_name: 'Physique',
+            abriviation: 'fphy',
+            modules: [],
+        },
+        {
+            english_name: 'Process And Mechanical Engineering',
+            french_name: 'Génie Mécanique et des Procédés',
+            abriviation: 'fgmgp',
+            modules: [],
+        },
+    ]
+}
