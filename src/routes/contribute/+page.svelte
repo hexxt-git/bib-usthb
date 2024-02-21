@@ -6,11 +6,11 @@
 
     class File{
         constructor(file, faculty, module, semester, type){
-            this.file = file || -1;
-            this.faculty = faculty || -1;
-            this.module = module || -1;
-            this.semester = semester || -1;
-            this.type = type || -1;
+            this.file = file !== undefined ? file : -1;
+            this.faculty = faculty !== undefined ? faculty : -1;
+            this.module = module !== undefined ? module : -1;
+            this.semester = semester !== undefined ? semester : -1;
+            this.type = type !== undefined ? type : -1;
         }
     }
 
@@ -20,10 +20,10 @@
         email: '',
         field: ''
     }
-    let files = [new File(1, 5, 1, 1, 1)];
+    let files = [new File()];
     
     let add_file = ()=>{
-        let copy_file = files.length ? new File(
+        let copy_file = files.length !== 0 ? new File(
             -1,
             files[files.length - 1].faculty,
             files[files.length - 1].module,
@@ -34,8 +34,8 @@
         files = [...files, copy_file];
         console.table(files);
     }
+
     let submit = ()=>{
-        files = [...files];
         console.table(personal_details);
         console.table(files);
     }
@@ -49,7 +49,7 @@
     <form action="">
         <h2>personal details</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page
+            &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <div class="personal-detail-container">
             <div class="text-input">
@@ -145,7 +145,7 @@
         </div>
         <h2>submission</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page
+            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <button type="submit" on:click={submit}>submit</button>
     </form>
@@ -218,12 +218,6 @@
     .text-input input:focus, .email-input input:focus{
         outline: none;
     }
-    .select-input{
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-        overflow: hidden;
-    }
     .file-input {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -285,6 +279,12 @@
         grid-template-columns: auto 1fr;
         height: fit-content;
     }
+    .select-input{
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 10px;
+        overflow: hidden;
+    }
     .select-input select{
         max-width: 100%;
         box-sizing: border-box;
@@ -328,7 +328,7 @@
         background-color: var(--off-white);
         cursor: pointer;
         user-select: none;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         color: var(--barnd-green);
         transition: 0.3s ease-in-out;
