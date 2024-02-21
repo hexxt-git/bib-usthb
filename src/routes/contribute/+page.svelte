@@ -20,9 +20,22 @@
         email: '',
         field: ''
     }
-    let files = [new File(), new File(), new File(), new File(), new File()];
+    let files = [new File(1, 5, 1, 1, 1)];
     
+    let add_file = ()=>{
+        let copy_file = files.length ? new File(
+            -1,
+            files[files.length - 1].faculty,
+            files[files.length - 1].module,
+            files[files.length - 1].semester,
+            files[files.length - 1].type
+        ): new File();
+
+        files = [...files, copy_file];
+        console.table(files);
+    }
     let submit = ()=>{
+        files = [...files];
         console.table(personal_details);
         console.table(files);
     }
@@ -43,13 +56,13 @@
                 <label for="name">name:</label>
                 <input type="text" id="name" name="name" bind:value={personal_details.name} required>
             </div>
-            <div class="checkbox-input">
-                <label for="usthb_student">are you a USTHB student?</label>
-                <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
-            </div>
             <div class="email-input">
                 <label for="email">email:</label>
                 <input type="email" id="email" name="email" bind:value={personal_details.email} required>
+            </div>
+            <div class="checkbox-input">
+                <label for="usthb_student">are you a USTHB student: </label>
+                <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
             </div>
             <div class="text-input">
                 <label for="field">what do you study:</label>
@@ -62,11 +75,20 @@
             <div class="file">
                 
                 <div class="file-input">
-                    <label for="file">file:</label>
-                    <input type="file" id="file" name="file" bind:value={file.file} required>
+                    <label for="file-{index}">file:
+                        {#if !file.file[0]}<span>upload</span>
+                        {:else}
+                            <span>change</span>
+                            {#if file.file[0].name.length > 33}
+                                <div>{file.file[0].name.slice(0, 30)}...</div>
+                            {:else}
+                                <div>{file.file[0].name}</div>
+                            {/if}
+                        {/if}
+                    </label>
+                    <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file} required>
                 </div>
 
-                {#if file.file !== -1}
                 <div class="select-input">
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
@@ -75,7 +97,6 @@
                         {/each}
                     </select>
                 </div>
-                {/if}
 
                 {#if file.faculty !== -1 && config.faculties[file.faculty].modules.length > 0}
                 
@@ -119,27 +140,36 @@
                 }}>delete</div>
             </div>
             {/each}{/if}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="file-plus" on:click={add_file}>+</div>
         </div>
         <h2>submission</h2>
+        <p>
+            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page
+        </p>
         <button type="submit" on:click={submit}>submit</button>
     </form>
 </main>
 <Footer />
 <style>
     main {
-        padding: 0px var(--side-margin);
+        padding: 0px var(--side-margin) 30px var(--side-margin);
     }
     h1 {
         margin: 20px 0px 10px 0px;
         color: #111;
         text-decoration: underline var(--barnd-green);
         font-family: 'Rubik';
+        user-select: none;
+        cursor: pointer;
     }
     h2 {
         margin: 40px 0px 10px 0px;
         color: #111;
         text-decoration: underline var(--barnd-green);
         font-family: 'Rubik';
+        user-select: none;
+        cursor: pointer;
     }
     p{
         margin: 0;
@@ -157,7 +187,10 @@
         box-shadow: var(--window-shadow);
         margin-top: 10px;
     }
-    @media (max-width: 800px), (orientation: portrait) {
+    .email-input{
+        grid-area: 2 / 1 / 3 / 2;
+    }
+    @media (max-width: 925px), (orientation: portrait) {
         .personal-detail-container{
             grid-template-columns: 1fr;
         }
@@ -173,10 +206,11 @@
     }    
     .text-input input, .email-input input{
         border: none;
-        border-bottom: 1px solid var(--barnd-green);
+        border-bottom: 2px solid var(--barnd-green);
         font-family: 'roboto', sans-serif;
         font-size: 16px;
         padding: 5px 5px 0px 10px;
+        border-radius: 10px 10px 0px 0px;
     }
     .text-input label, .email-input label{
         padding: 5px 0px 0px 0px;
@@ -184,20 +218,46 @@
     .text-input input:focus, .email-input input:focus{
         outline: none;
     }
-    .file-container{
-        display: grid;
-        grid-template-columns: 30% 30% 30%;
-        gap: 20px;
-    }
     .select-input{
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 10px;
+        overflow: hidden;
     }
     .file-input {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 10px;
+    }
+    .file-input input{
+        display: none;
+    }
+    .file-input label span{
+        padding: 0px 5px;
+        margin-left: 5px;
+        border: solid 1px #444;
+        border-radius: 5px;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 400;
+        
+    }
+    .file-input label span:hover{
+        text-decoration: underline;
+    }
+    .file-input label div{
+        display: inline;
+        font-weight: 400;
+    }
+    .file-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+    @media (max-width: 1000px) {
+        .file-container{
+            grid-template-columns: 1fr 1fr;
+        }
     }
     @media (max-width: 800px), (orientation: portrait) {
         .file-container{
@@ -205,13 +265,32 @@
         }
     }
     .file{
-        gap: 20px;
         padding: 20px 20px 50px 20px;
         border-radius: 10px;
         box-shadow: var(--window-shadow);
         margin-top: 10px;
         background-color: var(--off-white);
         position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 230px;
+    }
+    .file label{
+        font-weight: 500;
+    }
+    .file div{
+        padding-bottom: 5px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        height: fit-content;
+    }
+    .select-input select{
+        max-width: 100%;
+        box-sizing: border-box;
+        outline: none;
+        border: solid 1px #444;
+        border-radius: 5px;
     }
     .file-delete{
         position: absolute;
@@ -222,5 +301,45 @@
         text-decoration: underline;
         font-size: 14px;
         user-select: none;
+        font-weight: 500;
+    }
+    .file-plus{
+        border-radius: 10px;
+        box-shadow: var(--window-shadow);
+        background-color: var(--off-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        color: var(--barnd-green);
+        cursor: pointer;
+        user-select: none;
+        transition: font-size 0.1s ease-in-out;
+        min-height: 230px;
+    }
+    .file-plus:hover{
+        font-size: 45px;
+    }
+    button[type="submit"]{
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: var(--strong-shadow);
+        background-color: var(--off-white);
+        cursor: pointer;
+        user-select: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--barnd-green);
+        transition: 0.3s ease-in-out;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: 10px;
+        display: block;
+    }
+    button[type="submit"]:hover{
+        background-color: var(--barnd-green);
+        color: white;
+        box-shadow: var(--strong-glow);
     }
 </style>
