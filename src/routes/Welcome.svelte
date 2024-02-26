@@ -16,7 +16,6 @@
         bottom: 30px;
         left: 60px;
         margin: 0px;
-        user-select: none;
         color: white;
         font-family: 'Rubik';
         font-size: 60px;

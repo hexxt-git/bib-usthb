@@ -147,6 +147,7 @@
         <p>
             &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
+        <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback"></textarea>
         <button type="submit" on:click={submit}>submit</button>
     </form>
 </main>
