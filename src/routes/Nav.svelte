@@ -39,29 +39,26 @@
     #nav-left{
         display: flex;
         align-items: center;
-        gap: 20px;
-        padding-left: 30px;
+        gap: 30px;
+        padding-left: 50px;
     }
     #nav-right{
         display: flex;
         align-items: center;
-        gap: 20px;
-        padding-right: 45px;
+        gap: 40px;
+        padding-right: 80px;
     }
     #nav-logo{
         min-width: 210px;
         color: var(--barnd-green);
         font-family: 'Rubik';
         font-weight: 700;
-        font-size: 30px;
+        font-size: 35px;
         user-select: none;
         cursor: pointer;
         transition: text-shadow 200ms ease-in-out;
-        -webkit-transition: text-shadow 200ms ease-in-out;
-        -moz-transition: text-shadow 200ms ease-in-out;
-        -ms-transition: text-shadow 200ms ease-in-out;
-        -o-transition: text-shadow 200ms ease-in-out;
         text-decoration: none;
+        transform: translateY(-2px);
     }
     #nav-logo:hover{
         text-shadow: var(--weak-glow);
@@ -69,25 +66,18 @@
     #nav-contribute{
         color: white;
         background-color: var(--barnd-green);
-        width: 120px;
-        height: 30px;
+        width: 140px;
+        height: 35px;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 8px;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        -ms-border-radius: 8px;
-        -o-border-radius: 8px;
         user-select: none;
         cursor: pointer;
         transition: box-shadow 200ms ease-in-out;
-        -webkit-transition: box-shadow 200ms ease-in-out;
-        -moz-transition: box-shadow 200ms ease-in-out;
-        -ms-transition: box-shadow 200ms ease-in-out;
-        -o-transition: box-shadow 200ms ease-in-out;
         text-decoration: none;
         flex-shrink: 1;
+        font-size: 18px;
     }
     #nav-contribute:hover{
         box-shadow: var(--strong-glow);

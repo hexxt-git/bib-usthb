@@ -91,7 +91,7 @@
     #faculties-container{
         margin: 40px var(--side-margin);
         background-color: var(--off-white);
-        box-shadow: #4444 2px 5px 15px;
+        box-shadow: var(--window-shadow);
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
@@ -120,7 +120,7 @@
         display: grid;
         grid-template-columns: 5fr 3fr 5fr;
         background-color: var(--off-white);
-        box-shadow: #4444 2px 5px 15px;
+        box-shadow: var(--window-shadow);
         gap: 10px;
         border-radius: 10px;
         -webkit-border-radius: 10px;
@@ -164,6 +164,13 @@
         -o-border-radius: 5px;
         user-select: none;
         cursor: pointer;
+        transition: background-color 0.2s ease-out;
+        animation: apear 0.2s ease-in-out;
+    }
+
+    @keyframes apear{
+        from{ opacity: 0; }
+        to{ opacity: 1; }
     }
     /*.module span, .semester span, .subject span{
         color: var(--barnd-green);
