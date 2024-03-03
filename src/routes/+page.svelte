@@ -32,7 +32,10 @@
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <div class="module" style="
                         background-color: {selected_modules[index] === index2 ? 'var(--light-green)' : 'var(--off-off-white)'};
-                    " on:click={() => {selected_modules[index] = index2; selected_semesters[index] = -1}}>
+                    " on:click={() => {
+                        if(selected_modules[index] === index2) selected_modules[index] = -1;
+                        else selected_modules[index] = index2;
+                        selected_semesters[index] = -1}}>
                         {module.english_name} <!--<span>50</span>-->
                     </div>
                 {/each}
@@ -148,7 +151,7 @@
     .module-selector, .semester-selector, .subject-selector{
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 8px;
     }
     .module, .semester, .subject{
         background-color: var(--off-off-white);
@@ -166,6 +169,7 @@
         cursor: pointer;
         transition: background-color 0.2s ease-out;
         animation: apear 0.2s ease-in-out;
+        box-shadow: #0001 0 3px 6px;
     }
 
     @keyframes apear{

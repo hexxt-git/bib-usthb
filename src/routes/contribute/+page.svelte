@@ -18,7 +18,8 @@
         name: '',
         usthb_student: false,
         email: '',
-        field: ''
+        field: '',
+        additional: ''
     }
     let files = [new File()];
     
@@ -147,28 +148,28 @@
         <p>
             &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
-        <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback"></textarea>
+        <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
         <button type="submit" on:click={submit}>submit</button>
     </form>
 </main>
 <Footer />
 <style>
     main {
-        padding: 0px var(--side-margin) 30px var(--side-margin);
+        padding: 0 var(--side-margin) 30px var(--side-margin);
     }
     h1 {
-        margin: 20px 0px 10px 0px;
+        margin: 20px 0 10px 0;
         color: #111;
         text-decoration: underline var(--barnd-green);
-        font-family: 'Rubik';
+        font-family: 'Rubik', sans-serif;
         user-select: none;
         cursor: pointer;
     }
     h2 {
-        margin: 40px 0px 10px 0px;
+        margin: 40px 0 10px 0;
         color: #111;
         text-decoration: underline var(--barnd-green);
-        font-family: 'Rubik';
+        font-family: 'Rubik', sans-serif;
         user-select: none;
         cursor: pointer;
     }
@@ -210,11 +211,11 @@
         border-bottom: 2px solid var(--barnd-green);
         font-family: 'roboto', sans-serif;
         font-size: 16px;
-        padding: 5px 5px 0px 10px;
-        border-radius: 10px 10px 0px 0px;
+        padding: 5px 5px 0 10px;
+        border-radius: 10px 10px 0 0;
     }
     .text-input label, .email-input label{
-        padding: 5px 0px 0px 0px;
+        padding: 5px 0 0 0;
     }
     .text-input input:focus, .email-input input:focus{
         outline: none;
@@ -228,7 +229,7 @@
         display: none;
     }
     .file-input label span{
-        padding: 0px 5px;
+        padding: 0 5px;
         margin-left: 5px;
         border: solid 1px #444;
         border-radius: 5px;
@@ -316,7 +317,7 @@
         cursor: pointer;
         user-select: none;
         transition: font-size 0.1s ease-in-out;
-        min-height: 230px;
+        margin-top: 10px;
     }
     .file-plus:hover{
         font-size: 45px;
@@ -337,6 +338,10 @@
         margin-left: auto;
         margin-right: 10px;
         display: block;
+    }
+    textarea{
+        margin-top: 10px;
+        width: 100%;
     }
     button[type="submit"]:hover{
         background-color: var(--barnd-green);
