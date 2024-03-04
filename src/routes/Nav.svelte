@@ -1,8 +1,9 @@
 <script>
-    export let spacer = true;
+    import Bubbles from "./Bubbles.svelte";
 </script>
 
 <nav>
+    <Bubbles z_index=-1 width={150} height={10} opacity=5 />
     <div id="nav-left">
         <a id="nav-logo" href="/">TresorUSTHB</a>
         <a class="nav-link" href="/#faculties-page" id="nav-faculties">faculties</a>
@@ -14,27 +15,21 @@
         <a id="nav-contribute" href="/contribute">contribute</a>
     </div>
 </nav>
-{#if spacer}
-    <div id="spacer"></div>
-{/if}
 
 <style>
-    #spacer{
-        height: var(--nav-height);
-    }
     nav{
         z-index: 1;
-        position: fixed;
+        position: sticky;
         top: 0px;
         left: 0px;
         padding-top: 5px;
         height: var(--nav-height);
-        width: 100vw;
+        width: calc(100vw -9px);
         display: flex;
         justify-content: space-between;
         background-color: white;
         box-shadow: var(--strong-shadow);
-        overflow-x: auto;
+        overflow: hidden;
     }
     #nav-left{
         display: flex;

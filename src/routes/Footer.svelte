@@ -1,4 +1,9 @@
+<script>
+    import Bubbles from "./Bubbles.svelte";
+</script>
+
 <footer id="footer">
+    <Bubbles />
     <div>
         made by <a href="https://9EED.github.io/" target="_blank"> Zeghdani Salah </a> and <a href="https://laindev.me/" target="_blank"> Aymen charfaoui </a>
     </div>
@@ -6,7 +11,7 @@
         kept alive by your <a href="https://google.com" target="_blank">contributions</a>
     </div>
     <div>
-        icons from <a href="https://icons8.com/">icons8</a>
+        open-sourced on <a href="https://github.com/9EED/bib-usthb" target="_blank">github</a>
     </div>
 </footer>
 
@@ -19,6 +24,8 @@
         flex-direction: column;
         background-color: var(--off-white);
         box-shadow: var(--strong-shadow);
+        position: relative;
+        overflow: hidden;
     }
     footer a{
         color: var(--barnd-green);

@@ -250,7 +250,7 @@
         grid-template-columns: 1fr 1fr 1fr;
         gap: 20px;
     }
-    @media (max-width: 1000px) {
+    @media (max-width: 1200px) {
         .file-container{
             grid-template-columns: 1fr 1fr;
         }
@@ -322,30 +322,27 @@
     .file-plus:hover{
         font-size: 45px;
     }
-    button[type="submit"]{
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: var(--strong-shadow);
-        background-color: var(--off-white);
-        cursor: pointer;
-        user-select: none;
-        font-size: 18px;
-        font-weight: 500;
-        color: var(--barnd-green);
-        transition: 0.3s ease-in-out;
-        margin-top: 10px;
-        margin-left: auto;
-        margin-right: 10px;
-        display: block;
-    }
     textarea{
         margin-top: 10px;
         width: 100%;
     }
-    button[type="submit"]:hover{
-        background-color: var(--barnd-green);
+    button[type="submit"]{
+        padding: 7px 20px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: var(--weak-shadow);
+        cursor: pointer;
+        user-select: none;
+        font-size: 20px;
+        font-weight: 500;
         color: white;
-        box-shadow: var(--strong-glow);
+        margin-top: 20px;
+        margin-left: auto;
+        display: block;
+        transition: 0.3s ease-in-out;
+        background-color: var(--barnd-green);
+    }
+    button[type="submit"]:hover{
+        filter: contrast(1.2);
     }
 </style>
