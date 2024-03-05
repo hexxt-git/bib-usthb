@@ -5,7 +5,7 @@
 <nav>
     <Bubbles z_index=-1 width={150} height={10} opacity=5 />
     <div id="nav-left">
-        <a id="nav-logo" href="/">TresorUSTHB</a>
+        <a id="nav-logo" href="/">BiB-USTHB</a>
         <a class="nav-link" href="/#faculties-page" id="nav-faculties">faculties</a>
         <a class="nav-link" href="/#footer" id="nav-creators">creators</a>
     </div>

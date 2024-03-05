@@ -1,8 +1,8 @@
 <script> /* MAKE SURE THE PARENT ELEMENT DISPLAY IS RELATIVE*/
     export let opacity = 8;
     export let size = 16;
-    export let width = 80;
-    export let height = 50;
+    export let width = 120;
+    export let height = 10;
     export let z_index = 0;
     let dot_size = (x, y) => {
         return 16 - 0.9*x**0.5 - y*2;
