@@ -41,7 +41,7 @@
         console.table(files);
     }
 </script>
-<Nav spacer={true} />
+<Nav />
 <main>
     <h1><span>TresorUTHB</span> contribution page</h1>
     <p>

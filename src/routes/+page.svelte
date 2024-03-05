@@ -23,7 +23,7 @@
 </script>
 
 <main>
-    <Nav spacer={true} />
+    <Nav />
     <Welcome />
 
     <div id="faculties-page">

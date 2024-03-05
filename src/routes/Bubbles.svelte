@@ -7,7 +7,7 @@
     let dot_size = (x, y) => {
         return 16 - 0.9*x**0.5 - y*2;
     }
-    console.table({opacity, size, width, height, z_index});
+    //console.table({opacity, size, width, height, z_index});
 </script>
 
 <div id="parent" style="z-index: {z_index}">
