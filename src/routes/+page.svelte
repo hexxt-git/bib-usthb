@@ -8,6 +8,18 @@
     import Faculty from './Faculty.svelte';
     import Footer from './Footer.svelte';
 
+    import { onMount } from 'svelte';
+
+    async function load(){
+        let response = await fetch("https://sea-turtle-app-czqdu.ondigitalocean.app/api/fac/all");
+        let data = await response.json();
+        console.log(data);
+    }
+
+    onMount(() => {
+        load()
+    });
+
 </script>
 
 <main>
