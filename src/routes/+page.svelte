@@ -96,7 +96,7 @@
     }
     h2{
         margin: 10px 0px 0px 20px;
-        text-decoration: var(--barnd-green) underline;
+        text-decoration: var(--brand-green) underline;
         user-select: none;
         cursor: pointer;
         width: fit-content;
@@ -189,7 +189,7 @@
         to{ opacity: 1; }
     }
     /*.module span, .semester span, .subject span{
-        color: var(--barnd-green);
+        color: var(--brand-green);
         text-decoration: underline;
     }*/
     .module:hover, .semester:hover, .subject:hover{

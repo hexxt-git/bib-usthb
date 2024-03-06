@@ -7,7 +7,7 @@
     export let z_index = 0;
     export let flip_y = 0;
     let dot_size = (x, y) => {
-        return 16 - 0.9*x**0.5 - (-1)**flip_y * y*2;
+        return size - 0.9*x**0.5 - (-1)**flip_y * y*2;
     }
     //console.table({opacity, size, width, height, z_index});
 </script>

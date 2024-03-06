@@ -4,78 +4,73 @@
 
 <nav>
     <!-- <Bubbles z_index=-1 width={150} height={10} opacity=5 /> -->
-    <div id="nav-left">
-        <a id="nav-logo" href="/">BiB-USTHB</a>
-        <a class="nav-link" href="/#faculties-page" id="nav-faculties">faculties</a>
-        <a class="nav-link" href="/#footer" id="nav-creators">creators</a>
+    <a id="nav-logo" href="/">BiB-USTHB</a>
+    <div>
+    <a class="nav-link" href="/#faculties-page">faculties</a>
+    <a class="nav-link" href="/#footer">creators</a>
+    <a class="nav-link" href="/help">help</a>
     </div>
-    <div id="nav-right">
-        <a class="nav-link" href="/help" id="nav-creators">help</a>
-        <!--<input type="search" placeholder="search..." id="nav-search">-->
-        <a id="nav-contribute" href="/contribute">contribute</a>
-    </div>
+    <!--<input type="search" placeholder="search..." id="nav-search">-->
+    <a id="nav-contribute" href="/contribute">contribute</a>
 </nav>
 
 <style>
     nav{
         z-index: 1;
         position: sticky;
-        top: 0px;
-        left: 0px;
-        padding-top: 5px;
+        top: 0;
         height: var(--nav-height);
-        width: calc(100vw -9px);
+        width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        padding: 10px 50px 0 50px;
         background-color: white;
         box-shadow: var(--strong-shadow);
         overflow: hidden;
     }
-    #nav-left{
+    div{
         display: flex;
-        align-items: center;
-        gap: 30px;
-        padding-left: 50px;
+        justify-content: center;
+        gap: 20px;
     }
-    #nav-right{
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        padding-right: 80px;
+    .nav-link{
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        font-size: 1.2rem;
+        text-decoration: transparent underline 1px;
+        transition: text-decoration 130ms ease-in-out;
+    }
+    .nav-link:hover{
+        text-decoration: black underline 2px;
     }
     #nav-logo{
         min-width: 210px;
-        color: var(--barnd-green);
+        color: var(--brand-green);
         font-family: 'Rubik';
         font-weight: 700;
         font-size: 35px;
         user-select: none;
         cursor: pointer;
-        transition: text-shadow 200ms ease-in-out;
         text-decoration: none;
-        transform: translateY(-2px);
-    }
-    #nav-logo:hover{
-        text-shadow: var(--weak-glow);
+        padding-top: 3px;
     }
     #nav-contribute{
         color: white;
-        background-color: var(--barnd-green);
+        background-color: var(--brand-green);
         width: 140px;
-        height: 35px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 8px;
         user-select: none;
         cursor: pointer;
-        transition: box-shadow 200ms ease-in-out;
         text-decoration: none;
-        flex-shrink: 1;
-        font-size: 18px;
-    }
-    #nav-contribute:hover{
-        box-shadow: var(--strong-glow);
+        font-weight: 500;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
     }
     /*#nav-search{
         width: 150px;
@@ -89,31 +84,15 @@
         -moz-border-radius: 8px;
         -ms-border-radius: 8px;
         -o-border-radius: 8px;
-        color: var(--barnd-green-darker);
+        color: var(--brand-green-darker);
         font-family: 'Rubik';
         font-size: 15px;
         font-weight: 500;
         flex-shrink: 1;
     }*/
-    .nav-link{
-        cursor: pointer;
-        text-decoration: none;
-        color: black;
-    }
-    .nav-link:hover{
-        text-decoration: underline;
-    }
-    @media (max-width: 700px), (orientation: portrait) {
-        #nav-faculties, #nav-creators/*, #nav-search*/{
+    @media (max-width: 70px), (orientation: portrait) {
+        div{
             display: none;
-        }
-    }
-    @media (max-width: 500px) {
-        nav{
-            justify-content: space-evenly;
-        }
-        #nav-left, #nav-right{
-            padding: 0px;
         }
     }
 </style>

@@ -160,7 +160,7 @@
     h1 {
         margin: 20px 0 10px 0;
         color: #111;
-        text-decoration: underline var(--barnd-green);
+        text-decoration: underline var(--brand-green);
         font-family: 'Rubik', sans-serif;
         user-select: none;
         cursor: pointer;
@@ -168,7 +168,7 @@
     h2 {
         margin: 40px 0 10px 0;
         color: #111;
-        text-decoration: underline var(--barnd-green);
+        text-decoration: underline var(--brand-green);
         font-family: 'Rubik', sans-serif;
         user-select: none;
         cursor: pointer;
@@ -208,7 +208,7 @@
     }    
     .text-input input, .email-input input{
         border: none;
-        border-bottom: 2px solid var(--barnd-green);
+        border-bottom: 2px solid var(--brand-green);
         font-family: 'roboto', sans-serif;
         font-size: 16px;
         padding: 5px 5px 0 10px;
@@ -313,7 +313,7 @@
         align-items: center;
         justify-content: center;
         font-size: 35px;
-        color: var(--barnd-green);
+        color: var(--brand-green);
         cursor: pointer;
         user-select: none;
         transition: font-size 0.1s ease-in-out;
@@ -340,7 +340,7 @@
         margin-left: auto;
         display: block;
         transition: 0.3s ease-in-out;
-        background-color: var(--barnd-green);
+        background-color: var(--brand-green);
     }
     button[type="submit"]:hover{
         filter: contrast(1.2);

@@ -2,7 +2,7 @@
     import Bubbles from "./Bubbles.svelte";
 </script>
 
-<footer>
+<footer id="footer">
     <!-- <Bubbles offset={5} flip_y={1} height={8} opacity={4}/> -->
     <div>
         made by <a href="https://9EED.github.io/" target="_blank"> Zeghdani Salah </a> and <a href="https://laindev.me/" target="_blank"> Aymen charfaoui </a>
@@ -28,7 +28,7 @@
         overflow: hidden;
     }
     footer a{
-        color: var(--barnd-green);
+        color: var(--brand-green);
         text-decoration: none;
     }
     footer a:hover{
