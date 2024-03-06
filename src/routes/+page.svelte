@@ -17,7 +17,7 @@
     }
 
     onMount(() => {
-        load()
+        //load()
     });
 
 </script>
