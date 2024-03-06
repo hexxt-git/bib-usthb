@@ -1,6 +1,4 @@
 <script>
-    import { goto } from '$app/navigation';
-
     export let faculty = {
         abriviation: 'UNDF',
         english_name: 'undefined',
