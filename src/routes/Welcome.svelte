@@ -16,7 +16,7 @@
                 inf = true;
             }
         }
-        return i > 20 ? i/10 : Math.random()*4;
+        return i > 20 ? i/10-Math.random()*1 : Math.random()*4;
     }
     </script>
     <main>
@@ -25,7 +25,7 @@
             {#each new Array(80).fill(0).map((_,i)=>i) as x}
             <div style="
                     position: absolute;
-                    background: #00000010;
+                    background: #0000000b;
                     left: {x*20}px;
                     top: {y*20}px;
                     padding: {radius(x,y)}px;

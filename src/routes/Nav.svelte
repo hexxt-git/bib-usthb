@@ -24,7 +24,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 50px 0 50px;
+        padding: 0px 50px;
         background-color: white;
         box-shadow: var(--strong-shadow);
         overflow: hidden;
