@@ -1,28 +1,16 @@
 <script>
-    let opacity = 8;
-    let size = 30;
-    let offset = 1;
-    let width = 80;
-    let height = 15;
-    let flip_y = 0;
-    let dot_size = (x, y) => {
-        return size - 0.9*x**0.6 - (-1)**flip_y * y*1.5;
-    }
+
 </script>
 <main>
-    <div id="bubbles">
-        {#each new Array(width).fill(0).map((_,i)=>i) as x}
-        {#each new Array(height).fill(0).map((_,i)=>i) as y}
-        <div style="
-            background-color: hsla(0, 0%, 0%, {opacity}%);
-            width: {dot_size(x, y)}px;
-            height: {dot_size(x, y)}px;
-            position: absolute;
-            bottom: {y*(size+offset)-12}px;
-            left: {x*(size+offset)+(y%2)*(size+offset)/2-12}px;
-            border-radius: 100%;
-        "></div>
-        {/each}
+    <div>
+        {#each new Array(30).fill(0).map((_,i)=>i) as x}
+            <div style="
+                position: absolute;
+                width: 100vw;
+                height: {40-x**1.2}px;
+                bottom: {x*40}px;
+                background: #00000018;
+            "></div>
         {/each}
     </div>
     <div id="text-container">
