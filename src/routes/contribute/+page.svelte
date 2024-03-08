@@ -43,7 +43,7 @@
 </script>
 <Nav />
 <main>
-    <h1><span>TresorUTHB</span> contribution page</h1>
+    <h1><span>BiB-USTHB</span> contribution page</h1>
     <p>
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>

@@ -23,11 +23,7 @@
         gap: 10px;
         padding: 10px;
         cursor: default;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -ms-border-radius: 5px;
-        -o-border-radius: 5px;
+        border-radius: 15px;
         color: black;
         text-decoration: none;
         font-weight: 500;

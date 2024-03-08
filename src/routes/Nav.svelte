@@ -60,11 +60,11 @@
         color: white;
         background-color: var(--brand-green);
         width: 140px;
-        height: 40px;
+        height: 42px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 8px;
+        border-radius: 15px;
         user-select: none;
         cursor: pointer;
         text-decoration: none;

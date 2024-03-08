@@ -17,7 +17,7 @@
     }
 
     onMount(() => {
-        //load()
+        load()
     });
 
 </script>
@@ -112,11 +112,7 @@
         gap: 20px;
         padding: 10px;
         padding-bottom: 20px;
-        border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -o-border-radius: 10px;
+        border-radius: 25px;
     }
     @media (max-width: 700px), (orientation: portrait) {
         #faculties-container{
@@ -137,11 +133,7 @@
         background-color: var(--off-white);
         box-shadow: var(--window-shadow);
         gap: 10px;
-        border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        -ms-border-radius: 10px;
-        -o-border-radius: 10px;
+        border-radius: 25px;
         font-weight: 500;
     }
     hr{
@@ -169,14 +161,10 @@
         background-color: var(--off-off-white);
         color: black;
         text-decoration: none;
-        padding: 15px 10px 10px 10px;
+        padding: 17px 10px 10px 10px;
         display: flex;
         justify-content: space-between;
-        border-radius: 5px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -ms-border-radius: 5px;
-        -o-border-radius: 5px;
+        border-radius: 15px;
         user-select: none;
         cursor: pointer;
         transition: background-color 0.2s ease-out;
