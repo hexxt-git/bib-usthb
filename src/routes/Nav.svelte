@@ -59,6 +59,8 @@
     #nav-contribute{
         color: white;
         background-color: var(--brand-green);
+        padding: 7px 20px;
+        border-radius: 10px;
         width: 140px;
         height: 42px;
         display: flex;
@@ -90,9 +92,22 @@
         font-weight: 500;
         flex-shrink: 1;
     }*/
-    @media (max-width: 70px), (orientation: portrait) {
+    @media (max-width: 700px), (orientation: portrait) {
         div{
             display: none;
+        }
+    }
+    @media (max-width: 500px) {
+        nav{
+            padding: 0px 20px;
+        }
+        #nav-logo{
+            min-width: 180px;
+            font-size: 30px;
+        }
+        #nav-contribute{
+            padding: 7px 15px;
+            font-size: 1rem;
         }
     }
 </style>

@@ -49,6 +49,7 @@
         font-size: 2rem;
         font-weight: 500;
         letter-spacing: 1px;
+        padding: 0 30px;
     }
     #closing-arc{
         background: white;
@@ -61,15 +62,15 @@
     @media (max-width: 800px), (orientation: portrait){
         #text-container{
             padding-top: 0;
-            gap: 50px;
+            gap: 20px;
         }
         h1{
-            font-size: 3.5rem;
+            font-size: 3rem;
             display: flex;
             flex-direction: column;
         }
         h2{
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
     }
 </style>
