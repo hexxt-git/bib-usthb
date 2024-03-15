@@ -1,87 +1,33 @@
 <script>
-    import { config } from './config.js';
-    let selected_modules = new Array(config.faculties.length).fill(-1);
-    let selected_semesters = new Array(config.faculties.length).fill(-1);
-
     import Nav from './Nav.svelte';
     import Welcome from './Welcome.svelte';
+    import Faculties from './Faculties.svelte';
     import Faculty from './Faculty.svelte';
     import Footer from './Footer.svelte';
-
-    import { onMount } from 'svelte';
-
-    async function load(){
-        let response = await fetch("https://sea-turtle-app-czqdu.ondigitalocean.app/api/fac/all");
-        let data = await response.json();
-        console.log(data);
-    }
-
-    onMount(() => {
-        load()
+    
+    import { load } from './helper.js';
+    load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
+        console.log(faculties);
     });
-
 </script>
 
 <main>
     <Nav />
     <Welcome />
+    <Faculties />
 
-    <div id="faculties-page">
-        <h2>faculties</h2>
-        <div id="faculties-container">
-            {#each config.faculties as faculty}
-                <Faculty faculty={faculty} />
-            {/each}
-        </div>
-    </div>
-
-    {#each config.faculties as faculty, index}
-    <div id="{faculty.abriviation}-page" class="faculty-page"> <!-- 3jet ndir hado f modules w7dhom ktch fihom events -->
-        <h2>{faculty.english_name}</h2>
-        <div id="{faculty.abriviation}-navigator" class="faculty-navigator">
-            <div class="module-selector">
-                {#each faculty.modules as module, index2}
-                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                    <div class="module" style="
-                        background-color: {selected_modules[index] === index2 ? 'var(--light-green)' : 'var(--off-off-white)'};
-                    " on:click={() => {
-                        if(selected_modules[index] === index2) selected_modules[index] = -1;
-                        else selected_modules[index] = index2;
-                        selected_semesters[index] = -1}}>
-                        {module.english_name} <!--<span>50</span>-->
-                    </div>
-                {/each}
-            </div>
-            {#if faculty.modules.length && selected_modules[index] !== -1}
-                <hr>
-            {/if}
-            <div class="semester-selector">
-                {#if faculty.modules.length && selected_modules[index] !== -1}
-                    {#each faculty.modules[selected_modules[index]].semesters as semester, index2}
-                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                        <div class="semester" style="
-                            background-color: {selected_semesters[index] === index2 ? 'var(--light-green)' : 'var(--off-off-white)'};
-                        " on:click={() => selected_semesters[index] = index2}>
-                            {semester.name} <!--<span>50</span>-->
-                        </div>
-                    {/each}
-                {/if}
-            </div>
-            {#if faculty.modules.length && selected_modules[index] !== -1 && selected_semesters[index] !== -1}
-                <hr>
-            {/if}
-            <div class="subject-selector">
-                {#if faculty.modules.length && selected_modules[index] !== -1 && selected_semesters[index] !== -1}
-                {#each faculty.modules[selected_modules[index]].semesters[selected_semesters[index]].links as link}
-                    <a class="subject" href={link[1]} target="_blank">
-                        {link[0]} <!--<span>50</span>-->
-                    </a>
-                {/each}
-                {/if}
-            </div>
-        </div>
-    </div>
-    {/each}
+    {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}
+        <p>loading...</p>
+    {:then faculties}
+        {#each faculties as faculty}
+            <Faculty {faculty}/>
+        {/each}
+    {:catch error}
+        <p style="color: red;">
+            error: {error.message}<br>
+            please contact support and try again later
+        </p>
+    {/await}
 
     <Footer />
 
@@ -90,97 +36,5 @@
     main{
         margin: 0px;
         font-family: 'Roboto', sans-serif;
-    }
-    #faculties-page{
-        padding-top: 20px;
-    }
-    h2{
-        margin: 10px 0px 0px 20px;
-        text-decoration: var(--brand-green) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: 'Rubik';
-        color: #101010;
-    }
-    #faculties-container{
-        margin: 40px var(--side-margin);
-        background-color: var(--off-white);
-        box-shadow: var(--window-shadow);
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        padding: 10px;
-        padding-bottom: 20px;
-        border-radius: 25px;
-    }
-    @media (max-width: 700px), (orientation: portrait) {
-        #faculties-container{
-            grid-template-columns: 1fr;
-        }
-    }
-    .faculty-page{
-        min-height: 200px;
-        display: grid;
-        grid-template-rows: auto 1fr;
-    }
-    .faculty-navigator{
-        margin: 30px var(--side-margin) 50px var(--side-margin);
-        padding: 10px;
-        padding-bottom: 20px;
-        display: grid;
-        grid-template-columns: 5fr 3fr 5fr;
-        background-color: var(--off-white);
-        box-shadow: var(--window-shadow);
-        gap: 10px;
-        border-radius: 25px;
-        font-weight: 500;
-    }
-    hr{
-        display: none;
-    }
-    @media (max-width: 700px), (orientation: portrait) {
-        .faculty-navigator{
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        hr{
-            display: unset;
-            background-color: #666;
-            height: 1px;
-            width: 80%;
-            margin: 0px auto;
-        }
-    }
-    .module-selector, .semester-selector, .subject-selector{
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    .module, .semester, .subject{
-        background-color: var(--off-off-white);
-        color: black;
-        text-decoration: none;
-        padding: 17px 10px 10px 10px;
-        display: flex;
-        justify-content: space-between;
-        border-radius: 15px;
-        user-select: none;
-        cursor: pointer;
-        transition: background-color 0.2s ease-out;
-        animation: apear 0.2s ease-in-out;
-        box-shadow: #0001 0 3px 6px;
-    }
-
-    @keyframes apear{
-        from{ opacity: 0; }
-        to{ opacity: 1; }
-    }
-    /*.module span, .semester span, .subject span{
-        color: var(--brand-green);
-        text-decoration: underline;
-    }*/
-    .module:hover, .semester:hover, .subject:hover{
-        text-decoration: underline;
     }
 </style>
