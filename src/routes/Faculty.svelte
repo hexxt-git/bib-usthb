@@ -4,6 +4,20 @@
         if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
         return acc;
     }, [])
+
+    let selected_group_id = -1;
+    let selected_module_id = -1;
+    let select_group = (id) => {
+        selected_module_id = -1;
+        if(selected_group_id === id) selected_group_id = -1;
+        else selected_group_id = id;
+    };
+    let select_module = (id) => {
+        if(selected_module_id === id) selected_module_id = -1;
+        else selected_module_id = id;
+    }
+
+    $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id);
 </script>
 
 <main id="{faculty.short}-page">
@@ -11,25 +25,41 @@
     <div id="navigator">
         <div class="collumn">
             {#each faculty.groups as group}
-                <div class="item">
-                    {group.name}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <div class="item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
+                    <a href="https://drive.google.com/drive/folders/{group.drive_id}" target="_blank">
+                        {group.name}
+                    </a>
                 </div>
             {/each}
         </div>
         <hr>
         <div class="collumn">
-            {#each faculty.modules as module}
-                <div class="item">
-                    {module.name}
+            {#each modules as module}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <div class="item {module.id==selected_module_id}" on:click={()=>select_module(module.id)}>
+                    <a href="https://drive.google.com/drive/folders/{module.drive_id}" target="_blank">
+                        {module.short}
+                    </a>
                 </div>
             {/each}
         </div>
         <hr>
         <div class="collumn">
-            <div class="item">lessons</div>
-            <div class="item">exams</div>
-            <div class="item">exercises</div>
-            <div class="item">other</div>
+            {#if selected_module_id !== -1}
+                <a class="item" href="https://google.com" target="_blank">
+                    {selected_module_id} lessons
+                </a>
+                <a class="item" href="https://google.com" target="_blank">
+                    {selected_module_id} exams
+                </a>
+                <a class="item" href="https://google.com" target="_blank">
+                    {selected_module_id} exercises
+                </a>
+                <a class="item" href="https://google.com" target="_blank">
+                    {selected_module_id} other
+                </a>
+            {/if}
         </div>
     </div>
 </main>
@@ -86,7 +116,7 @@
         background-color: var(--off-off-white);
         color: black;
         text-decoration: none;
-        padding: 17px 10px 10px 10px;
+        padding: 15px 20px 10px 10px;
         display: flex;
         justify-content: space-between;
         border-radius: 15px;
@@ -96,7 +126,9 @@
         animation: apear 0.2s ease-in-out;
         box-shadow: #0001 0 3px 6px;
     }
-
+    .true{
+        background-color: var(--light-green);
+    }
     @keyframes apear{
         from{ opacity: 0; }
         to{ opacity: 1; }
@@ -105,7 +137,11 @@
         color: var(--brand-green);
         text-decoration: underline;
     }*/
-    .item:hover{
+    a{
+        color: white;
+        text-decoration: none;
+    }
+    a:hover{
         text-decoration: underline;
     }
 </style>

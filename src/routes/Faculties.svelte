@@ -4,7 +4,7 @@
 </script>
 
 <main>
-    <h2>faculties</h2>
+    <h2>faculties&nbsp;</h2>
     <div id="faculties-container">
         {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}
             loading... 
@@ -70,13 +70,13 @@
     .faculty:hover{
         background: var(--off-off-white);
     }
-    .faculty span{
+    span{
         cursor: pointer;
     }
-    .faculty span:hover{
+    span:hover{
         text-decoration: underline;
     }
-    .faculty img{
-        height: 100%;
+    img{
+        height: 90%;
     }
 </style>
