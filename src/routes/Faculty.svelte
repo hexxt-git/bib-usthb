@@ -47,17 +47,20 @@
         <hr>
         <div class="collumn">
             {#if selected_module_id !== -1}
-                <a class="item" href="https://google.com" target="_blank">
-                    {selected_module_id} lessons
+                <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).cour_drive_id}" target="_blank">
+                    lessons
                 </a>
-                <a class="item" href="https://google.com" target="_blank">
-                    {selected_module_id} exams
+                <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).exam_drive_id}" target="_blank">
+                    exams
                 </a>
-                <a class="item" href="https://google.com" target="_blank">
-                    {selected_module_id} exercises
+                <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).td_drive_id}" target="_blank">
+                    directed work (TD)
                 </a>
-                <a class="item" href="https://google.com" target="_blank">
-                    {selected_module_id} other
+                <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).tp_drive_id}" target="_blank">
+                    practical work (TP)
+                </a>
+                <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).other_drive_id}" target="_blank">
+                    other
                 </a>
             {/if}
         </div>

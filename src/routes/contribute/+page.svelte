@@ -3,6 +3,7 @@
     import Footer from '../Footer.svelte';
     import {onMount} from 'svelte';
     import {load} from '../helper.js';
+    import {upload} from '../helper.js';
 
     let faculties = []
     onMount(async ()=>{
@@ -56,6 +57,7 @@
             console.table(personal_details);
             console.table(files);
             // do the uploading here
+            files.forEach(file => upload(file, personal_details));
         }
     }
 </script>
