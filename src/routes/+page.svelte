@@ -16,9 +16,7 @@
     <Welcome />
     <Faculties />
 
-    {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}
-        <p>loading...</p>
-    {:then faculties}
+    {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all") then faculties}
         {#each faculties as faculty}
             <Faculty {faculty}/>
         {/each}

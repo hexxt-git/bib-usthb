@@ -1,16 +1,29 @@
 <script>
-    import { config } from '../config.js';
-
     import Nav from '../Nav.svelte';
     import Footer from '../Footer.svelte';
+    import {onMount} from 'svelte';
+    import {load} from '../helper.js';
+
+    let faculties = []
+    onMount(async ()=>{
+        faculties = await load('https://walrus-app-mwr59.ondigitalocean.app/api/fac/all')
+        faculties = faculties.map(fac => {
+            fac.groups = fac.modules?.reduce((acc, module) => {
+                if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
+                return acc;
+            }, []);
+            return fac;
+        });
+        console.log(faculties);
+    });
 
     class File{
-        constructor(file, faculty, module, semester, type){
-            this.file = file !== undefined ? file : -1;
-            this.faculty = faculty !== undefined ? faculty : -1;
-            this.module = module !== undefined ? module : -1;
-            this.semester = semester !== undefined ? semester : -1;
-            this.type = type !== undefined ? type : -1;
+        constructor(file=-1, faculty=-1, group=-1, module=-1, type=-1){
+            this.file = file;
+            this.faculty = faculty;
+            this.group = group;
+            this.module = module;
+            this.type = type // exam or lesson ..
         }
     }
 
@@ -18,7 +31,7 @@
         name: '',
         usthb_student: false,
         email: '',
-        field: '',
+        domain: '',
         additional: ''
     }
     let files = [new File()];
@@ -27,18 +40,23 @@
         let copy_file = files.length !== 0 ? new File(
             -1,
             files[files.length - 1].faculty,
+            files[files.length - 1].group,
             files[files.length - 1].module,
-            files[files.length - 1].semester,
             files[files.length - 1].type
         ): new File();
 
         files = [...files, copy_file];
-        console.table(files);
     }
 
-    let submit = ()=>{
-        console.table(personal_details);
-        console.table(files);
+    let formElement;
+    let submit = (e)=>{
+        if (!formElement.reportValidity()) {
+           e.preventDefault();
+        } else {
+            console.table(personal_details);
+            console.table(files);
+            // do the uploading here
+        }
     }
 </script>
 <Nav />
@@ -47,7 +65,7 @@
     <p>
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>
-    <form action="">
+    <form bind:this={formElement} on:submit={submit}>
         <h2>personal details</h2>
         <p>
             &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
@@ -66,15 +84,15 @@
                 <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
             </div>
             <div class="text-input">
-                <label for="field">what do you study:</label>
-                <input type="text" id="field" name="field" bind:value={personal_details.field} required>
+                <label for="domain">what do you study:</label>
+                <input type="text" id="domain" name="domain" bind:value={personal_details.domain} required>
             </div>
         </div>
         <h2>file uploads</h2>
         <div class="file-container">
-            {#if files.length > 0}{#each files as file, index}
+            {#each files as file, index}
             <div class="file">
-                
+
                 <div class="file-input">
                     <label for="file-{index}">file:
                         {#if !file.file[0]}<span>upload</span>
@@ -89,48 +107,46 @@
                     </label>
                     <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file} required>
                 </div>
-
+                {#if file.file !== -1}
                 <div class="select-input">
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                        {#each config.faculties as faculty, index2}
-                        <option value={index2}>{faculty.english_name}</option>
+                        {#each faculties as faculty}
+                        <option value={faculty.id}>{faculty.name}</option>
                         {/each}
                     </select>
                 </div>
-
-                {#if file.faculty !== -1 && config.faculties[file.faculty].modules.length > 0}
-                
+                {#if file.faculty !== -1}
+                <div class="select-input">
+                    <label for="file_module">group:</label>
+                    <select name="file_module" id="file_module" bind:value={file.group} required>
+                        {#each faculties.find(fac => fac.id === file.faculty)?.groups||[] as group}
+                        <option value={group.id}>{group.name}</option>
+                        {/each}
+                    </select>
+                </div>
+                {#if file.group !== -1}
                 <div class="select-input">
                     <label for="file_module">module:</label>
                     <select name="file_module" id="file_module" bind:value={file.module} required>
-                        {#each config.faculties[file.faculty].modules as module, index2}
-                        <option value={index2}>{module.english_name}</option>
+                        {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group)||[] as module}
+                        <option value={module.id}>{module.name}</option>
                         {/each}
                     </select>
                 </div>
-                
-                {#if file.module !== -1 && config.faculties[file.faculty].modules[file.module].semesters.length > 0}
-                <div class="select-input">
-                    <label for="file_semester">semester:</label>
-                    <select name="file_semester" id="file_semester" bind:value={file.semester} required>
-                        {#each config.faculties[file.faculty].modules[file.module].semesters as semester, index2}
-                        <option value={index2}>{semester.name}</option>
-                        {/each}
-                    </select>
-                </div>
-
-                {#if file.semester !== -1 && config.faculties[file.faculty].modules[file.module].semesters[file.semester].links.length > 0}
+                {#if file.module !== -1}
                 <div class="select-input">
                     <label for="file_type">type:</label>
                     <select name="file_type" id="file_type" bind:value={file.type} required>
-                        {#each config.faculties[file.faculty].modules[file.module].semesters[file.semester].links as link, index2}
-                        <option value={index2}>{link[0]}</option>
-                        {/each}
+                        <option value="exam">exam</option>
+                        <option value="lesson">lesson</option>
+                        <option value="exercises">exercises</option>
+                        <option value="other">other</option>
                     </select>
                 </div>
+                
                 {/if}
-
+                {/if}
                 {/if}
                 {/if}
 
@@ -140,7 +156,7 @@
                     files = [...files];
                 }}>delete</div>
             </div>
-            {/each}{/if}
+            {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div class="file-plus" on:click={add_file}>+</div>
         </div>
@@ -149,7 +165,7 @@
             &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
-        <button type="submit" on:click={submit}>submit</button>
+        <button type="submit">submit</button>
     </form>
 </main>
 <Footer />
