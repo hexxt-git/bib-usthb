@@ -60,13 +60,12 @@
         color: white;
         background-color: var(--brand-green);
         padding: 7px 20px;
-        border-radius: 10px;
         width: 140px;
         height: 42px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 15px;
+        border-radius: 17px;
         user-select: none;
         cursor: pointer;
         text-decoration: none;

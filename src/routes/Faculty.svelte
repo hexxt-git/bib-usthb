@@ -141,7 +141,7 @@
         text-decoration: underline;
     }*/
     a{
-        color: white;
+        color: black;
         text-decoration: none;
     }
     a:hover{
