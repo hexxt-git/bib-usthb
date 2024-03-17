@@ -50,30 +50,43 @@
     }
 
     let formElement;
+    let submitting = false;
     let submit = async (e) => {
         if (!formElement.reportValidity()) {
             e.preventDefault();
         } else {
-            // document.querySelector('*').style += ';cursor: wait !important;'
+            submitting = true;
             console.log('uploading...');
+            let allok = true;
 
-            const uploadPromises = files.map(file => upload(file, personal_details));
-            const results = await Promise.allSettled(uploadPromises);
+            for (const file of files) {
+                try {
+                    let response =  await upload(file, personal_details);
+                    
+                    if(!response.ok) { 
+                        allok = false;
+                        console.log(`error uploading ${file.file[0].name}`, response);
+                        response.json().then(data => {
+                            console.log(data);
+                        });
+                        alert(`error uploading ${file.file[0].name}`);
+                    } else {
+                        console.log(`success uploading ${file.file[0].name}`);
+                    }
 
-            results.forEach((result, index) => {
-                if (result.value.ok) {
-                    console.log(`file ${index} uploaded`);
-                } else {
-                    console.log(`file ${index} failed to upload`);
+                } catch (error) {
+                    allok = false;
+                    console.log(`error uploading ${file.file[0].name}`, response, error);
+                    response.json().then(data => {
+                        console.log(data);
+                    });
+                    alert(`error uploading ${file.file[0].name}\n${error}`);
                 }
-            });
-
-            if(results.every(result => result.value.ok)){
-                alert('all files uploaded successfully');
-            }else{
-                alert('some files failed to upload');
             }
-
+            
+            submitting = false;
+            if(allok) alert('all files uploaded successfully');
+            else alert('some files failed to upload');
         }
     }
     
@@ -186,7 +199,11 @@
             &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
-        <button type="submit">submit</button>
+        {#if submitting}
+            <button type="submit" disabled>uploading...</button>
+        {:else}
+            <button type="submit">submit</button>
+        {/if}
     </form>
 </main>
 <Footer />
@@ -380,6 +397,6 @@
         background-color: var(--brand-green);
     }
     button[type="submit"]:hover{
-        filter: contrast(1.2);
+        filter: contrast(1.3);
     }
 </style>
