@@ -6,9 +6,10 @@
     import Footer from './Footer.svelte';
     
     import { load } from './helper.js';
-    load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
-        console.log(faculties);
-    });
+    
+    // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
+    //     console.log(faculties);
+    // });
 </script>
 
 <main>

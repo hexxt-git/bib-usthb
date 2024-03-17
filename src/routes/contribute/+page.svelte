@@ -15,7 +15,7 @@
             }, []);
             return fac;
         });
-        console.log(faculties);
+        //console.log(faculties);
     });
 
     class File{
@@ -50,14 +50,35 @@
     }
 
     let formElement;
-    let submit = (e)=>{
+    let submit = async (e) => {
         if (!formElement.reportValidity()) {
-           e.preventDefault();
+            e.preventDefault();
         } else {
-            //console.table(personal_details);
-            console.table(files);
-            // do the uploading here
-            files.forEach(file => upload(file).then(res => console.log(res)));
+            document.querySelector('*').style += 'cursor: wait !important;'
+
+            const uploadFile = async (file, personalDetails) => {
+                try {
+                    const res = await upload(file, personalDetails);
+                    console.log(file.file[0].name, res);
+                    return res.message == "file uploaded successfully";
+                } catch (error) {
+                    console.error(`Failed to upload file: ${file.file[0].name}`, error);
+                    return false;
+                }
+            }
+
+            const uploadPromises = files.map(file => uploadFile(file, personal_details));
+            const results = await Promise.allSettled(uploadPromises);
+
+            const successfulUploads = results.filter(result => result.status === 'fulfilled' && result.value).length;
+
+            if (successfulUploads === files.length) {
+                alert('all files uploaded successfully');
+            } else {
+                alert('an error must have happened, try again later');
+            }
+
+            location.reload();
         }
     }
     
@@ -69,7 +90,7 @@
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>
     <form bind:this={formElement} on:submit={submit}>
-        <!-- <h2>personal details</h2>
+        <h2>personal details</h2>
         <p>
             &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
@@ -90,7 +111,7 @@
                 <label for="domain">what do you study:</label>
                 <input type="text" id="domain" name="domain" bind:value={personal_details.domain} required>
             </div>
-        </div> -->
+        </div>
         <h2>file uploads</h2>
         <div class="file-container">
             {#each files as file, index}
@@ -110,7 +131,7 @@
                     </label>
                     <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file} required>
                 </div>
-                <!-- {#if file.file !== -1}
+                {#if file.file !== -1}
                 <div class="select-input">
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
@@ -142,8 +163,9 @@
                     <label for="file_type">type:</label>
                     <select name="file_type" id="file_type" bind:value={file.type} required>
                         <option value="exam">exam</option>
-                        <option value="lesson">lesson</option>
-                        <option value="exercises">exercises</option>
+                        <option value="cour">lesson</option>
+                        <option value="td">directed work (TD)</option>
+                        <option value="tp">practical work (TP)</option>
                         <option value="other">other</option>
                     </select>
                 </div>
@@ -151,7 +173,7 @@
                 {/if}
                 {/if}
                 {/if}
-                {/if} -->
+                {/if}
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div class="file-delete" on:click={()=>{
