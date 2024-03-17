@@ -42,7 +42,7 @@
     {#each new Array(80).fill(0).map((_,i)=>i) as y}
     <div style="
             position: absolute;
-            background: #00000020;
+            background: #00000018;
             left: {x*20}px;
             top: {y*20}px;
             padding: {radius(x,y)}px;

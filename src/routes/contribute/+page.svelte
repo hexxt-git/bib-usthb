@@ -97,6 +97,7 @@
             submitting = false;
             if(allok) alert('all files uploaded successfully');
             else if(files.length > 1) alert('some files failed to upload');
+            location.reload();
         }
     }
     let uploading_dots = '';

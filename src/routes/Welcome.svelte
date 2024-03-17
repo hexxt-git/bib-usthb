@@ -1,11 +1,13 @@
 <script>
     import FractalBackground from "./FractalBackground.svelte";
+    import SearchBar from "./SearchBar.svelte";
 </script>
 <main>
     <FractalBackground />
     <div id="text-container">
         <h1>Welcome to <div>BiB-USTHB</div></h1>
         <h2>The unofficial student resource sharing website</h2>
+        <SearchBar />
     </div>
     <div id="closing-arc"></div>
 </main>
@@ -70,7 +72,7 @@
             flex-direction: column;
         }
         h2{
-            font-size: 1.25rem;
+            font-size: 2rem;
         }
     }
 </style>
