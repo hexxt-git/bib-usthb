@@ -54,31 +54,26 @@
         if (!formElement.reportValidity()) {
             e.preventDefault();
         } else {
-            document.querySelector('*').style += 'cursor: wait !important;'
+            // document.querySelector('*').style += ';cursor: wait !important;'
+            console.log('uploading...');
 
-            const uploadFile = async (file, personalDetails) => {
-                try {
-                    const res = await upload(file, personalDetails);
-                    console.log(file.file[0].name, res);
-                    return res.message == "file uploaded successfully";
-                } catch (error) {
-                    console.error(`Failed to upload file: ${file.file[0].name}`, error);
-                    return false;
-                }
-            }
-
-            const uploadPromises = files.map(file => uploadFile(file, personal_details));
+            const uploadPromises = files.map(file => upload(file, personal_details));
             const results = await Promise.allSettled(uploadPromises);
 
-            const successfulUploads = results.filter(result => result.status === 'fulfilled' && result.value).length;
+            results.forEach((result, index) => {
+                if (result.value.ok) {
+                    console.log(`file ${index} uploaded`);
+                } else {
+                    console.log(`file ${index} failed to upload`);
+                }
+            });
 
-            if (successfulUploads === files.length) {
+            if(results.every(result => result.value.ok)){
                 alert('all files uploaded successfully');
-            } else {
-                alert('an error must have happened, try again later');
+            }else{
+                alert('some files failed to upload');
             }
 
-            location.reload();
         }
     }
     
@@ -90,7 +85,7 @@
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>
     <form bind:this={formElement} on:submit={submit}>
-        <h2>personal details</h2>
+        <!-- <h2>personal details</h2>
         <p>
             &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
@@ -111,7 +106,7 @@
                 <label for="domain">what do you study:</label>
                 <input type="text" id="domain" name="domain" bind:value={personal_details.domain} required>
             </div>
-        </div>
+        </div> -->
         <h2>file uploads</h2>
         <div class="file-container">
             {#each files as file, index}
@@ -167,6 +162,7 @@
                         <option value="td">directed work (TD)</option>
                         <option value="tp">practical work (TP)</option>
                         <option value="other">other</option>
+                        <option value="xxx">xxx</option>
                     </select>
                 </div>
                 

@@ -19,16 +19,10 @@ export async function upload(file, personal_details){
     formData.append('module_id', file.module);
     formData.append('file_type', file.type);
 
-    try{
-        let response = await fetch('https://walrus-app-mwr59.ondigitalocean.app/api/upload/', {
-            method: 'POST',
-            body: formData
-        });
-        //console.log(response);
-        return response.json();
-
-    } catch (error) {
-        return error;
-    }
-
+    let response = await fetch('https://walrus-app-mwr59.ondigitalocean.app/api/upload/', {
+        method: 'POST',
+        body: formData
+    });
+    
+    return response;
 }
