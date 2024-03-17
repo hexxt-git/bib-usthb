@@ -54,12 +54,13 @@
         if (!formElement.reportValidity()) {
            e.preventDefault();
         } else {
-            console.table(personal_details);
+            //console.table(personal_details);
             console.table(files);
             // do the uploading here
-            files.forEach(file => upload(file, personal_details));
+            files.forEach(file => upload(file).then(res => console.log(res)));
         }
     }
+    
 </script>
 <Nav />
 <main>
@@ -68,7 +69,7 @@
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>
     <form bind:this={formElement} on:submit={submit}>
-        <h2>personal details</h2>
+        <!-- <h2>personal details</h2>
         <p>
             &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
@@ -89,7 +90,7 @@
                 <label for="domain">what do you study:</label>
                 <input type="text" id="domain" name="domain" bind:value={personal_details.domain} required>
             </div>
-        </div>
+        </div> -->
         <h2>file uploads</h2>
         <div class="file-container">
             {#each files as file, index}
@@ -109,7 +110,7 @@
                     </label>
                     <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file} required>
                 </div>
-                {#if file.file !== -1}
+                <!-- {#if file.file !== -1}
                 <div class="select-input">
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
@@ -150,7 +151,7 @@
                 {/if}
                 {/if}
                 {/if}
-                {/if}
+                {/if} -->
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div class="file-delete" on:click={()=>{
