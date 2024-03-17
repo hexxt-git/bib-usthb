@@ -7,14 +7,18 @@
 
     let faculties = []
     onMount(async ()=>{
-        faculties = await load('https://walrus-app-mwr59.ondigitalocean.app/api/fac/all')
-        faculties = faculties.map(fac => {
-            fac.groups = fac.modules?.reduce((acc, module) => {
-                if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
-                return acc;
-            }, []);
-            return fac;
-        });
+        try{
+            faculties = await load('https://walrus-app-mwr59.ondigitalocean.app/api/fac/all')
+            faculties = faculties.map(fac => {
+                fac.groups = fac.modules?.reduce((acc, module) => {
+                    if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
+                    return acc;
+                }, []);
+                return fac;
+            });
+        } catch (error) {
+            alert('error loading page \nreload and try again later');
+        }
         //console.log(faculties);
     });
 
@@ -52,8 +56,14 @@
     let formElement;
     let submitting = false;
     let submit = async (e) => {
+        if(files.length === 0) {
+            alert('please upload at least one file');
+            e.preventDefault();
+            return;
+        }
         if (!formElement.reportValidity()) {
             e.preventDefault();
+            return;
         } else {
             submitting = true;
             console.log('uploading...');
@@ -67,7 +77,7 @@
                         allok = false;
                         console.log(`error uploading ${file.file[0].name}`, response);
                         response.json().then(data => {
-                            console.log(data);
+                            console.log(file.file[0].name, data);
                         });
                         alert(`error uploading ${file.file[0].name}`);
                     } else {
@@ -78,7 +88,7 @@
                     allok = false;
                     console.log(`error uploading ${file.file[0].name}`, response, error);
                     response.json().then(data => {
-                        console.log(data);
+                        console.log(file.file[0].name, data);
                     });
                     alert(`error uploading ${file.file[0].name}\n${error}`);
                 }
@@ -86,30 +96,33 @@
             
             submitting = false;
             if(allok) alert('all files uploaded successfully');
-            else alert('some files failed to upload');
+            else if(files.length > 1) alert('some files failed to upload');
         }
     }
-    
+    let uploading_dots = '';
+    setInterval(()=>{
+        uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
+    }, 500);
 </script>
 <Nav />
 <main>
-    <h1><span>BiB-USTHB</span> contribution page</h1>
+    <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>
     <p>
         &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
     </p>
     <form bind:this={formElement} on:submit={submit}>
-        <!-- <h2>personal details</h2>
+        <h2>personal details</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;for safety reasons contributions to the website require answering some basic questions. rest assured that your identity will be kept private. for more details read <a href="../help" target="_blank">help</a> page.
+            &nbsp;&nbsp;&nbsp;please fill in the following fields to help us identify you and contact you if needed. your personal details will not be shared with anyone.
         </p>
         <div class="personal-detail-container">
             <div class="text-input">
                 <label for="name">name:</label>
-                <input type="text" id="name" name="name" bind:value={personal_details.name} required>
+                <input type="text" id="name" name="name" bind:value={personal_details.name}>
             </div>
             <div class="email-input">
                 <label for="email">email:</label>
-                <input type="email" id="email" name="email" bind:value={personal_details.email} required>
+                <input type="email" id="email" name="email" bind:value={personal_details.email}>
             </div>
             <div class="checkbox-input">
                 <label for="usthb_student">are you a USTHB student: </label>
@@ -117,9 +130,9 @@
             </div>
             <div class="text-input">
                 <label for="domain">what do you study:</label>
-                <input type="text" id="domain" name="domain" bind:value={personal_details.domain} required>
+                <input type="text" id="domain" name="domain" bind:value={personal_details.domain}>
             </div>
-        </div> -->
+        </div>
         <h2>file uploads</h2>
         <div class="file-container">
             {#each files as file, index}
@@ -150,7 +163,7 @@
                 </div>
                 {#if file.faculty !== -1}
                 <div class="select-input">
-                    <label for="file_module">group:</label>
+                    <label for="file_module">module:</label>
                     <select name="file_module" id="file_module" bind:value={file.group} required>
                         {#each faculties.find(fac => fac.id === file.faculty)?.groups||[] as group}
                         <option value={group.id}>{group.name}</option>
@@ -159,7 +172,7 @@
                 </div>
                 {#if file.group !== -1}
                 <div class="select-input">
-                    <label for="file_module">module:</label>
+                    <label for="file_module">semester:</label>
                     <select name="file_module" id="file_module" bind:value={file.module} required>
                         {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group)||[] as module}
                         <option value={module.id}>{module.name}</option>
@@ -175,7 +188,6 @@
                         <option value="td">directed work (TD)</option>
                         <option value="tp">practical work (TP)</option>
                         <option value="other">other</option>
-                        <option value="xxx">xxx</option>
                     </select>
                 </div>
                 
@@ -200,9 +212,13 @@
         </p>
         <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
         {#if submitting}
-            <button type="submit" disabled>uploading...</button>
+            <button type="submit" disabled>
+                uploading{uploading_dots}
+            </button>
         {:else}
-            <button type="submit">submit</button>
+            <button type="submit">
+                submit
+            </button>
         {/if}
     </form>
 </main>
@@ -232,6 +248,7 @@
     }
     a{
         color: black;
+        text-decoration: underline;
     }
     .personal-detail-container{
         display: grid;
@@ -372,6 +389,7 @@
         user-select: none;
         transition: font-size 0.1s ease-in-out;
         margin-top: 10px;
+        min-height: 230px;
     }
     .file-plus:hover{
         font-size: 45px;

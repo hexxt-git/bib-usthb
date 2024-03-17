@@ -3,7 +3,7 @@
     import { load } from './helper.js';
 </script>
 
-<main>
+<main id="faculties-page">
     <h2>faculties&nbsp;</h2>
     <div id="faculties-container">
         {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}

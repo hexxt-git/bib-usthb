@@ -8,7 +8,7 @@
         made by <a href="https://9EED.github.io/" target="_blank"> Zeghdani Salah </a> and <a href="https://laindev.me/" target="_blank"> Aymen charfaoui </a>
     </div>
     <div>
-        kept alive by your <a href="https://google.com" target="_blank">contributions</a>
+        kept alive by your <a href="./contribute/">contributions</a>
     </div>
     <div>
         open-sourced on <a href="https://github.com/9EED/bib-usthb" target="_blank">github</a>
