@@ -114,7 +114,7 @@
     <form bind:this={formElement} on:submit={submit}>
         <h2>personal details</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;please fill in the following fields to help us identify you and contact you if needed. your personal details will not be shared with anyone.
+            &ensp; it is not necessary to provide your personal details. however, if you do, you will be notified by email when your files are added to the website.
         </p>
         <div class="personal-detail-container">
             <div class="text-input">
@@ -209,7 +209,7 @@
         </div>
         <h2>submission</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a few days for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
+            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
         {#if submitting}

@@ -8,8 +8,9 @@
     import { load } from './helper.js';
     
     // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
-    //     console.log(faculties);
+    //     console.table(faculties);
     // });
+
 </script>
 
 <main>
@@ -18,9 +19,11 @@
     <Faculties />
 
     {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all") then faculties}
-        {#each faculties as faculty}
-            <Faculty {faculty}/>
-        {/each}
+        {#if faculties.length > 0}
+            {#each faculties as faculty}
+                <Faculty {faculty}/>
+            {/each}
+        {/if}
     {:catch error}
         <p style="color: red;">
             error: {error.message}<br>

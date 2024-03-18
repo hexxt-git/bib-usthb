@@ -9,12 +9,19 @@
         {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}
             loading... 
         {:then faculties}
-            {#each faculties as faculty}
-                <a class="faculty" href="#{faculty.short}-page">
-                    <img src="images/university.png" alt="">
-                    <span>{faculty.name}</span>
-                </a>
-            {/each}
+            {#if faculties.length > 0}
+                {#each faculties as faculty}
+                    <a class="faculty" href="#{faculty.short}-page">
+                        <img src="images/university.png" alt="">
+                        <span>{faculty.name}</span>
+                    </a>
+                {/each}
+            {:else}
+                <p style="color: red;">
+                    error: loading faculties<br>
+                    please contact support and try again later
+                </p>
+            {/if}
         {:catch error}
             <p style="color: red;">
                 error: {error.message}<br>

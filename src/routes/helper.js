@@ -27,8 +27,12 @@ export async function upload(file, personal_details){
     return response;
 }
 
-export async function search(value){
-    let response = await fetch(`https://walrus-app-mwr59.ondigitalocean.app/api/search/file/?query=${value}`);
-    let data = await response.json();
-    return data;
+export async function search(query, type){
+    try{
+        let response = await fetch(`https://walrus-app-mwr59.ondigitalocean.app/api/search/${type}/?query=${query}`);
+        let data = await response.json();
+        return data;
+    } catch (error) {
+       console.error(error);
+    }
 }
