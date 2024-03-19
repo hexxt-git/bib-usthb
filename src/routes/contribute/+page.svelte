@@ -59,7 +59,7 @@
         input.click();
         input.onchange = (e)=>{
             let new_files = e.target.files;
-            console.log(new_files);
+            //console.log(new_files);
             for (const file of new_files) {
                 let data_transfer = new DataTransfer();
                 data_transfer.items.add(file);
@@ -71,7 +71,7 @@
         e.preventDefault();
         let dt = e.dataTransfer;
         let files = dt.files;
-        console.log(e.dataTransfer.files)
+        //console.log(e.dataTransfer.files)
         for (const file of files) { // this breaks them to lists of files so it works with svelte bind
             let data_transfer = new DataTransfer();
             data_transfer.items.add(file);
