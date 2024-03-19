@@ -242,7 +242,7 @@
                 class="file-drop"
             >
                 <span><div>
-                    <img src="src/lib/upload.png" alt="" />
+                    <img src="../images/upload.png" alt="" />
                     <p>drag and drop files</p>
                     <p>or click <button type="button" on:click={prompt_new_file}>here</button> to upload</p>
                 </div></span>

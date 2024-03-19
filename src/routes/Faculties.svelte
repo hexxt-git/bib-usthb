@@ -11,7 +11,7 @@
             {#if faculties.length > 0}
                 {#each faculties as faculty}
                     <a class="faculty" href="#{faculty.short}-page">
-                        <img src="src/lib/university.png" alt="">
+                        <img src="/images/university.png" alt="">
                         <span>{faculty.name}</span>
                     </a>
                 {/each}
