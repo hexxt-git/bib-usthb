@@ -41,13 +41,19 @@
     {#each new Array(100).fill(0).map((_,i)=>i) as x}
     {#each new Array(80).fill(0).map((_,i)=>i) as y}
     <div style="
-            position: absolute;
-            background: #00000018;
             left: {x*20}px;
             top: {y*20}px;
             padding: {radius(x,y)}px;
-            border-radius: 100%;
-        "></div>
+        " class="dot"></div>
     {/each}
     {/each}
 </div>
+
+<style>
+    .dot{
+        position: absolute;
+        background: #00000012;
+        border-radius: 100%;
+        filter: blur(1px);
+    }
+</style>

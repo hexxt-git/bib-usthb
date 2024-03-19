@@ -18,6 +18,7 @@
     }
 
     $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id);
+    import {load} from './helper.js';
 </script>
 
 <main id="{faculty.short}-page">
@@ -41,27 +42,45 @@
                     <a href="https://drive.google.com/drive/folders/{module.drive_id}" target="_blank">
                         {module.short}
                     </a>
+                    {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${module.id}/getcount/`)}
+                        0
+                    {:then counts}
+                        <span>{
+                        counts.cour_count + 
+                        counts.exam_count +
+                        counts.td_count +
+                        counts.tp_count +
+                        counts.other_count                            
+                        }</span>
+                    {/await}
                 </div>
             {/each}
         </div>
         <hr>
         <div class="collumn">
             {#if selected_module_id !== -1}
+            {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${selected_module_id}/getcount/`) then counts}
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).cour_drive_id}" target="_blank">
                     lessons
+                    <span>{counts.cour_count}</span>
                 </a>
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).exam_drive_id}" target="_blank">
                     exams
+                    <span>{counts.exam_count}</span>
                 </a>
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).td_drive_id}" target="_blank">
                     directed work (TD)
+                    <span>{counts.td_count}</span>
                 </a>
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).tp_drive_id}" target="_blank">
                     practical work (TP)
+                    <span>{counts.tp_count}</span>
                 </a>
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).other_drive_id}" target="_blank">
                     other
+                    <span>{counts.other_count}</span>
                 </a>
+            {/await}
             {/if}
         </div>
     </div>
