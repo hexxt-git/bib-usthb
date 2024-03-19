@@ -39,18 +39,44 @@
         domain: '',
         additional: ''
     }
-    let files = [new File()];
+    let files = [];
     
-    let add_file = ()=>{
+    let add_file = (file=-1)=>{
         let copy_file = files.length !== 0 ? new File(
-            -1,
+            file,
             files[files.length - 1].faculty,
             files[files.length - 1].group,
             files[files.length - 1].module,
             files[files.length - 1].type
-        ): new File();
-
+        ): new File(file);
+        
         files = [...files, copy_file];
+    }
+    let prompt_new_file = ()=>{
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.multiple = true;
+        input.click();
+        input.onchange = (e)=>{
+            let new_files = e.target.files;
+            console.log(new_files);
+            for (const file of new_files) {
+                let data_transfer = new DataTransfer();
+                data_transfer.items.add(file);
+                add_file(data_transfer.files);
+            }
+        }
+    }
+    let handleDrop = (e)=>{
+        e.preventDefault();
+        let dt = e.dataTransfer;
+        let files = dt.files;
+        console.log(e.dataTransfer.files)
+        for (const file of files) { // this breaks them to lists of files so it works with svelte bind
+            let data_transfer = new DataTransfer();
+            data_transfer.items.add(file);
+            add_file(data_transfer.files);
+        }
     }
 
     let formElement;
@@ -70,6 +96,7 @@
             let allok = true;
 
             for (const file of files) {
+                if(!file.file.length) continue;
                 try {
                     let response =  await upload(file, personal_details);
                     
@@ -100,6 +127,7 @@
             location.reload();
         }
     }
+    
     let uploading_dots = '';
     setInterval(()=>{
         uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
@@ -135,6 +163,9 @@
             </div>
         </div>
         <h2>file uploads</h2>
+        <!-- <button type="button" on:click={()=>{
+            console.log(files);
+        }}>log</button> -->
         <div class="file-container">
             {#each files as file, index}
             <div class="file">
@@ -151,7 +182,7 @@
                             {/if}
                         {/if}
                     </label>
-                    <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file} required>
+                    <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file}>
                 </div>
                 {#if file.file !== -1}
                 <div class="select-input">
@@ -204,12 +235,22 @@
                 }}>delete</div>
             </div>
             {/each}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="file-plus" on:click={add_file}>+</div>
+            <div
+                on:dragover="{(e) => e.preventDefault()}"
+                on:dragenter="{(e) => e.preventDefault()}"
+                on:drop="{handleDrop}"
+                class="file-drop"
+            >
+                <span><div>
+                    <img src="src/lib/upload.png" alt="" />
+                    <p>drag and drop files</p>
+                    <p>or click <button type="button" on:click={prompt_new_file}>here</button> to upload</p>
+                </div></span>
+            </div>
         </div>
         <h2>submission</h2>
         <p>
-            &nbsp;&nbsp;&nbsp;your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
+            &ensp; your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
         </p>
         <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
         {#if submitting}
@@ -377,23 +418,53 @@
         user-select: none;
         font-weight: 500;
     }
-    .file-plus{
+    .file-drop{
         border-radius: 10px;
         box-shadow: var(--window-shadow);
         background-color: var(--off-white);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 35px;
-        color: var(--brand-green);
-        cursor: pointer;
-        user-select: none;
-        transition: font-size 0.1s ease-in-out;
         margin-top: 10px;
         min-height: 230px;
+        padding: 15px;
+        color: #444;
     }
-    .file-plus:hover{
-        font-size: 45px;
+    .file-drop span, .file-drop div{
+        pointer-events: none;
+    }
+    .file-drop span{
+        border: var(--brand-green) 2px dashed;
+        border-radius: 10px;
+        display: block;
+        widows: 100%;
+        height: 100%;
+    }
+    .file-drop div{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    .file-drop p{
+        margin: 0;
+    }
+    .file-drop img{
+        height: 80px;
+        filter: invert(0.3);
+    }
+    .file-drop button{
+        border-radius: 5px;
+        border: solid 1px #111;
+        padding: 0 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: 'roboto', sans-serif;
+        color: #444;
+        pointer-events: all !important;
+    }
+    .file-drop button:hover{
+        text-decoration: underline;
     }
     textarea{
         margin-top: 10px;

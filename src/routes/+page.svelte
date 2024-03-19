@@ -7,9 +7,9 @@
     
     import { load } from './helper.js';
     
-    // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
-    //     console.table(faculties);
-    // });
+    load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
+        console.table(faculties);
+    });
 
 </script>
 
