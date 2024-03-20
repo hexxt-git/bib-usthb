@@ -38,21 +38,25 @@
         padding: 0 var(--side-margin) 30px var(--side-margin);
         min-height: calc(100vh - 207px);
     }
-    h1 {
-        margin: 20px 0 10px 0;
-        color: #111;
-        text-decoration: underline var(--brand-green);
-        font-family: 'Rubik', sans-serif;
+    h1{
+        margin: 20px 0px 0px 0px;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
+        width: fit-content;
+        font-family: var(--title-font);
+        font-size: var(--title-1);
+        color: var(--title-color);
     }
-    h2 {
-        margin: 10px 0 10px 0;
-        color: #111;
-        text-decoration: underline var(--brand-green);
-        font-family: 'Rubik', sans-serif;
+    h2{
+        margin: 10px 0px 0px 0px;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
+        width: fit-content;
+        font-family: var(--title-font);
+        font-size: var(--title-2);
+        color: var(--title-color);
     }
     p{
         margin: 10px 0;
@@ -61,7 +65,7 @@
         word-spacing: 2px;
     }
     a{
-        color: black;
+        color: var(--brand-color);
         text-decoration: underline;
     }
 </style>

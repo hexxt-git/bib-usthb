@@ -189,7 +189,10 @@
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
                         {#each faculties as faculty}
-                        <option value={faculty.id}>{faculty.name}</option>
+                        <option value={faculty.id}>{
+                            faculty.name.substring(0, 30) +
+                            (faculty.name.length>27?'...':'')
+                        }</option>
                         {/each}
                     </select>
                 </div>
@@ -268,34 +271,39 @@
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);
+        min-height: calc(100vh - 207px);
     }
-    h1 {
-        margin: 20px 0 10px 0;
-        color: #111;
-        text-decoration: underline var(--brand-green);
-        font-family: 'Rubik', sans-serif;
+    h1{
+        margin: 20px 0px 10px 0px;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
+        width: fit-content;
+        font-family: var(--title-font);
+        font-size: var(--title-1);
+        color: var(--title-color);
     }
-    h2 {
-        margin: 40px 0 10px 0;
-        color: #111;
-        text-decoration: underline var(--brand-green);
-        font-family: 'Rubik', sans-serif;
+    h2{
+        margin: 10px 0px 10px 0px;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
+        width: fit-content;
+        font-family: var(--title-font);
+        font-size: var(--title-2);
+        color: var(--title-color);
     }
     p{
         margin: 0;
     }
     a{
-        color: black;
+        color: var(--text-color);
         text-decoration: underline;
     }
     .personal-detail-container{
         display: grid;
         grid-template-columns: 1fr 1fr;
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         gap: 20px 30px;
         padding: 20px 40px 30px 15px;
         border-radius: 10px;
@@ -321,7 +329,7 @@
     }    
     .text-input input, .email-input input{
         border: none;
-        border-bottom: 2px solid var(--brand-green);
+        border-bottom: 2px solid var(--brand-color);
         font-family: 'roboto', sans-serif;
         font-size: 16px;
         padding: 5px 5px 0 10px;
@@ -378,7 +386,7 @@
         border-radius: 10px;
         box-shadow: var(--window-shadow);
         margin-top: 10px;
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         position: relative;
         display: flex;
         flex-direction: column;
@@ -421,7 +429,7 @@
     .file-drop{
         border-radius: 10px;
         box-shadow: var(--window-shadow);
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         margin-top: 10px;
         min-height: 230px;
         padding: 15px;
@@ -431,7 +439,7 @@
         pointer-events: none;
     }
     .file-drop span{
-        border: var(--brand-green) 2px dashed;
+        border: var(--brand-color) 2px dashed;
         border-radius: 10px;
         display: block;
         widows: 100%;
@@ -471,9 +479,9 @@
         width: 100%;
     }
     button[type="submit"]{
-        padding: 7px 20px;
+        padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 15px;
         box-shadow: var(--weak-shadow);
         cursor: pointer;
         user-select: none;
@@ -484,9 +492,6 @@
         margin-left: auto;
         display: block;
         transition: 0.3s ease-in-out;
-        background-color: var(--brand-green);
-    }
-    button[type="submit"]:hover{
-        filter: contrast(1.3);
+        background-color: var(--brand-color);
     }
 </style>

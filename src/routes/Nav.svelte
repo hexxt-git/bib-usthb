@@ -25,8 +25,11 @@
         justify-content: space-between;
         align-items: center;
         padding: 0px 50px;
-        background-color: white;
+        background-color: var(--background-0);
+        color: var(--text-color);
+        font-size: var(--text-1);
         box-shadow: var(--strong-shadow);
+        font-family: var(--main-font);
         overflow: hidden;
     }
     div{
@@ -37,18 +40,18 @@
     .nav-link{
         cursor: pointer;
         text-decoration: none;
-        color: black;
-        font-size: 1.2rem;
+        color: var(--text-color);
+        font-size: var(--text-0);
         text-decoration: transparent underline 1px;
         transition: text-decoration 130ms ease-in-out;
     }
     .nav-link:hover{
-        text-decoration: black underline 2px;
+        text-decoration: var(--text-color) underline 2px;
     }
     #nav-logo{
         min-width: 210px;
-        color: var(--brand-green);
-        font-family: 'Rubik';
+        color: var(--brand-color);
+        font-family: var(--title-font);
         font-weight: 700;
         font-size: 35px;
         user-select: none;
@@ -58,7 +61,7 @@
     }
     #nav-contribute{
         color: white;
-        background-color: var(--brand-green);
+        background-color: var(--brand-color);
         padding: 7px 20px;
         width: 140px;
         height: 42px;

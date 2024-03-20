@@ -9,7 +9,7 @@
     
     // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
     //     console.table(faculties);
-    // });
+    // })
 
 </script>
 
@@ -38,5 +38,6 @@
     main{
         margin: 0px;
         font-family: 'Roboto', sans-serif;
+        background-color: var(--background-0);
     }
 </style>

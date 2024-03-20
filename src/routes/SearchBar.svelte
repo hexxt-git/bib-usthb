@@ -42,7 +42,7 @@
 <style>
     #container{
         width: 780px;
-        background-color: white;
+        background-color: var(--background-1);
         border-radius: 25px;
         padding: 10px;
         margin-top: 20px;
@@ -59,11 +59,11 @@
         outline: none;
         width: 100%;
         font-family: 'roboto' sans-serif;
-        font-size: 1.3em;
+        font-size: var(--text-0);
     }
     hr{
         margin: 5px 0;
-        border: solid var(--brand-green) 1px;
+        border: solid var(--brand-color) 1px;
     }
     #results{
         max-height: 300px;
@@ -71,17 +71,17 @@
         overflow-y: auto;
     }
     #results div{
-        font-size: 1.2em;
+        font-size: var(--text-0);
         margin: 5px 0;
     }
     .result{
         display: block;
         padding: 5px 8px;
-        color: black;
+        color: var(--text-color);
         text-decoration: none;
         border-radius: 10px;
     }
     .result:hover{
-        background-color: #f5f5f5;
+        background-color: var(--background-2);
     }
 </style>

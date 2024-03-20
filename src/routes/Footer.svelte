@@ -22,13 +22,13 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         box-shadow: var(--strong-shadow);
         position: relative;
         overflow: hidden;
     }
     footer a{
-        color: var(--brand-green);
+        color: var(--brand-color);
         text-decoration: none;
     }
     footer a:hover{

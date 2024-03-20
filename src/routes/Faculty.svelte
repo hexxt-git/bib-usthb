@@ -94,12 +94,13 @@
     }
     h2{
         margin: 10px 0px 0px 20px;
-        text-decoration: var(--brand-green) underline;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
         width: fit-content;
-        font-family: 'Rubik';
-        color: #101010;
+        font-family: var(--title-font);
+        font-size: var(--title-2);
+        color: var(--title-color);
     }
     #navigator{
         margin: 30px var(--side-margin) 50px var(--side-margin);
@@ -107,7 +108,7 @@
         padding-bottom: 20px;
         display: grid;
         grid-template-columns: 5fr 3fr 5fr;
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         box-shadow: var(--window-shadow);
         gap: 10px;
         border-radius: 25px;
@@ -135,7 +136,7 @@
         gap: 8px;
     }
     .item{
-        background-color: var(--off-off-white);
+        background-color: var(--background-2);
         color: black;
         text-decoration: none;
         padding: 15px 20px 10px 10px;
@@ -149,7 +150,7 @@
         box-shadow: #0001 0 3px 6px;
     }
     .true{
-        background-color: var(--light-green);
+        background-color: var(--brand-color-weaker);
     }
     @keyframes apear{
         from{ opacity: 0; }
@@ -160,7 +161,7 @@
         text-decoration: underline;
     }*/
     a{
-        color: black;
+        color: var(--text-color);
         text-decoration: none;
     }
     a:hover{

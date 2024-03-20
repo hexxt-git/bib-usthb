@@ -16,7 +16,7 @@
     main{
         height: calc(100vh - var(--nav-height));
         position: relative;
-        background-color: #57cd3f;
+        background-color: var(--brand-color-weak);
         overflow: hidden;
     }
     #text-container{
@@ -36,7 +36,7 @@
     h1{
         color: white;
         margin: 0;
-        font-family: 'Rubik', sans-serif;
+        font-family: var(--title-font);
         font-size: 5rem;
         font-weight: 700;
     }
@@ -47,14 +47,14 @@
     h2{
         color: white;
         margin: 0;
-        font-family: 'Rubik', sans-serif;
+        font-family: var(--title-font);
         font-size: 2rem;
         font-weight: 500;
         letter-spacing: 1px;
         padding: 0 30px;
     }
     #closing-arc{
-        background: white;
+        background: var(--background-0);
         position: absolute;
         bottom: -50px;
         width: 100%;

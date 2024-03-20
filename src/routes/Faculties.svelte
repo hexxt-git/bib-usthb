@@ -36,16 +36,17 @@
     }
     h2{
         margin: 10px 0px 0px 20px;
-        text-decoration: var(--brand-green) underline;
+        text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
         width: fit-content;
-        font-family: 'Rubik';
-        color: #101010;
+        font-family: var(--title-font);
+        font-size: var(--title-2);
+        color: var(--title-color);
     }
     #faculties-container{
         margin: 40px var(--side-margin);
-        background-color: var(--off-white);
+        background-color: var(--background-1);
         box-shadow: var(--window-shadow);
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -68,13 +69,13 @@
         padding: 10px;
         cursor: default;
         border-radius: 15px;
-        color: black;
+        color: var(--text-color);
         text-decoration: none;
         font-weight: 500;
         font-size: 18px;
     }
     .faculty:hover{
-        background: var(--off-off-white);
+        background: var(--background-2);
     }
     span{
         cursor: pointer;
