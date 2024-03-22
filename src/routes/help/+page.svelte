@@ -36,10 +36,14 @@
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 207px);
+        min-height: calc(100vh - 187px);
+        font-family: var(--main-font);
+        background-color: var(--background-0);
+        color: var(--text-color);
     }
     h1{
-        margin: 20px 0px 0px 0px;
+        margin: 0;
+        padding: 20px 0px 0px 0px;
         text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;

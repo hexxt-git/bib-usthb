@@ -43,7 +43,7 @@
     #container{
         width: 780px;
         background-color: var(--background-1);
-        border-radius: 25px;
+        border-radius: var(--window-radius);
         padding: 10px;
         margin-top: 20px;
         text-align: start;
@@ -58,7 +58,7 @@
         border: none;
         outline: none;
         width: 100%;
-        font-family: 'roboto' sans-serif;
+        font-family: var(--main-font);
         font-size: var(--text-0);
     }
     hr{
@@ -79,7 +79,7 @@
         padding: 5px 8px;
         color: var(--text-color);
         text-decoration: none;
-        border-radius: 10px;
+        border-radius: var(--element-radius);
     }
     .result:hover{
         background-color: var(--background-2);

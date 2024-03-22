@@ -25,11 +25,10 @@
         justify-content: space-between;
         align-items: center;
         padding: 0px 50px;
-        background-color: var(--background-0);
+        background-color: var(--background-1);
         color: var(--text-color);
         font-size: var(--text-1);
         box-shadow: var(--strong-shadow);
-        font-family: var(--main-font);
         overflow: hidden;
     }
     div{
@@ -39,7 +38,6 @@
     }
     .nav-link{
         cursor: pointer;
-        text-decoration: none;
         color: var(--text-color);
         font-size: var(--text-0);
         text-decoration: transparent underline 1px;
@@ -53,14 +51,14 @@
         color: var(--brand-color);
         font-family: var(--title-font);
         font-weight: 700;
-        font-size: 35px;
+        font-size: 2.25em;
         user-select: none;
         cursor: pointer;
         text-decoration: none;
         padding-top: 3px;
     }
     #nav-contribute{
-        color: white;
+        color: var(--background-0);
         background-color: var(--brand-color);
         padding: 7px 20px;
         width: 140px;
@@ -68,33 +66,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 17px;
+        border-radius: var(--element-radius);
         user-select: none;
         cursor: pointer;
         text-decoration: none;
         font-weight: 500;
-        font-size: 1.2rem;
+        font-size: var(--text-0);
         letter-spacing: 1px;
     }
-    /*#nav-search{
-        width: 150px;
-        height: 30px;
-        border: #666 solid 1.5px;
-        box-shadow: var(--weak-shadow);
-        outline: none;
-        padding: 0px 8px;
-        border-radius: 8px;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        -ms-border-radius: 8px;
-        -o-border-radius: 8px;
-        color: var(--brand-green-darker);
-        font-family: 'Rubik';
-        font-size: 15px;
-        font-weight: 500;
-        flex-shrink: 1;
-    }*/
-    @media (max-width: 700px), (orientation: portrait) {
+    @media (max-width: 700px), (max-aspect-ratio: 3/4) {
         div{
             display: none;
         }
@@ -105,11 +85,10 @@
         }
         #nav-logo{
             min-width: 180px;
-            font-size: 30px;
+            font-size: 2em;
         }
         #nav-contribute{
             padding: 7px 15px;
-            font-size: 1rem;
         }
     }
 </style>

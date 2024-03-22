@@ -3,7 +3,7 @@
 </script>
 
 <main id="faculties-page">
-    <h2>faculties&nbsp;</h2>
+    <h2>Faculties&nbsp;</h2>
     <div id="faculties-container">
         {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all")}
             loading... 
@@ -53,7 +53,7 @@
         gap: 20px;
         padding: 10px;
         padding-bottom: 20px;
-        border-radius: 25px;
+        border-radius: var(--window-radius);
     }
     @media (max-width: 700px), (orientation: portrait) {
         #faculties-container{
@@ -68,14 +68,16 @@
         gap: 10px;
         padding: 10px;
         cursor: default;
-        border-radius: 15px;
+        border-radius: var(--element-radius);
         color: var(--text-color);
         text-decoration: none;
         font-weight: 500;
-        font-size: 18px;
+        font-size: var(--text-1);
+        transition: 0.2s ease;
     }
     .faculty:hover{
         background: var(--background-2);
+        box-shadow: var(--item-shadow);
     }
     span{
         cursor: pointer;

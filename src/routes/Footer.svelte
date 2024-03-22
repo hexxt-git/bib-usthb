@@ -26,6 +26,7 @@
         box-shadow: var(--strong-shadow);
         position: relative;
         overflow: hidden;
+        color: var(--text-color);
     }
     footer a{
         color: var(--brand-color);

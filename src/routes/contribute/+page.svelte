@@ -175,8 +175,8 @@
                         {#if !file.file[0]}<span>upload</span>
                         {:else}
                             <span>change</span>
-                            {#if file.file[0].name.length > 33}
-                                <div>{file.file[0].name.slice(0, 30)}...</div>
+                            {#if file.file[0].name.length > 83}
+                                <div>{file.file[0].name.slice(0, 80)}...</div>
                             {:else}
                                 <div>{file.file[0].name}</div>
                             {/if}
@@ -271,10 +271,14 @@
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 207px);
+        min-height: calc(100vh - 187px);
+        font-family: var(--main-font);
+        background-color: var(--background-0);
+        color: var(--text-color);
     }
     h1{
-        margin: 20px 0px 10px 0px;
+        margin: 0;
+        padding: 20px 0px 10px 0px;
         text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;
@@ -306,7 +310,7 @@
         background-color: var(--background-1);
         gap: 20px 30px;
         padding: 20px 40px 30px 15px;
-        border-radius: 10px;
+        border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         margin-top: 10px;
     }
@@ -330,10 +334,12 @@
     .text-input input, .email-input input{
         border: none;
         border-bottom: 2px solid var(--brand-color);
-        font-family: 'roboto', sans-serif;
-        font-size: 16px;
+        font-family: var(--main-font);
+        font-size: var(--text-1);
         padding: 5px 5px 0 10px;
-        border-radius: 10px 10px 0 0;
+        border-radius: var(--element-radius) var(--element-radius) 0 0;
+        background-color: var(--background-2);
+        color: var(--text-color);
     }
     .text-input label, .email-input label{
         padding: 5px 0 0 0;
@@ -353,7 +359,7 @@
         padding: 0 5px;
         margin-left: 5px;
         border: solid 1px #444;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
         user-select: none;
         font-weight: 400;
@@ -383,7 +389,7 @@
     }
     .file{
         padding: 20px 20px 50px 20px;
-        border-radius: 10px;
+        border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         margin-top: 10px;
         background-color: var(--background-1);
@@ -413,7 +419,7 @@
         box-sizing: border-box;
         outline: none;
         border: solid 1px #444;
-        border-radius: 5px;
+        border-radius: 8px;
     }
     .file-delete{
         position: absolute;
@@ -422,12 +428,12 @@
         color: rgb(245, 22, 59);
         cursor: pointer;
         text-decoration: underline;
-        font-size: 14px;
+        font-size: var(--text-2);
         user-select: none;
         font-weight: 500;
     }
     .file-drop{
-        border-radius: 10px;
+        border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         background-color: var(--background-1);
         margin-top: 10px;
@@ -440,7 +446,7 @@
     }
     .file-drop span{
         border: var(--brand-color) 2px dashed;
-        border-radius: 10px;
+        border-radius: var(--element-radius);
         display: block;
         widows: 100%;
         height: 100%;
@@ -462,14 +468,15 @@
         filter: invert(0.3);
     }
     .file-drop button{
-        border-radius: 5px;
+        border-radius: 8px;
         border: solid 1px #111;
         padding: 0 5px;
         cursor: pointer;
         font-size: 16px;
-        font-family: 'roboto', sans-serif;
+        font-family: var(--main-font);
         color: #444;
         pointer-events: all !important;
+        background-color: var(--background-3);
     }
     .file-drop button:hover{
         text-decoration: underline;
@@ -477,21 +484,22 @@
     textarea{
         margin-top: 10px;
         width: 100%;
+        background-color: var(--background-1);
+        border-radius: 5px;
+        color: var(--text-color);
     }
     button[type="submit"]{
         padding: 10px 20px;
         border: none;
-        border-radius: 15px;
+        border-radius: var(--element-radius);
         box-shadow: var(--weak-shadow);
         cursor: pointer;
         user-select: none;
-        font-size: 20px;
-        font-weight: 500;
+        font-size: var(--text-0);
         color: white;
         margin-top: 20px;
         margin-left: auto;
         display: block;
-        transition: 0.3s ease-in-out;
         background-color: var(--brand-color);
     }
 </style>

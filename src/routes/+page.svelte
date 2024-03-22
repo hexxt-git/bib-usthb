@@ -37,7 +37,7 @@
 <style>
     main{
         margin: 0px;
-        font-family: 'Roboto', sans-serif;
+        font-family: var(--main-font);
         background-color: var(--background-0);
     }
 </style>

@@ -29,26 +29,25 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        gap: 5px;
         padding-top: 60px;
         text-align: center;
     }
     h1{
-        color: white;
+        color: var(--background-0);
         margin: 0;
         font-family: var(--title-font);
         font-size: 5rem;
         font-weight: 700;
     }
     h1 div{
-        color: #052e05;
+        color: var(--first-title-color);
         display: inline-block;
     }
     h2{
-        color: white;
+        color: var(--background-0);
         margin: 0;
         font-family: var(--title-font);
-        font-size: 2rem;
+        font-size: 2em;
         font-weight: 500;
         letter-spacing: 1px;
         padding: 0 30px;
@@ -72,7 +71,8 @@
             flex-direction: column;
         }
         h2{
-            font-size: 2rem;
+            font-size: 1.75em;
+            display: none;
         }
     }
 </style>
