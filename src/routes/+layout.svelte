@@ -111,5 +111,8 @@
                 --side-margin: 20px;
             }
         }
+        *{
+            scrollbar-color: #3cb931 #1a1c1d;
+        }
     </style>
 {/if}

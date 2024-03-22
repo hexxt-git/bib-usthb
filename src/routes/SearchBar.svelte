@@ -47,6 +47,7 @@
         padding: 10px;
         margin-top: 20px;
         text-align: start;
+        color: var(--text-color);
     }
     @media screen and (max-width: 900px), (orientation: portrait){
         #container{
@@ -60,6 +61,7 @@
         width: 100%;
         font-family: var(--main-font);
         font-size: var(--text-0);
+        color: var(--text-color);
     }
     hr{
         margin: 5px 0;

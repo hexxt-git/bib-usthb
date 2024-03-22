@@ -33,7 +33,7 @@
         text-align: center;
     }
     h1{
-        color: var(--background-0);
+        color: white;
         margin: 0;
         font-family: var(--title-font);
         font-size: 5rem;
@@ -44,7 +44,7 @@
         display: inline-block;
     }
     h2{
-        color: var(--background-0);
+        color: white;
         margin: 0;
         font-family: var(--title-font);
         font-size: 2em;
