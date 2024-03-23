@@ -6,10 +6,16 @@
     import Footer from './Footer.svelte';
     
     import { load } from './helper.js';
+	import { notify } from './notification_store';
     
     // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
     //     console.table(faculties);
     // })
+
+    notify({
+        state: "notification",
+        message: "the website is still a work in progress please be patient and report any bugs you find. dont start contributing just yet",
+    })
 
 </script>
 
