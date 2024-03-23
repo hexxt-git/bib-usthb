@@ -1,11 +1,21 @@
 <script>
+	import { onMount } from 'svelte';
+
     export let state = "error"
-    export let message = "an error had occured"
+    export let message = "an error must have occured"
     export let id = 0
-    export let duration = 60*1000
+    export let duration = 30*1000
 
     import {delete_notification} from './notification_store'
     setTimeout(()=>delete_notification(id), duration)
+    let time = 0;
+    onMount(()=>{
+        let update_time = _ => {
+            time += 16
+            requestAnimationFrame(update_time)
+        }
+        update_time()
+    })
 </script>
 
 <main class={state}>
@@ -13,6 +23,7 @@
     <p>{message}</p>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <span on:click={()=>delete_notification(id)}>x</span>
+    <div class="timer" style="width: {100 - time/duration*100}%;"></div>
 </main>
 
 <style>
@@ -25,6 +36,7 @@
         position: relative;
         opacity: 0.9;
         animation: appear 200ms ease-out;
+        overflow: hidden;
     }
     @keyframes appear{
         from{
@@ -71,5 +83,13 @@
         border-radius: 100%;
         user-select: none;
         cursor: pointer;
+    }
+    .timer{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #fff8;
     }
 </style>

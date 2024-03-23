@@ -1,5 +1,10 @@
 <script>
     import { load } from './helper.js';
+
+    let scroll_to_fac = fac => {
+        window.open('./#'+fac+'-page', '_self')
+        setTimeout(()=>scrollBy(0, -80), 900) // scuffed scroll
+    }
 </script>
 
 <main id="faculties-page">
@@ -10,14 +15,15 @@
         {:then faculties}
             {#if faculties.length > 0}
                 {#each faculties as faculty}
-                    <a class="faculty" href="#{faculty.short}-page">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <div class="faculty" on:click={()=>scroll_to_fac(faculty.short)}>
                         <img src="/images/university.png" alt="">
                         <span>{faculty.name}</span>
-                    </a>
+                    </div>
                 {/each}
             {:else}
                 <p style="color: red;">
-                    error: loading faculties<br>
+                    error: loading website data<br>
                     please contact support and try again later
                 </p>
             {/if}

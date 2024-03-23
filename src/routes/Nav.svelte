@@ -1,14 +1,20 @@
 <script>
     import Bubbles from "./Bubbles.svelte";
+    let switch_mode = ()=>{
+        localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark");
+        location.reload()
+    }
 </script>
 
 <nav>
     <Bubbles z_index=-1 width={150} height={10} opacity=5 />
     <a id="nav-logo" href="/">BiB-USTHB</a>
     <div>
-    <a class="nav-link" href="/#faculties-page">faculties</a>
-    <a class="nav-link" href="/#footer">creators</a>
-    <a class="nav-link" href="/help">help</a>
+    <a href="/#faculties-page">faculties</a>
+    <!-- <a href="/#footer">creators</a> -->
+    <a href="/help">help</a>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span on:click={switch_mode}> {localStorage.getItem('theme') == 'dark' ? 'light' : 'dark'} mode </span>
     </div>
     <!--<input type="search" placeholder="search..." id="nav-search">-->
     <a id="nav-contribute" href="/contribute">contribute</a>
@@ -34,16 +40,17 @@
     div{
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 20px;
     }
-    .nav-link{
+    a, span{
         cursor: pointer;
         color: var(--text-color);
         font-size: var(--text-0);
         text-decoration: transparent underline 1px;
         transition: text-decoration 130ms ease-in-out;
     }
-    .nav-link:hover{
+    a:hover, span:hover{
         text-decoration: var(--text-color) underline 2px;
     }
     #nav-logo{

@@ -17,7 +17,7 @@
                 return fac;
             });
         } catch (error) {
-            notify({state: 'error', message: 'error loading page \nreload and try again later', duration:15*1000});
+            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 10*1000});
         }
         //console.log(faculties);
     });
@@ -83,7 +83,7 @@
     let submitting = false;
     let submit = async (e) => {
         if(files.length === 0) {
-            notify({state:'error', message:'please upload atleast one message', duration:5*1000})
+            notify({state:'error', message:'please upload atleast one file', duration: 10*1000})
 
             e.preventDefault();
             return;
@@ -121,9 +121,12 @@
             }
             
             submitting = false;
-            if(allok) notify({state: 'success', message: 'all files uploaded successfully', duration: 10*1000});
-            else if(files.length > 1) notify({state: 'error', message: 'some files failed to upload', duration: 10*1000});
-
+            if(allok){
+                notify({state: 'success', message: 'all files uploaded successfully', duration: 10*1000})
+                files = [];
+            } else if(files.length > 1){
+                notify({state: 'error', message: 'some files failed to upload', duration: 10*1000});
+            }
         }
     }
     

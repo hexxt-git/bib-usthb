@@ -39,5 +39,6 @@
         margin: 0px;
         font-family: var(--main-font);
         background-color: var(--background-0);
+        color: var(--text-color)
     }
 </style>
