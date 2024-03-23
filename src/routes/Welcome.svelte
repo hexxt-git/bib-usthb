@@ -62,7 +62,7 @@
     }
     @media (max-width: 800px), (orientation: portrait){
         #text-container{
-            padding-top: 0;
+            padding-bottom: 200px;
             gap: 20px;
         }
         h1{

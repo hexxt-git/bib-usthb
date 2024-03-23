@@ -54,6 +54,11 @@
             width: 80vw;
         }
     }
+    @media screen and (orientation: portrait){
+        #container{
+            width: 300px;
+        }
+    }
     input{
         background-color: transparent;
         border: none;

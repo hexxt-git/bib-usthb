@@ -53,7 +53,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
     }
     a, span{
         cursor: pointer;
@@ -100,14 +100,17 @@
     }
     @media (max-width: 500px) {
         nav{
-            padding: 0px 20px;
+            padding: 0px 30px;
         }
         #nav-logo{
-            min-width: 180px;
-            font-size: 2em;
+            min-width: 140px;
+            font-size: 1.5em;
         }
         #nav-contribute{
-            padding: 7px 15px;
+            font-size: 1em;
+            height: 32px;
+            width: 120px;
+            border-radius: 13px;
         }
     }
 </style>

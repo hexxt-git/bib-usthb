@@ -7,6 +7,7 @@
     })
 
     import NotificationSystem from "./NotificationSystem.svelte";
+    
 </script>
 
 <NotificationSystem />
@@ -65,6 +66,7 @@
         @media screen and (max-width: 700px){
             :root{
                 --side-margin: 20px;
+                --nav-height: 60px;
             }
         }
     </style>
@@ -120,6 +122,7 @@
         @media screen and (max-width: 700px){
             :root{
                 --side-margin: 20px;
+                --nav-height: 60px;
             }
         }
         *{

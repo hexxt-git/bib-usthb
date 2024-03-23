@@ -29,6 +29,7 @@
 <style>
     main{
         width: 350px;
+        max-width: 90vw;
         padding: 15px;
         color: white;
         border-radius: var(--element-radius);

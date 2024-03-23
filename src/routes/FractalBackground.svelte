@@ -39,7 +39,7 @@
 
 <div>
     {#each new Array(100).fill(0).map((_,i)=>i) as x}
-    {#each new Array(80).fill(0).map((_,i)=>i) as y}
+    {#each new Array(60).fill(0).map((_,i)=>i) as y}
     <div style="
             left: {x*20}px;
             top: {y*20}px;
