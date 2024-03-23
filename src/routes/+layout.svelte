@@ -6,8 +6,10 @@
         theme = localStorage.getItem("theme") || "light";
     })
 
+    import NotificationSystem from "./NotificationSystem.svelte";
 </script>
 
+<NotificationSystem />
 <slot />
 
 {#if theme == "light"}
@@ -17,7 +19,11 @@
             --brand-color: #46c925;
             --brand-color-weak: #57cd3f;
             --brand-color-weaker: #96e889;
-            
+
+            --success-color: #3cb931;
+            --error-color: #d3534e;
+            --info-color: #5678e9;
+
             --background-0: #ffffff;
             --background-1: #f4f5f3;
             --background-2: #eeefee;
@@ -68,6 +74,10 @@
             --brand-color: #70f14c;
             --brand-color-weak: #272b27;
             --brand-color-weaker: #488825;
+
+            --success-color: #29af1c;
+            --error-color: #ca4c48;
+            --info-color: #5373db;
             
             --background-0: #1a1c1d;
             --background-1: #222526;
@@ -75,6 +85,7 @@
             --background-3: #282828;
             
             --strong-shadow: #8883 0px 0px 10px;
+            --medium-shadow: #0002 0px 5px 10px;
             --weak-shadow: #fff3 0px 0px 14px;
             --window-shadow: #4442 0px 5px 10px;
             --item-shadow: #05050510 0 5px 10px;

@@ -2,8 +2,8 @@
     import Nav from '../Nav.svelte';
     import Footer from '../Footer.svelte';
     import {onMount} from 'svelte';
-    import {load} from '../helper.js';
-    import {upload} from '../helper.js';
+    import {load, upload} from '../helper.js';
+    import {notify, delete_notification} from '../notification_store'
 
     let faculties = []
     onMount(async ()=>{
@@ -17,7 +17,7 @@
                 return fac;
             });
         } catch (error) {
-            alert('error loading page \nreload and try again later');
+            notify({state: 'error', message: 'error loading page \nreload and try again later', duration:15*1000});
         }
         //console.log(faculties);
     });
@@ -83,7 +83,8 @@
     let submitting = false;
     let submit = async (e) => {
         if(files.length === 0) {
-            alert('please upload at least one file');
+            notify({state:'error', message:'please upload atleast one message', duration:5*1000})
+
             e.preventDefault();
             return;
         }
@@ -92,7 +93,7 @@
             return;
         } else {
             submitting = true;
-            console.log('uploading...');
+            notify({state: "notification", message: "uploading files...", duration: 10*1000});
             let allok = true;
 
             for (const file of files) {
@@ -102,29 +103,27 @@
                     
                     if(!response.ok) { 
                         allok = false;
-                        console.log(`error uploading ${file.file[0].name}`, response);
                         response.json().then(data => {
                             console.log(file.file[0].name, data);
                         });
-                        alert(`error uploading ${file.file[0].name}`);
+                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 10*1000})
                     } else {
-                        console.log(`success uploading ${file.file[0].name}`);
+                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 10*1000})
                     }
 
                 } catch (error) {
                     allok = false;
-                    console.log(`error uploading ${file.file[0].name}`, response, error);
                     response.json().then(data => {
                         console.log(file.file[0].name, data);
                     });
-                    alert(`error uploading ${file.file[0].name}\n${error}`);
+                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 10*1000})
                 }
             }
             
             submitting = false;
-            if(allok) alert('all files uploaded successfully');
-            else if(files.length > 1) alert('some files failed to upload');
-            location.reload();
+            if(allok) notify({state: 'success', message: 'all files uploaded successfully', duration: 10*1000});
+            else if(files.length > 1) notify({state: 'error', message: 'some files failed to upload', duration: 10*1000});
+
         }
     }
     
