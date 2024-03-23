@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
     export let state = "error"
     export let message = "an error must have occured"
@@ -7,15 +7,24 @@
     export let duration = 30*1000
 
     import {delete_notification} from './notification_store'
-    setTimeout(()=>delete_notification(id), duration)
     let time = 0;
-    onMount(()=>{
-        let update_time = _ => {
-            time += 16
-            requestAnimationFrame(update_time)
+    let interval;
+
+    onMount(() => {
+        interval = setInterval(() => {
+            time += 50;
+            if (time >= duration) {
+                delete_notification(id);
+                clearInterval(interval);
+            }
+        }, 50);
+    });
+
+    onDestroy(() => {
+        if (interval) {
+            clearInterval(interval);
         }
-        update_time()
-    })
+    });
 </script>
 
 <main class={state}>

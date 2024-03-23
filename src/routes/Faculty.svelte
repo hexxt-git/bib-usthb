@@ -34,7 +34,9 @@
                 </div>
             {/each}
         </div>
+        {#if selected_group_id != -1}
         <hr>
+        {/if}
         <div class="collumn">
             {#each modules as module}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -56,7 +58,9 @@
                 </div>
             {/each}
         </div>
+        {#if selected_group_id != -1 && selected_module_id != -1}
         <hr>
+        {/if}
         <div class="collumn">
             {#if selected_module_id !== -1}
             {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${selected_module_id}/getcount/`) then counts}

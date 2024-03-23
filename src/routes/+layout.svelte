@@ -86,7 +86,7 @@
             --background-2: #26292a;
             --background-3: #282828;
             
-            --strong-shadow: #8883 0px 0px 10px;
+            --strong-shadow: #8882 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
             --weak-shadow: #fff3 0px 0px 14px;
             --window-shadow: #4442 0px 5px 10px;
