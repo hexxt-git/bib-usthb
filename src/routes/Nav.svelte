@@ -5,7 +5,7 @@
     onMount(()=>{
         if(typeof window !== 'undefined'){
             if(localStorage.getItem("theme") == null){
-                localStorage.setItem("theme", "dark")
+                localStorage.setItem("theme", "light")
             }
             current_theme = localStorage.getItem("theme")
             document.documentElement.setAttribute('theme', current_theme)
