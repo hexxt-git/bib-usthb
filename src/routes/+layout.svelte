@@ -1,19 +1,13 @@
 <script>
-	import { onMount } from "svelte";
+    import { theme_store } from "./theme_store.js"
 
-    let theme = "light";
-    onMount(() => {
-        theme = localStorage.getItem("theme") || "light";
-    })
-
-    import NotificationSystem from "./NotificationSystem.svelte";
-    
+    import NotificationSystem from "./NotificationSystem.svelte";    
 </script>
 
 <NotificationSystem />
 <slot />
 
-{#if theme == "light"}
+{#if $theme_store == "light"}
     <style>
         :root{
             --brand-color-strong: #3cb931;
@@ -70,7 +64,7 @@
             }
         }
     </style>
-{:else if theme == 'dark'}
+{:else if $theme_store == 'dark'}
     <style>
         :root{
             --brand-color: #70f14c;

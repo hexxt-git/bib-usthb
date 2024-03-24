@@ -1,21 +1,7 @@
 <script>
-	import { onMount } from "svelte";
     import Bubbles from "./Bubbles.svelte";
-    let current_theme = ''
-    onMount(()=>{
-        if(typeof window !== 'undefined'){
-            if(localStorage.getItem("theme") == null){
-                localStorage.setItem("theme", "light")
-            }
-            current_theme = localStorage.getItem("theme")
-            document.documentElement.setAttribute('theme', current_theme)
-        }
-    })
-
-    let switch_mode = ()=>{
-        localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark");
-        location.reload()
-    }
+    import { theme_store } from "./theme_store.js";
+    import { switch_theme } from "./theme_store.js";
 </script>
 
 <nav>
@@ -26,10 +12,10 @@
     <!-- <a href="/#footer">creators</a> -->
     <a href="/help">help</a>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={switch_mode}> {current_theme == 'dark' ? 'light' : 'dark'} mode </span>
+    <span on:click={switch_theme}> {$theme_store == 'dark' ? 'light' : 'dark'} mode </span>
     </div>
     <!--<input type="search" placeholder="search..." id="nav-search">-->
-    <a id="nav-contribute" href="/contribute">contribute</a>
+    <a id="nav-contribute" href="/contribute/">contribute</a>
 </nav>
 
 <style>
