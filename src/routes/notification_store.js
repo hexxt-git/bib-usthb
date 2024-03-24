@@ -4,7 +4,7 @@ export let notification_store = writable([])
 
 export let notify = new_notification => {
     console.log(new_notification)
-    let new_id = Math.random()
+    let new_id = Math.floor(Math.random() * 10**12)
     notification_store.update(notifications => {
         return [...notifications, {...new_notification, id: new_id}];
     });

@@ -1,16 +1,5 @@
 <script>
-	import { onMount } from "svelte";
     import Bubbles from "./Bubbles.svelte";
-    let current_theme = ''
-    onMount(()=>{
-        if(typeof window !== 'undefined'){
-            if(localStorage.getItem("theme") == null){
-                localStorage.setItem("theme", "light")
-            }
-            current_theme = localStorage.getItem("theme")
-            document.documentElement.setAttribute('theme', current_theme)
-        }
-    })
 
     let switch_mode = ()=>{
         localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark");
@@ -24,10 +13,10 @@
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div id="mobile-links">
-    <div on:click={switch_mode}> switch website theme to <span>{current_theme == 'dark' ? 'light' : 'dark'} mode </span></div>
-    <div>
-        having an issues? visit our <a href="./help">help</a> page
-    </div>
+        <div>
+            having an issues? visit our <a href="./help">help</a> page
+        </div>
+        <div on:click={switch_mode}> switch website theme <span> here </span></div>
     </div>
     <div>
         kept alive by your <a href="./contribute/">contributions</a>
@@ -49,10 +38,12 @@
         position: relative;
         overflow: hidden;
         color: var(--text-color);
+        text-align: center;
     }
     footer a, footer span{
         color: var(--brand-color);
         text-decoration: none;
+        cursor: pointer;
     }
     footer a:hover, footer span:hover{
         text-decoration: underline;

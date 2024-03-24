@@ -2,16 +2,29 @@
 	import { onMount } from "svelte";
 
     let theme = "light";
+    let loaded = false
     onMount(() => {
         theme = localStorage.getItem("theme") || "light";
+        loaded = true
     })
 
     import NotificationSystem from "./NotificationSystem.svelte";
     
 </script>
 
+<div style="height: 100vh; position: fixed; top: 0; left: 0; z-index: 10; width: 100vw; background: #020a06; color: #fff" id="loading-thing">loading please wait..</div>
+
 <NotificationSystem />
 <slot />
+
+<!-- disabling loading thing on load -->
+{#if loaded}
+    <style>
+        #loading-thing{
+            display: none;
+        }
+    </style>
+{/if}
 
 {#if theme == "light"}
     <style>
