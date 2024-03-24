@@ -1,10 +1,7 @@
 <script>
     import Bubbles from "./Bubbles.svelte";
-
-    let switch_mode = ()=>{
-        localStorage.setItem("theme", localStorage.getItem("theme") == "dark" ? "light" : "dark");
-        location.reload()
-    }
+    import { theme_store } from "./theme_store.js";
+    import { switch_theme } from "./theme_store.js";
 </script>
 <footer id="footer">
     <Bubbles offset={5} flip_y={1} height={8} opacity={4}/>
@@ -13,13 +10,13 @@
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div id="mobile-links">
-        <div>
-            having an issues? visit our <a href="./help">help</a> page
-        </div>
-        <div on:click={switch_mode}> switch website theme <span> here </span></div>
+    <div on:click={switch_theme}> switch website theme to <span>{$theme_store == 'dark' ? 'light' : 'dark'} mode </span></div>
+    <div>
+        having an issues? visit our <a href="./help">help</a> page
+    </div>
     </div>
     <div>
-        kept alive by your <a href="./contribute/">contributions</a>
+        kept alive by your <a href="/contribute/">contributions</a>
     </div>
     <div>
         open-sourced on <a href="https://github.com/9EED/bib-usthb" target="_blank">github</a>
@@ -38,12 +35,10 @@
         position: relative;
         overflow: hidden;
         color: var(--text-color);
-        text-align: center;
     }
     footer a, footer span{
         color: var(--brand-color);
         text-decoration: none;
-        cursor: pointer;
     }
     footer a:hover, footer span:hover{
         text-decoration: underline;
