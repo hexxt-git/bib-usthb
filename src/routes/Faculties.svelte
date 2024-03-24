@@ -1,5 +1,6 @@
 <script>
     import { load } from './helper.js';
+    import { notify } from './notification_store.js';
 
     let scroll_to_fac = fac => {
         window.open('./#'+fac+'-page', '_self')
@@ -24,14 +25,17 @@
             {:else}
                 <p style="color: red;">
                     error: loading website data<br>
-                    please contact support and try again later
+                    please contact support and try again later <br>
+                    {notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 10*1000})}
                 </p>
             {/if}
         {:catch error}
             <p style="color: red;">
                 error: {error.message}<br>
-                please contact support and try again later
+                please contact support and try again later <br>
+                {notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 10*1000})}
             </p>
+
         {/await}
     </div>
 </main>
