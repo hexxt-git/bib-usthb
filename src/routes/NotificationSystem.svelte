@@ -1,6 +1,7 @@
 <script>
     import Notification from './Notification.svelte'
     import {notification_store} from './notification_store.js'
+    import {clear_notifications} from './notification_store.js'
 
 </script>
 
@@ -9,6 +10,7 @@
     {#each $notification_store as notification}
         <Notification state={notification.state} message={notification.message} id={notification.id} duration={notification.duration} />
     {/each}
+    <button on:click={clear_notifications}>clear</button>
     {/if}
 </main>
 
@@ -22,5 +24,25 @@
         z-index: 2;
         gap: 15px;
         padding: 15px;
+    }
+    button{
+        background-color: var(--background-1);
+        color: var(--text-color);
+        border: solid var(--background-2) 1px;
+        border-radius: calc(var(--element-radius) * 0.5);
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: var(--text-2);
+        letter-spacing: 2px;
+        box-shadow: var(--weak-shadow);
+        opacity: 0.8;
+        animation: appear 300ms ease-out;
+    }
+    @keyframes appear{
+        from{
+            opacity: 0;
+        } to {
+            opacity: 0.9;
+        }
     }
 </style>

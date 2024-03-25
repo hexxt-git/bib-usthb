@@ -27,9 +27,10 @@
         <div class="collumn">
             {#each faculty.groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div class="item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
+                <div class="item group-item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
+                    {group.name}
                     <a href="https://drive.google.com/drive/folders/{group.drive_id}" target="_blank">
-                        {group.name}
+                        <img src="/images/link.png" alt="">
                     </a>
                 </div>
             {/each}
@@ -41,9 +42,13 @@
             {#each modules as module}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <div class="item {module.id==selected_module_id}" on:click={()=>select_module(module.id)}>
+                    <div>
+                    {module.short}
                     <a href="https://drive.google.com/drive/folders/{module.drive_id}" target="_blank">
-                        {module.short}
+                        <img src="/images/link.png" alt="">
                     </a>
+                    </div>
+
                     {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${module.id}/getcount/`)}
                         0
                     {:then counts}
@@ -147,12 +152,26 @@
         padding: 15px 20px 10px 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border-radius: var(--element-radius);
         user-select: none;
         cursor: pointer;
         transition: background-color 0.2s ease-out;
         animation: apear 0.3s ease-in-out;
         box-shadow: var(--item-shadow);
+    }
+    .item img{
+        height: 18px;
+        border-bottom: transparent solid 1px;
+        transform: translate(0px, 4px);
+        filter: var(--icon-filter);
+    }
+    .item img:hover{
+        border-bottom: black solid 1px;
+    }
+    .group-item{
+        justify-content: flex-start;
+        gap: 5px;
     }
     .true{
         background-color: var(--brand-color-weaker);
@@ -163,9 +182,5 @@
     }
     a{
         color: var(--text-color);
-        text-decoration: none;
-    }
-    a:hover{
-        text-decoration: underline;
     }
 </style>

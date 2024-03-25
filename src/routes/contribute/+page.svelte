@@ -125,6 +125,7 @@
             submitting = false;
             if(allok){
                 notify({state: 'success', message: 'all files uploaded successfully', duration: 10*1000})
+                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 10*1000})
                 files = [];
                 confetti = true;
                 setTimeout(()=>{
@@ -462,7 +463,7 @@
         margin-top: 10px;
         min-height: 230px;
         padding: 15px;
-        color: #444;
+        color: var(--text-color-weak);
     }
     .file-drop span, .file-drop div{
         pointer-events: none;
@@ -488,16 +489,16 @@
     }
     .file-drop img{
         height: 80px;
-        filter: invert(0.3);
+        filter: var(--icon-filter-weak);
     }
     .file-drop button{
         border-radius: 8px;
-        border: solid 1px #111;
+        border: solid 1px var(--text-color-weak);
         padding: 0 5px;
         cursor: pointer;
         font-size: 16px;
         font-family: var(--main-font);
-        color: #444;
+        color: var(--text-color-weak);
         pointer-events: all !important;
         background-color: var(--background-3);
     }
@@ -518,8 +519,9 @@
         box-shadow: var(--weak-shadow);
         cursor: pointer;
         user-select: none;
-        font-size: var(--text-0);
-        color: white;
+        font-size: var(--text-1);
+        color: var(--background-0);
+        font-weight: 600;
         margin-top: 20px;
         margin-left: auto;
         display: block;

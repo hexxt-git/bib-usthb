@@ -17,3 +17,7 @@ export let delete_notification = delete_id =>{
         notifications.filter(notification => notification.id != delete_id)    
     )
 }
+
+export let clear_notifications = () => {
+    notification_store.set([])
+}
