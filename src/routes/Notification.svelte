@@ -7,24 +7,10 @@
     export let duration = 30*1000
 
     import {delete_notification} from './notification_store'
-    let time = 0;
-    let interval;
 
-    onMount(() => {
-        interval = setInterval(() => {
-            time += 50;
-            if (time >= duration) {
-                delete_notification(id);
-                clearInterval(interval);
-            }
-        }, 50);
-    });
-
-    onDestroy(() => {
-        if (interval) {
-            clearInterval(interval);
-        }
-    });
+    setTimeout(()=>{
+        delete_notification(id)
+    }, duration)        
 </script>
 
 <main class={state}>
@@ -32,7 +18,7 @@
     <p>{message}</p>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <span on:click={()=>delete_notification(id)}>x</span>
-    <div class="timer" style="width: {100 - time/duration*100}%;"></div>
+    <div class="timer" style="animation-duration: {duration}ms;"></div>
 </main>
 
 <style>
@@ -44,8 +30,8 @@
         border-radius: var(--element-radius);
         box-shadow: var(--medium-shadow);
         position: relative;
-        opacity: 0.9;
-        animation: appear 200ms ease-out;
+        opacity: 0.8;
+        animation: appear 300ms ease-out;
         overflow: hidden;
     }
     @keyframes appear{
@@ -101,5 +87,14 @@
         width: 100%;
         height: 2px;
         background-color: #fff8;
+        animation-name: shrink;
+        animation-timing-function: linear;
+    }
+    @keyframes shrink{
+        from{
+            width: 100%;
+        } to {
+            width: 0;
+        }
     }
 </style>

@@ -45,7 +45,7 @@
         background-color: var(--background-1);
         border-radius: var(--window-radius);
         padding: 10px;
-        margin-top: 20px;
+        margin-top: 15px;
         text-align: start;
         color: var(--text-color);
     }

@@ -30,7 +30,7 @@
             --item-shadow: #0001 0 5px 10px;
 
             --text-color: #000;
-            --text-color-weak: #555;
+            --text-color-weak: #353535;
             --title-color: #333;
             --first-title-color: #081808;
 
@@ -51,6 +51,8 @@
             --window-radius: 25px;
             --element-radius: 15px;
 
+            --icon-filter: invert(0);
+            --icon-filter-weak: invert(0.25);
         }
         *::selection{
             background-color:#3cb931ca;
@@ -82,7 +84,7 @@
             
             --strong-shadow: #8882 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
-            --weak-shadow: #fff3 0px 0px 14px;
+            --weak-shadow: #0003 0px 0px 14px;
             --window-shadow: #4442 0px 5px 10px;
             --item-shadow: #05050510 0 5px 10px;
 
@@ -107,6 +109,9 @@
             
             --window-radius: 25px;
             --element-radius: 15px;
+
+            --icon-filter: invert(1);
+            --icon-filter-weak: invert(0.5);
         }
         *::selection{
             background-color:#3cb931ca;

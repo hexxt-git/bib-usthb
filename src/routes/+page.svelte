@@ -17,6 +17,7 @@
         notify({
             state: "notification",
             message: "the website is still a work in progress please be patient and report any bugs you find. dont start contributing just yet",
+            duration: 30*1000
         })
     })
 
