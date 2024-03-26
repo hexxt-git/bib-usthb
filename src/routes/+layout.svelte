@@ -1,19 +1,30 @@
 <script>
     import { theme_store } from "./theme_store.js"
+	import { onMount } from "svelte";
 
     import NotificationSystem from "./NotificationSystem.svelte";    
+    import LoadingScreen from "./LoadingScreen.svelte";
+
+    let do_wait_for_theme_load = true;
+    let mounted = !do_wait_for_theme_load;
+
+    onMount(()=>{
+        mounted = true;
+    });
 </script>
 
-<NotificationSystem />
-<slot />
-
-{#if true}
-    <style>
-        body{
-            background: var(--background-0);
-        }
-    </style>
+{#if mounted}
+    <slot />
+    <NotificationSystem />
+{:else}
+    <LoadingScreen />
 {/if}
+
+<style>
+    :global(body){
+        background: var(--background-0);
+    }
+</style>
 
 {#if $theme_store == "light"}
     <style>
