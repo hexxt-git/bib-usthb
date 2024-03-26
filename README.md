@@ -1,23 +1,19 @@
-# create-svelte
+# bib-usthb
+this is the public repository for [bib-usthb](https://bib-usthb.com) website.
+it is a students resouce sharing platform targeted to the university of science and technology houari boumediene students. 
+we currently host all files on google drive but intend to migrate to a custom solution soon.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+# running locally
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
+clone the github repository bu downloading it using the command prompt
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/9EED/bib-usthb
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+install all the dependancies
+```bash
+npm install
+```
+start a development server
 ```bash
 npm run dev
 
@@ -25,14 +21,14 @@ npm run dev
 npm run dev -- --open
 ```
 
-## Building
-
 To create a production version of your app:
-
 ```bash
 npm run build
 ```
-
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+# contribution
+
+you can help the website by requesting to add themes and all sort of features but please make sure to discuss it first.
+
+all pull requests to new branches please.
