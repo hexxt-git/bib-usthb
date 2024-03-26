@@ -96,6 +96,7 @@
         text-decoration: underline;
     }
     img{
-        height: 90%;
+        height: 90%;    
+        filter: var(--green-icons-filter);
     }
 </style>

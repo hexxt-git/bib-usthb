@@ -1,13 +1,6 @@
 <script>
-	import { onMount } from "svelte";
 	import { search } from "./helper";
     let query = "";
-
-    // onMount(async () => {
-    //     search('a', 'module').then((res) => {
-    //         console.log(res);
-    //     });
-    // });
     
 </script>
 
@@ -20,7 +13,7 @@
         {#await search(query, 'module') then results}
         {#if results.length > 0}
         <div>folders: </div>
-            {#each results.splice(0, 3) as result}
+            {#each results.splice(0, 5) as result}
                 <a href={'https://drive.google.com/drive/folders/'+result.drive_id} class="result" target="_blank">{result.name}</a>
             {/each}
         {/if}
@@ -47,7 +40,7 @@
         padding: 10px;
         margin-top: 15px;
         text-align: start;
-        color: var(--text-color);
+        color: var(--highlight-color);
     }
     @media screen and (max-width: 900px), (orientation: portrait){
         #container{
@@ -84,7 +77,7 @@
     .result{
         display: block;
         padding: 5px 8px;
-        color: var(--text-color);
+        color: var(--highlight-color);
         text-decoration: none;
         border-radius: var(--element-radius);
     }

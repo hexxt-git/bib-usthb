@@ -12,7 +12,7 @@
     <!-- <a href="/#footer">creators</a> -->
     <a href="/help">help</a>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <span on:click={switch_theme}> {$theme_store == 'dark' ? 'light' : 'dark'} mode </span>
+    <span on:click={switch_theme}> {$theme_store} mode </span>
     </div>
     <!--<input type="search" placeholder="search..." id="nav-search">-->
     <a id="nav-contribute" href="/contribute/">contribute</a>
@@ -43,13 +43,13 @@
     }
     a, span{
         cursor: pointer;
-        color: var(--text-color);
+        color: var(--highlight-color);
         font-size: var(--text-0);
         text-decoration: transparent underline 1px;
         transition: text-decoration 130ms ease-in-out;
     }
     a:hover, span:hover{
-        text-decoration: var(--text-color) underline 2px;
+        text-decoration: underline 2px;
     }
     #nav-logo{
         min-width: 210px;

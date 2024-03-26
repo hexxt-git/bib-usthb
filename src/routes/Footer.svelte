@@ -10,7 +10,7 @@
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div id="mobile-links">
-    <div on:click={switch_theme}> switch website theme to <span>{$theme_store == 'dark' ? 'light' : 'dark'} mode </span></div>
+    <div on:click={switch_theme}> switch website theme to <span>{$theme_store} mode </span></div>
     <div>
         having an issues? visit our <a href="./help">help</a> page
     </div>
@@ -34,7 +34,7 @@
         box-shadow: var(--strong-shadow);
         position: relative;
         overflow: hidden;
-        color: var(--text-color);
+        color: var(--highlight-color);
     }
     footer a, footer span{
         color: var(--brand-color);

@@ -26,9 +26,9 @@
         padding: 15px;
     }
     button{
-        background-color: var(--background-1);
+        background-color: var(--clear-notification-color);
         color: var(--text-color);
-        border: solid var(--background-2) 1px;
+        border: solid var(--clear-notification-border) 1px;
         border-radius: calc(var(--element-radius) * 0.5);
         padding: 5px 10px;
         cursor: pointer;
@@ -37,6 +37,9 @@
         box-shadow: var(--weak-shadow);
         opacity: 0.8;
         animation: appear 300ms ease-out;
+    }
+    button:hover{
+        text-decoration: underline;
     }
     @keyframes appear{
         from{
