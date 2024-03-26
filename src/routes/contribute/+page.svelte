@@ -18,7 +18,7 @@
                 return fac;
             });
         } catch (error) {
-            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 10*1000});
+            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 15*1000});
         }
         //console.log(faculties);
     });
@@ -85,7 +85,7 @@
     let confetti = false;
     let submit = async (e) => {
         if(files.length === 0) {
-            notify({state:'error', message:'please upload atleast one file', duration: 10*1000})
+            notify({state:'error', message:'please upload atleast one file', duration: 15*1000})
 
             e.preventDefault();
             return;
@@ -95,7 +95,7 @@
             return;
         } else {
             submitting = true;
-            notify({state: "notification", message: "uploading files...", duration: 10*1000});
+            notify({state: "notification", message: "uploading files...", duration: 15*1000});
             let allok = true;
 
             for (const file of files) {
@@ -108,9 +108,9 @@
                         response.json().then(data => {
                             console.log(file.file[0].name, data);
                         });
-                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 10*1000})
+                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 15*1000})
                     } else {
-                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 10*1000})
+                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 15*1000})
                     }
 
                 } catch (error) {
@@ -118,21 +118,21 @@
                     response.json().then(data => {
                         console.log(file.file[0].name, data);
                     });
-                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 10*1000})
+                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 15*1000})
                 }
             }
             
             submitting = false;
             if(allok){
-                notify({state: 'success', message: 'all files uploaded successfully', duration: 10*1000})
-                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 10*1000})
+                notify({state: 'success', message: 'all files uploaded successfully', duration: 15*1000})
+                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 15*1000})
                 files = [];
                 confetti = true;
                 setTimeout(()=>{
                     confetti = false;
                 }, 8000);
             } else if(files.length > 1){
-                notify({state: 'error', message: 'some files failed to upload', duration: 10*1000});
+                notify({state: 'error', message: 'some files failed to upload', duration: 15*1000});
             }
         }
     }
@@ -363,7 +363,7 @@
         padding: 5px 5px 0 10px;
         border-radius: var(--element-radius) var(--element-radius) 0 0;
         background-color: var(--background-2);
-        color: var(--text-color);
+        color: var(--highlight-color);
     }
     .text-input label, .email-input label{
         padding: 5px 0 0 0;
@@ -510,7 +510,7 @@
         width: 100%;
         background-color: var(--background-1);
         border-radius: 5px;
-        color: var(--text-color);
+        color: var(--highlight-color);
     }
     button[type="submit"]{
         padding: 10px 20px;
