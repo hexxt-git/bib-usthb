@@ -5,7 +5,7 @@
 
 <style>
     main{
-        background-color: #050505;
+        background-color: #080808;
         color: #fff;
         display: flex;
         justify-content: center;

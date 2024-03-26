@@ -17,6 +17,7 @@
             {#if faculties.length > 0}
                 {#each faculties as faculty}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="faculty" on:click={()=>scroll_to_fac(faculty.short)}>
                         <img src="/images/university.png" alt="">
                         <span>{faculty.name}</span>

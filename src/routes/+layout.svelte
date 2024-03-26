@@ -11,6 +11,13 @@
     onMount(()=>{
         mounted = true;
     });
+
+    import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+    injectSpeedInsights();
+
+    import { inject } from '@vercel/analytics'
+    inject()
+
 </script>
 
 {#if mounted}
@@ -250,7 +257,7 @@
             --first-title-color: #f7b740;
             --highlight-color: #faf2f1;
 
-            /* --main-font: 'Domine', serif; */
+            --main-font: 'Domine', serif;
             --title-font: 'Rakkas', serif;
         
             --title-1: 2em;

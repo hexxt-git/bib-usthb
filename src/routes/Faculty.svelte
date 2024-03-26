@@ -27,6 +27,7 @@
         <div class="collumn">
             {#each faculty.groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item group-item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
                     {group.name}
                     <a href="https://drive.google.com/drive/folders/{group.drive_id}" target="_blank">
@@ -41,6 +42,7 @@
         <div class="collumn">
             {#each modules as module}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item {module.id==selected_module_id}" on:click={()=>select_module(module.id)}>
                     <div>
                     {module.short}
