@@ -1,6 +1,4 @@
 <script>
-    import { onMount, onDestroy } from 'svelte';
-
     export let state = "error"
     export let message = "an error must have occured"
     export let id = 0
