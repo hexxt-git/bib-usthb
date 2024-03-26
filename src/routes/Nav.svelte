@@ -32,6 +32,7 @@
         background-color: var(--background-1);
         color: var(--text-color);
         font-size: var(--text-1);
+        font-family: var(--main-font);
         box-shadow: var(--strong-shadow);
         overflow: hidden;
     }

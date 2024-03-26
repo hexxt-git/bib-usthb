@@ -7,7 +7,7 @@
 
 <main>
     {#if ($notification_store).length > 0}
-    {#each $notification_store as notification}
+    {#each $notification_store as notification (notification.id)}
         <Notification state={notification.state} message={notification.message} id={notification.id} duration={notification.duration} />
     {/each}
     <button on:click={clear_notifications}>clear</button>

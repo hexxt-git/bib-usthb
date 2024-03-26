@@ -30,7 +30,9 @@
         &ensp; If you have any questions, suggestions or issues, you may reach us on <a href="mailto:zeghdns@gmail.com">email</a> or on <a href="https://github.com/9EED/BiB-USTHB/issues" target="_blank">github issues</a> we're are always happy to help and we are always looking for ways to improve the website.
     </p>
     <h2>Privacy</h2>
+    <p>
         &ensp; using this website you're completly anonymous, we don't collect any personal information about you, we don't use cookies and we don't track you. the only information we collect is the one you provide us with when you upload a file, and that information is only used to provide the service and to improve it.
+    </p>
 </main>
 <Footer />
 <style>

@@ -3,7 +3,7 @@
     export let message = "an error must have occured"
     export let id = 0
     export let duration = 30*1000
-
+    
     import {delete_notification} from './notification_store'
 
     setTimeout(()=>{
@@ -15,6 +15,7 @@
     <h3>{state}</h3>
     <p>{message}</p>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <span on:click={()=>delete_notification(id)}>x</span>
     <div class="timer" style="animation-duration: {duration}ms;"></div>
 </main>
