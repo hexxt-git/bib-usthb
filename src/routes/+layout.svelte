@@ -239,8 +239,8 @@
             --first-title-color: #f7b740;
             --highlight-color: #faf2f1;
 
-            --main-font: 'Roboto', sans-serif;
-            --title-font: 'Rubik', sans-serif;
+            /* --main-font: 'Domine', serif; */
+            --title-font: 'Rakkas', serif;
         
             --title-1: 2em;
             --title-2: 1.5em;
@@ -249,7 +249,7 @@
             --nav-height: 70px;
             --side-margin: 120px;
 
-            --text-0: 1.2em;
+            --text-0: 1.1em;
             --text-1: 1em;
             --text-2: 0.9em;
             

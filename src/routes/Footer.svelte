@@ -10,11 +10,12 @@
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div id="mobile-links">
-    <div on:click={switch_theme}> switch website theme to <span>{$theme_store} mode </span></div>
-    <div>
-        having an issues? visit our <a href="./help">help</a> page
-    </div>
-    </div>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={switch_theme}> switch website from <span>{$theme_store} mode </span></div>
+            <div>
+                having an issues? visit our <a href="/help">help</a> page
+            </div>
+        </div>
     <div>
         kept alive by your <a href="/contribute/">contributions</a>
     </div>
@@ -35,6 +36,7 @@
         position: relative;
         overflow: hidden;
         color: var(--highlight-color);
+        font-family: var(--main-font);
     }
     footer a, footer span{
         color: var(--brand-color);
