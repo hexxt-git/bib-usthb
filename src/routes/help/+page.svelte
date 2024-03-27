@@ -27,7 +27,7 @@
     </p>
     <h2>Support</h2>
     <p>
-        &ensp; If you have any questions, suggestions or issues, you may reach us on <a href="mailto:zeghdns@gmail.com">email</a> or on <a href="https://github.com/9EED/BiB-USTHB/issues" target="_blank">github issues</a> we're are always happy to help and we are always looking for ways to improve the website.
+        &ensp; If you have any questions, suggestions or issues, you may reach us through email <a href="mailto:bibusthb@gmail.com">bibusthb@gmail.com</a>  or on <a href="https://github.com/9EED/BiB-USTHB/issues" target="_blank">github issues</a> we're are always happy to help and we are always looking for ways to improve the website.
     </p>
     <h2>Privacy</h2>
     <p>

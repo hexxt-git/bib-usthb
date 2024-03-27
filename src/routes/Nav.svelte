@@ -12,6 +12,7 @@
     <!-- <a href="/#footer">creators</a> -->
     <a href="/help">help</a>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <span on:click={switch_theme}> {$theme_store} mode </span>
     </div>
     <!--<input type="search" placeholder="search..." id="nav-search">-->

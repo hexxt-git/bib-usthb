@@ -16,7 +16,12 @@
     onMount(()=>{
         notify({
             state: "notification",
-            message: "the website is still a work in progress please be patient and report any bugs you find. dont start contributing just yet",
+            message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
+            duration: 30*1000
+        })
+        notify({
+            state: "notification",
+            message: "if you notice a module or faculty missing, please shoot us an email at bibusthb@gmail.com.",
             duration: 30*1000
         })
     })
