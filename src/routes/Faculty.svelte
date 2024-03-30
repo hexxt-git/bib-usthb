@@ -48,7 +48,7 @@
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item {module.id==selected_module_id}" on:click={()=>select_module(module.id)}>
                     <div>
-                    {module.name}
+                    {module.name} ({module.short.toUpperCase()})
                     <a href="https://drive.google.com/drive/folders/{module.drive_id}" target="_blank">
                         <img src="/images/link.png" alt="">
                     </a>

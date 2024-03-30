@@ -230,7 +230,7 @@
                 </div>
                 {#if file.faculty !== -1}
                 <div class="select-input">
-                    <label for="file_module">group:</label>
+                    <label for="file_module">module:</label>
                     <select name="file_module" id="file_module" bind:value={file.group} required>
                         {#each faculties.find(fac => fac.id === file.faculty)?.groups||[] as group}
                         <option value={group.id}>{group.name}</option>
@@ -242,7 +242,7 @@
                 
                 {#if file.group !== -1}
                 <div class="select-input">
-                    <label for="file_module">module:</label>
+                    <label for="file_module">semester:</label>
                     <select name="file_module" id="file_module" bind:value={file.module} required>
                         {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
                         <option value={module.id}>{module.name}</option>
@@ -253,7 +253,7 @@
 
                 {:else}
                 <div class="file-text">
-                    <label for="custom_module">module:</label>
+                    <label for="custom_module">semester:</label>
                     <input bind:value={file.custom_module} type="text" name="custom_module" required />
                 </div>
                 {/if}
