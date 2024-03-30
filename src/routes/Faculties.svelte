@@ -20,7 +20,10 @@
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="faculty" on:click={()=>scroll_to_fac(faculty.short)}>
                         <img src="/images/university.png" alt="">
-                        <span>{faculty.name}</span>
+                        <span>
+                            {faculty.short != 'extra' ? 'Faculty of' : ''}
+                            {faculty.name}
+                        </span>
                     </div>
                 {/each}
             {:else}
@@ -85,17 +88,19 @@
         font-weight: 500;
         font-size: var(--text-1);
         transition: 0.2s ease;
+        text-transform: capitalize;
+        cursor: pointer;
     }
     .faculty:hover{
         background: var(--background-2);
         box-shadow: var(--item-shadow);
     }
-    span{
+    /* span{
         cursor: pointer;
     }
     span:hover{
         text-decoration: underline;
-    }
+    } */
     img{
         height: 90%;    
         filter: var(--green-icons-filter);
