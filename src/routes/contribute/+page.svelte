@@ -6,6 +6,9 @@
     import {notify, delete_notification} from '../notification_store'
     import { Confetti } from "svelte-confetti"
 
+    const OTHER_GROUP_ID = 3;
+    const OTHER_MODULE_ID = 7;
+
     let faculties = []
     onMount(async ()=>{
         try{
@@ -20,16 +23,18 @@
         } catch (error) {
             notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 15*1000});
         }
-        //console.log(faculties);
+        console.log(faculties);
     });
 
     class File{
-        constructor(file=-1, faculty=-1, group=-1, module=-1, type=-1){
+        constructor(file=-1, faculty=-1, group=-1, custom_module='', module=-1, type=-1){
             this.file = file;
             this.faculty = faculty;
             this.group = group;
+            this.custom_module = custom_module;
             this.module = module;
             this.type = type // exam or lesson ..
+            console.log(this)
         }
     }
 
@@ -43,12 +48,13 @@
     let files = [];
     
     let add_file = (file=-1)=>{
-        let copy_file = files.length !== 0 ? new File(
+        let copy_file = files.length != 0 ? new File(
             file,
             files[files.length - 1].faculty,
             files[files.length - 1].group,
+            files[files.length - 1].custom_module,
             files[files.length - 1].module,
-            files[files.length - 1].type
+            files[files.length - 1].type,
         ): new File(file);
         
         files = [...files, copy_file];
@@ -100,6 +106,7 @@
 
             for (const file of files) {
                 if(!file.file.length) continue;
+                if(file.group == OTHER_GROUP_ID) file.module = OTHER_MODULE_ID;
                 try {
                     let response =  await upload(file, personal_details);
                     
@@ -187,9 +194,10 @@
             </div>
         </div>
         <h2>file uploads</h2>
-        <!-- <button type="button" on:click={()=>{
+        <button type="button" on:click={()=>{
             console.log(files);
-        }}>log</button> -->
+        }}>log</button>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="file-container">
             {#each files as file, index}
             <div class="file">
@@ -212,7 +220,7 @@
                 <div class="select-input">
                     <label for="file_faculty">faculty:</label>
                     <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                        {#each faculties as faculty}
+                        {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
                         <option value={faculty.id}>{
                             faculty.name.substring(0, 30) +
                             (faculty.name.length>27?'...':'')
@@ -222,23 +230,35 @@
                 </div>
                 {#if file.faculty !== -1}
                 <div class="select-input">
-                    <label for="file_module">module:</label>
+                    <label for="file_module">group:</label>
                     <select name="file_module" id="file_module" bind:value={file.group} required>
                         {#each faculties.find(fac => fac.id === file.faculty)?.groups||[] as group}
                         <option value={group.id}>{group.name}</option>
                         {/each}
                     </select>
                 </div>
+
+                {#if file.group != OTHER_GROUP_ID}
+                
                 {#if file.group !== -1}
                 <div class="select-input">
-                    <label for="file_module">semester:</label>
+                    <label for="file_module">module:</label>
                     <select name="file_module" id="file_module" bind:value={file.module} required>
-                        {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group)||[] as module}
+                        {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
                         <option value={module.id}>{module.name}</option>
                         {/each}
                     </select>
                 </div>
-                {#if file.module !== -1}
+                {/if}
+
+                {:else}
+                <div class="file-text">
+                    <label for="custom_module">module:</label>
+                    <input bind:value={file.custom_module} type="text" name="custom_module" required />
+                </div>
+                {/if}
+
+                {#if file.module !== -1 || file.custom_module !== ''}
                 <div class="select-input">
                     <label for="file_type">type:</label>
                     <select name="file_type" id="file_type" bind:value={file.type} required>
@@ -249,13 +269,13 @@
                         <option value="other">other</option>
                     </select>
                 </div>
-                
-                {/if}
+
                 {/if}
                 {/if}
                 {/if}
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="file-delete" on:click={()=>{
                     files.splice(index, 1);
                     files = [...files];
@@ -455,6 +475,16 @@
         font-size: var(--text-2);
         user-select: none;
         font-weight: 500;
+    }
+    .file-text{
+        display: flex;
+        gap: 10px;
+    }
+    .file-text input{
+        border-radius: var(--element-radius);
+    }
+    .file-text input:focus{
+        outline: none;
     }
     .file-drop{
         border-radius: var(--element-radius);

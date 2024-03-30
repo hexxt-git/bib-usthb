@@ -25,7 +25,10 @@
     <h2>{faculty.name}&nbsp;</h2>
     <div id="navigator">
         <div class="collumn">
-            {#each faculty.groups as group}
+            {#if faculty.groups.filter(group => group.short != 'other').length == 0}
+                no contributions were made to this faculty yet. we encourage you to be the first
+            {/if}
+            {#each faculty.groups.filter(group => group.short != 'other') as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item group-item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
@@ -45,7 +48,7 @@
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item {module.id==selected_module_id}" on:click={()=>select_module(module.id)}>
                     <div>
-                    {module.short}
+                    {module.name}
                     <a href="https://drive.google.com/drive/folders/{module.drive_id}" target="_blank">
                         <img src="/images/link.png" alt="">
                     </a>
