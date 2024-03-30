@@ -194,9 +194,9 @@
             </div>
         </div>
         <h2>file uploads</h2>
-        <button type="button" on:click={()=>{
+        <!-- <button type="button" on:click={()=>{
             console.log(files);
-        }}>log</button>
+        }}>log</button> -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="file-container">
             {#each files as file, index}
