@@ -164,6 +164,7 @@
         transition: background-color 0.2s ease-out;
         animation: apear 0.3s ease-in-out;
         box-shadow: var(--item-shadow);
+        text-transform: capitalize;
     }
     .item img{
         height: 18px;

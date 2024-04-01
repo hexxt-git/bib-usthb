@@ -253,7 +253,7 @@
 
                 {:else}
                 <div class="file-text">
-                    <label for="custom_module">semester:</label>
+                    <label for="custom_module">module:</label>
                     <input bind:value={file.custom_module} type="text" name="custom_module" required />
                 </div>
                 {/if}
