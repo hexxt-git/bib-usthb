@@ -1,4 +1,4 @@
-<script>
+<script> /* this whole code base requires a restructure */
     import Nav from './Nav.svelte';
     import Welcome from './Welcome.svelte';
     import Faculties from './Faculties.svelte';
@@ -14,16 +14,20 @@
     // })
 
     onMount(()=>{
-        notify({
-            state: "notification",
-            message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
-            duration: 30*1000
-        })
-        notify({
-            state: "notification",
-            message: "if you notice a module or faculty missing, please shoot us an email at bibusthb@gmail.com.",
-            duration: 30*1000
-        })
+        setTimeout(()=>
+            notify({
+                state: "notification",
+                message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
+                duration: 30*1000
+            }),
+        800)
+        setTimeout(()=>
+            notify({
+                state: "notification",
+                message: "if you notice a module or faculty missing, please contact us through the support page bib-usthb.com/feedback",
+                duration: 30*1000
+            }),
+        1800)
     })
 
 </script>
