@@ -18,7 +18,7 @@
 </script>
 <Nav />
 <main>
-    <h1>feedback and support page</h1>
+    <h1>BiB-USTHB feedback and support page</h1>
     <p>
         &nbsp;&nbsp;&nbsp;In this page you can reach us, the developers and maintainers of the website. we're always looking for new ways to improve our service, so plesae write any suggestions or complaints you have on here. you can also reach us through email <a href="mailto:bibusthb@gmail.com" target="_blank">bibusthb@gmail.com</a> and github <a href="https://github.com/9EED/bib-usthb/issues" target="_blank">reports</a>.<br>
         &nbsp;&nbsp;&nbsp;adding personal details is optional but that is how we can get back to you on updates.

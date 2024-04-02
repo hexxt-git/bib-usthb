@@ -459,7 +459,7 @@
         user-select: none;
         font-weight: 500;
     }
-    .file-text{
+    /* .file-text{
         display: flex;
         gap: 10px;
     }
@@ -468,7 +468,7 @@
     }
     .file-text input:focus{
         outline: none;
-    }
+    } */
     .file-drop{
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
