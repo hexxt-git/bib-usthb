@@ -1,21 +1,29 @@
 <script>
     import Nav from '../Nav.svelte';
     import Footer from '../Footer.svelte';
-	import { notify } from '../notification_store';
-    let personal_details = {}
-    let topic = ''
-    let detail = ''
-    let formElement;
-
-    let submit = ()=>{
-        console.table({...personal_details, topic, detail})
+    import { Confetti } from "svelte-confetti"
+    let confetti = false /*   can't do both confetti and submit this way x(   */
+    let send_confetti = ()=>{
+        confetti = true
+        setTimeout(()=>{confetti = true}, 2000)
     }
-    notify({
-            state: "error",
-            message: "the feedback page is currently unavailable. the reason is that aymen haven't finished the backend yet >:[",
-            duration: 30*1000
-        }, 30*1000)
 </script>
+{#if confetti}
+    <div style="
+        position: fixed;
+        top: -50px;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 10;
+        "
+    ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
+{/if}
+
 <Nav />
 <main>
     <h1>BiB-USTHB feedback and support page</h1>
@@ -24,26 +32,26 @@
         &nbsp;&nbsp;&nbsp;adding personal details is optional but that is how we can get back to you on updates.
     </p>
     <h2>feedback form</h2>
-    <form bind:this={formElement} on:submit={submit}>
+    <form method="POST" on:submit={()=>send_confetti()}> 
         <div class="text-input">
             <label for="name">name:</label>
-            <input type="text" id="name" name="name" bind:value={personal_details.name}>
+            <input type="text" id="name" name="name">
         </div>
         <div class="email-input">
             <label for="email">email:</label>
-            <input type="email" id="email" name="email" bind:value={personal_details.email}>
+            <input type="email" id="email" name="email">
         </div>
         <div class="checkbox-input">
             <label for="usthb_student">are you a USTHB student: </label>
-            <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
+            <input type="checkbox" id="usthb_student" name="usthb_student">
         </div>
         <div class="text-input">
             <label for="domain">study field:</label>
-            <input type="text" id="domain" name="domain" bind:value={personal_details.domain}>
+            <input type="text" id="domain" name="domain">
         </div>
         <div class="select-input" id="topic">
             <label for="topic">topic:</label>
-            <select name="topic" bind:value={topic} required>
+            <select name="topic" value="" required>
                 <option value="website error">website errors</option>
                 <option value="missing module">corrupted/missing module</option>
                 <option value="missing module">inappropriately categoraized module</option>
@@ -59,9 +67,9 @@
         </div>
         <div class="textarea-input" id="detail">
             <label for="detail">details:</label>
-            <textarea name="detail" bind:value={detail} rows="4" required></textarea>
+            <textarea name="detail" rows="4" required></textarea>
         </div>
-        <button type="submit" disabled>submit</button>
+        <button type="submit">submit</button>
     </form>
 </main>
 <Footer />
@@ -199,9 +207,9 @@
         background-color: var(--brand-color);
         grid-column: 1 / -1;
     }
-    button[type="submit"]{
+    /* button[type="submit"]{
         background-color: #666;
         color: #aaa;
         cursor: not-allowed;
-    }
+    } */
 </style>
