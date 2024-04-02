@@ -7,6 +7,16 @@
         confetti = true
         setTimeout(()=>{confetti = true}, 2000)
     }
+    let name = ''
+    let email = ''
+    let domain = ''
+    let usthb_student = false
+    const submit = ()=>{
+        send_confetti()
+        if(!name) name = 'anonymous'
+        if(!email) email = 'anonymous@mail'
+        if(!domain) domain = 'unknown'
+    }
 </script>
 {#if confetti}
     <div style="
@@ -32,22 +42,22 @@
         &nbsp;&nbsp;&nbsp;adding personal details is optional but that is how we can get back to you on updates.
     </p>
     <h2>feedback form</h2>
-    <form method="POST" on:submit={()=>send_confetti()}> 
+    <form method="POST" on:submit={()=>submit()}> 
         <div class="text-input">
             <label for="name">name:</label>
-            <input type="text" id="name" name="name" value=" ">
+            <input type="text" id="name" name="name" bind:value={name}>
         </div>
         <div class="email-input">
             <label for="email">email:</label>
-            <input type="email" id="email" name="email" value=" ">
+            <input type="email" id="email" name="email" bind:value={email}>
         </div>
         <div class="checkbox-input">
             <label for="usthb_student">are you a USTHB student: </label>
-            <input type="checkbox" id="usthb_student" name="usthb_student" checked>
+            <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={usthb_student}>
         </div>
         <div class="text-input">
             <label for="domain">study field:</label>
-            <input type="text" id="domain" name="domain" value=" ">
+            <input type="text" id="domain" name="domain" bind:value={domain}>
         </div>
         <div class="select-input" id="topic">
             <label for="topic">topic:</label>
