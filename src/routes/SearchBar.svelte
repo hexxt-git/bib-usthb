@@ -41,6 +41,7 @@
         margin-top: 15px;
         text-align: start;
         color: var(--highlight-color);
+        z-index: 2;
     }
     @media screen and (max-width: 900px), (orientation: portrait){
         #container{

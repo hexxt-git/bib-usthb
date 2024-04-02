@@ -29,7 +29,7 @@
         border-radius: var(--element-radius);
         box-shadow: var(--medium-shadow);
         position: relative;
-        opacity: 0.8;
+        opacity: 0.9;
         animation: appear 300ms ease-out;
         overflow: hidden;
     }

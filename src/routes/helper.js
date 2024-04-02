@@ -16,8 +16,7 @@ export async function upload(file, personal_details){
     formData.append('file', file.file[0]);
     formData.append('title', file.file[0].name);
     formData.append('description',
-        JSON.stringify(personal_details).replaceAll(',',',\n') +
-        (file.custom_group != -1 ? `\n\nthis file was uploaded as custom group/module named "${file.custom_module}" by the user for the faculty of id "${file.faculty}".\n\n`: '')
+        JSON.stringify(personal_details).replaceAll(',',',\n')
     );
     formData.append('module_id', file.module);
     formData.append('file_type', file.type);

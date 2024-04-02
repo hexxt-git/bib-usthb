@@ -17,7 +17,7 @@
             </div>
         </div>
     <div>
-        kept alive by your <a href="/contribute/">contributions</a>
+        kept alive by your <a href="/contribute/">contributions</a> and <a href="/feedback/">feedback</a>
     </div>
     <div>
         open-sourced on <a href="https://github.com/9EED/bib-usthb" target="_blank">github</a>

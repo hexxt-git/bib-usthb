@@ -6,9 +6,6 @@
     import {notify, delete_notification} from '../notification_store'
     import { Confetti } from "svelte-confetti"
 
-    const OTHER_GROUP_ID = 3;
-    const OTHER_MODULE_ID = 7;
-
     let faculties = []
     onMount(async ()=>{
         try{
@@ -27,24 +24,17 @@
     });
 
     class File{
-        constructor(file=-1, faculty=-1, group=-1, custom_module='', module=-1, type=-1){
+        constructor(file=-1, faculty=-1, group=-1, module=-1, type=-1){
             this.file = file;
             this.faculty = faculty;
             this.group = group;
-            this.custom_module = custom_module;
             this.module = module;
             this.type = type // exam or lesson ..
             console.log(this)
         }
     }
 
-    let personal_details = {
-        name: '',
-        usthb_student: false,
-        email: '',
-        domain: '',
-        additional: ''
-    }
+    let personal_details = {}
     let files = [];
     
     let add_file = (file=-1)=>{
@@ -52,7 +42,6 @@
             file,
             files[files.length - 1].faculty,
             files[files.length - 1].group,
-            files[files.length - 1].custom_module,
             files[files.length - 1].module,
             files[files.length - 1].type,
         ): new File(file);
@@ -106,7 +95,6 @@
 
             for (const file of files) {
                 if(!file.file.length) continue;
-                if(file.group == OTHER_GROUP_ID) file.module = OTHER_MODULE_ID;
                 try {
                     let response =  await upload(file, personal_details);
                     
@@ -168,12 +156,12 @@
 <main>
     <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>
     <p>
-        &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have.
+        &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have. If you can't find a module or faculty that is because the website is still in its early phase and we're looking for people to help us fill them up, you can help us with that on the <a href="/feedback/">feedback</a> page.
     </p>
     <form bind:this={formElement} on:submit={submit}>
         <h2>personal details</h2>
         <p>
-            &ensp; it is not necessary to provide your personal details. however, if you do, you will be notified by email when your files are added to the website.
+            adding personal details is optional but that is how we can get back to you on updates.
         </p>
         <div class="personal-detail-container">
             <div class="text-input">
@@ -189,7 +177,7 @@
                 <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
             </div>
             <div class="text-input">
-                <label for="domain">what do you study:</label>
+                <label for="domain">study field:</label>
                 <input type="text" id="domain" name="domain" bind:value={personal_details.domain}>
             </div>
         </div>
@@ -217,61 +205,53 @@
                     <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file}>
                 </div>
                 {#if file.file !== -1}
-                <div class="select-input">
-                    <label for="file_faculty">faculty:</label>
-                    <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                        {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
-                        <option value={faculty.id}>{
-                            faculty.name.substring(0, 30) +
-                            (faculty.name.length>27?'...':'')
-                        }</option>
-                        {/each}
-                    </select>
-                </div>
-                {#if file.faculty !== -1}
-                <div class="select-input">
-                    <label for="file_module">module:</label>
-                    <select name="file_module" id="file_module" bind:value={file.group} required>
-                        {#each faculties.find(fac => fac.id === file.faculty)?.groups||[] as group}
-                        <option value={group.id}>{group.name}</option>
-                        {/each}
-                    </select>
-                </div>
-
-                {#if file.group != OTHER_GROUP_ID}
-                
-                {#if file.group !== -1}
-                <div class="select-input">
-                    <label for="file_module">semester:</label>
-                    <select name="file_module" id="file_module" bind:value={file.module} required>
-                        {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
-                        <option value={module.id}>{module.name}</option>
-                        {/each}
-                    </select>
-                </div>
-                {/if}
-
-                {:else}
-                <div class="file-text">
-                    <label for="custom_module">semester:</label>
-                    <input bind:value={file.custom_module} type="text" name="custom_module" required />
-                </div>
-                {/if}
-
-                {#if file.module !== -1 || file.custom_module !== ''}
-                <div class="select-input">
-                    <label for="file_type">type:</label>
-                    <select name="file_type" id="file_type" bind:value={file.type} required>
-                        <option value="exam">exam</option>
-                        <option value="cour">lesson</option>
-                        <option value="td">directed work (TD)</option>
-                        <option value="tp">practical work (TP)</option>
-                        <option value="other">other</option>
-                    </select>
-                </div>
-
-                {/if}
-                {/if}
+                    <div class="select-input">
+                        <label for="file_faculty">faculty:</label>
+                        <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
+                            {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
+                                <option value={faculty.id}>{
+                                    faculty.name.substring(0, 30) +
+                                    (faculty.name.length>27?'...':'')
+                                }</option>
+                            {/each}
+                        </select>
+                    </div>
+                    {#if file.faculty !== -1}
+                        {#if (faculties.find(fac => fac.id === file.faculty)?.groups).length > 2}
+                        <div class="select-input">
+                            <label for="file_module">module:</label>
+                            <select name="file_module" id="file_module" bind:value={file.group} required>
+                                {#each (faculties.find(fac => fac.id === file.faculty)?.groups||[]).filter(group => group.short != 'other') as group}
+                                    <option value={group.id}>{group.name}</option>
+                                {/each}
+                            </select>
+                        </div>
+                            {#if file.group !== -1}
+                            <div class="select-input">
+                                <label for="file_module">semester:</label>
+                                <select name="file_module" id="file_module" bind:value={file.module} required>
+                                    {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
+                                        <option value={module.id}>{module.name}</option>
+                                    {/each}
+                                </select>
+                            </div>
+                                {#if file.module !== -1}
+                                <div class="select-input">
+                                    <label for="file_type">type:</label>
+                                    <select name="file_type" id="file_type" bind:value={file.type} required>
+                                        <option value="exam">exam</option>
+                                        <option value="cour">lesson</option>
+                                        <option value="td">directed work (TD)</option>
+                                        <option value="tp">practical work (TP)</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </div>
+                                {/if}
+                            {/if}
+                        {:else}
+                            <p style="color: #e23131;">no modules have been inserted to this faculty yet. you can help us fill it up on the <a href="/feedback/" target="_blank" style="color: #e23131;">feedback</a> page</p>
+                        {/if}
+                    {/if}
                 {/if}
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -343,9 +323,11 @@
     }
     p{
         margin: 0;
+        font-size: var(--text-1);
+        word-spacing: 1px;
     }
     a{
-        color: var(--text-color);
+        color: var(--brand-color);
         text-decoration: underline;
     }
     .personal-detail-container{
@@ -374,14 +356,15 @@
     .checkbox-input{
         display: flex;
         align-items: center;
-    }    
+        gap: 5px;
+    }
     .text-input input, .email-input input{
         border: none;
         border-bottom: 2px solid var(--brand-color);
         font-family: var(--main-font);
         font-size: var(--text-1);
         padding: 5px 5px 0 10px;
-        border-radius: var(--element-radius) var(--element-radius) 0 0;
+        border-radius: calc(var(--element-radius)/2) calc(var(--element-radius)/2) 0 0;
         background-color: var(--background-2);
         color: var(--highlight-color);
     }
@@ -476,7 +459,7 @@
         user-select: none;
         font-weight: 500;
     }
-    .file-text{
+    /* .file-text{
         display: flex;
         gap: 10px;
     }
@@ -485,7 +468,7 @@
     }
     .file-text input:focus{
         outline: none;
-    }
+    } */
     .file-drop{
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
@@ -538,9 +521,16 @@
     textarea{
         margin-top: 10px;
         width: 100%;
+        max-width: 100%;
         background-color: var(--background-1);
-        border-radius: 5px;
+        border-radius: var(--element-radius);
         color: var(--highlight-color);
+        font-family: var(--main-font);
+        font-size: var(--text-1);
+        padding: 10px;
+    }
+    textarea:focus{
+        outline: none;
     }
     button[type="submit"]{
         padding: 10px 20px;
