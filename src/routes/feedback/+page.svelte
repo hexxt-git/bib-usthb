@@ -51,7 +51,7 @@
         </div>
         <div class="select-input" id="topic">
             <label for="topic">topic:</label>
-            <select name="topic" required>
+            <select name="topic" value="" required>
                 <option value="website error">website errors</option>
                 <option value="missing module">corrupted/missing module</option>
                 <option value="missing module">inappropriately categoraized module</option>
