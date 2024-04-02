@@ -2,12 +2,13 @@ import { Resend } from "resend";
 import { resend_key } from '$env/static/private';
 
 let actions = { default: async () => { console.error('resend api key not found') } };
+const resend = new Resend(resend_key);
 
 if (resend_key && resend_key.slice(0, 6) === 're_GUz') {
+    console.log('key found!')
     actions = {
         default: async ({ request }) => {
             try {
-                const resend = new Resend(resend_key);
                 const formData = Object.fromEntries([...await request.formData()]);
 
                 const subject = `bib-usthb.com ${formData.topic} from ${formData.name || 'anonymous'}`;

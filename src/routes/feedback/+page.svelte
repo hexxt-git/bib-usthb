@@ -35,19 +35,19 @@
     <form method="POST" on:submit={()=>send_confetti()}> 
         <div class="text-input">
             <label for="name">name:</label>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="name" value=" ">
         </div>
         <div class="email-input">
             <label for="email">email:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" value=" ">
         </div>
         <div class="checkbox-input">
             <label for="usthb_student">are you a USTHB student: </label>
-            <input type="checkbox" id="usthb_student" name="usthb_student">
+            <input type="checkbox" id="usthb_student" name="usthb_student" checked>
         </div>
         <div class="text-input">
             <label for="domain">study field:</label>
-            <input type="text" id="domain" name="domain">
+            <input type="text" id="domain" name="domain" value=" ">
         </div>
         <div class="select-input" id="topic">
             <label for="topic">topic:</label>
