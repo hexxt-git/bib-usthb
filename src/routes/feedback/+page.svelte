@@ -5,7 +5,7 @@
     let confetti = false /*   can't do both confetti and submit this way x(   */
     let send_confetti = ()=>{
         confetti = true
-        setTimeout(()=>{confetti = true}, 2000)
+        setTimeout(()=>{confetti = true}, 8000)
     }
 </script>
 {#if confetti}

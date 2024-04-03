@@ -18,7 +18,7 @@
                 return fac;
             });
         } catch (error) {
-            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 15*1000});
+            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 30*1000});
         }
         console.log(faculties);
     });
@@ -80,7 +80,7 @@
     let confetti = false;
     let submit = async (e) => {
         if(files.length === 0) {
-            notify({state:'error', message:'please upload atleast one file', duration: 15*1000})
+            notify({state:'error', message:'please upload atleast one file', duration: 30*1000})
 
             e.preventDefault();
             return;
@@ -90,9 +90,10 @@
             return;
         } else {
             submitting = true;
-            notify({state: "notification", message: "uploading files...", duration: 15*1000});
+            notify({state: "notification", message: "uploading files...", duration: 30*1000});
             let allok = true;
 
+            let successfull_uploads = []
             for (const file of files) {
                 if(!file.file.length) continue;
                 try {
@@ -103,31 +104,32 @@
                         response.json().then(data => {
                             console.log(file.file[0].name, data);
                         });
-                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 15*1000})
+                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
                     } else {
-                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 15*1000})
+                        successfull_uploads.push(file);
+                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 30*1000})
                     }
 
                 } catch (error) {
                     allok = false;
-                    response.json().then(data => {
-                        console.log(file.file[0].name, data);
-                    });
-                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 15*1000})
+                    // response.json().then(data => { // this caused a fatal error once so i disabled it
+                    //     console.log(file.file[0].name, data);
+                    // });
+                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
                 }
             }
             
             submitting = false;
             if(allok){
-                notify({state: 'success', message: 'all files uploaded successfully', duration: 15*1000})
-                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 15*1000})
-                files = [];
+                notify({state: 'success', message: 'all files uploaded successfully', duration: 30*1000})
+                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 30*1000})
+                files = files.filter(file => !successfull_uploads.includes(file));
                 confetti = true;
                 setTimeout(()=>{
                     confetti = false;
                 }, 8000);
             } else if(files.length > 1){
-                notify({state: 'error', message: 'some files failed to upload', duration: 15*1000});
+                notify({state: 'error', message: 'some files failed to upload', duration: 30*1000});
             }
         }
     }

@@ -35,7 +35,7 @@
         font-size: var(--text-2);
         letter-spacing: 2px;
         box-shadow: var(--weak-shadow);
-        opacity: 0.8;
+        opacity: 0.9;
         animation: appear 300ms ease-out;
     }
     button:hover{
