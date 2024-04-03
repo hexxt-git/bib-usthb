@@ -1,10 +1,10 @@
 import { writable } from "svelte/store"
 
 let themes = ['light', 'dark', 'ocean', 'fire']
-export let theme_store = writable('light')
+export let theme_store = writable('ocean')
 
 if(typeof window !== 'undefined'){
-    theme_store = writable(localStorage.getItem('theme') || 'light')
+    theme_store = writable(localStorage.getItem('theme') || 'ocean')
 }
 
 export let switch_theme = () => {
