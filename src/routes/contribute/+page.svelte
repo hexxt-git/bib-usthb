@@ -30,7 +30,7 @@
             this.group = group;
             this.module = module;
             this.type = type // exam or lesson ..
-            console.log(this)
+            //console.log(this)
         }
     }
 
@@ -95,6 +95,7 @@
 
             let successfull_uploads = []
             for (const file of files) {
+                console.log(file, personal_details)
                 if(!file.file.length) continue;
                 try {
                     let response =  await upload(file, personal_details);
