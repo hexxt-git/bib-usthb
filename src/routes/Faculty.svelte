@@ -27,7 +27,7 @@
         {#if groups.length == 0}
             no contributions were made to this faculty yet. we encourage you to be the first
         {/if}
-        <div class="collumn">
+        <div class="column">
             {#each groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -42,7 +42,7 @@
         {#if selected_group_id != -1}
         <hr>
         {/if}
-        <div class="collumn">
+        <div class="column">
             {#each modules as module}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -71,7 +71,7 @@
         {#if selected_group_id != -1 && selected_module_id != -1}
         <hr>
         {/if}
-        <div class="collumn">
+        <div class="column">
             {#if selected_module_id !== -1}
             {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${selected_module_id}/getcount/`) then counts}
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).cour_drive_id}" target="_blank">
@@ -145,10 +145,16 @@
             margin: 0px auto;
         }
     }
-    .collumn{
+    .column{
         display: flex;
         flex-direction: column;
         gap: 8px;
+
+        max-height: 600px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        padding-right: 5px;
+
     }
     .item{
         background-color: var(--background-2);
