@@ -21,7 +21,7 @@
 
 <style>
     nav{
-        z-index: 1;
+        z-index: 3;
         position: sticky;
         top: 0;
         height: var(--nav-height);

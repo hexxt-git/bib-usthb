@@ -5,7 +5,12 @@
 </script>
 
 <div id="container">
-    <input type="text" bind:value={query} placeholder="search for files and folders">
+    <div class="input">
+        <input type="text" bind:value={query} placeholder="search for files and modules">
+        {#if query == ''}
+        <img src="images/send.png" alt="">
+        {/if}
+    </div>
     {#if query}
     <hr>
     <div id="results">
@@ -37,21 +42,26 @@
         width: 780px;
         background-color: var(--background-1);
         border-radius: var(--window-radius);
-        padding: 10px;
+        padding: 15px;
         margin-top: 15px;
         text-align: start;
         color: var(--highlight-color);
         z-index: 2;
     }
-    @media screen and (max-width: 900px), (orientation: portrait){
+    @media screen and (max-width: 900px), screen and (orientation: portrait){
         #container{
             width: 80vw;
         }
     }
-    @media screen and (orientation: portrait){
-        #container{
-            width: 300px;
-        }
+    .input{
+        display: flex;
+        align-items: space-between;
+        justify-content: center;
+    }
+    .input img{
+        height: 26px;
+        filter: var(--green-icons-filter) brightness(0.9);
+        margin-right: 5px;
     }
     input{
         background-color: transparent;
@@ -60,7 +70,10 @@
         width: 100%;
         font-family: var(--main-font);
         font-size: var(--text-0);
-        color: var(--text-color);
+        color: var(--highlighted-text-color);
+    }
+    input::placeholder{
+        color: var(--first-title-color);
     }
     hr{
         margin: 5px 0;
@@ -70,6 +83,7 @@
         max-height: 300px;
         width: 100%;
         overflow-y: auto;
+        scrollbar-width: thin;
     }
     #results div{
         font-size: var(--text-0);

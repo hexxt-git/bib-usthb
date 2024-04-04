@@ -39,7 +39,7 @@
 
     {#await load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all") then faculties}
         {#if faculties.length > 0}
-            {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
+            {#each faculties.filter(faculty => faculty.short != 'other').sort((a, b) => a.name.localeCompare(b.name)) as faculty}
                 <Faculty {faculty}/>
             {/each}
         {/if}

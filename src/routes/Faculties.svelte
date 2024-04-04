@@ -15,7 +15,7 @@
             loading... 
         {:then faculties}
             {#if faculties.length > 0}
-                {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
+                {#each faculties.filter(faculty => faculty.short != 'other').sort((a, b) => a.name.localeCompare(b.name)) as faculty}
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="faculty" on:click={()=>scroll_to_fac(faculty.short)}>
