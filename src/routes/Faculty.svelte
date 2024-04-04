@@ -1,9 +1,9 @@
 <script>
     export let faculty;
-    faculty.groups = faculty.modules?.reduce((acc, module) => {
+    let groups = faculty.modules?.reduce((acc, module) => {
         if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
         return acc;
-    }, [])
+    }, []).filter(group => group.short != 'other').sort((a, b) => a.name.localeCompare(b.name));
 
     let selected_group_id = -1;
     let selected_module_id = -1;
@@ -17,18 +17,18 @@
         else selected_module_id = id;
     }
 
-    $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id);
+    $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id).filter(group => group.short != 'other').sort((a, b) => a.name.localeCompare(b.name));
     import {load} from './helper.js';
 </script>
 
 <main id="{faculty.short}-page">
     <h2>{faculty.name}&nbsp;</h2>
     <div id="navigator">
+        {#if groups.length == 0}
+            no contributions were made to this faculty yet. we encourage you to be the first
+        {/if}
         <div class="collumn">
-            {#if faculty.groups.filter(group => group.short != 'other').length == 0}
-                no contributions were made to this faculty yet. we encourage you to be the first
-            {/if}
-            {#each faculty.groups.filter(group => group.short != 'other') as group}
+            {#each groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="item group-item {group.id==selected_group_id}" on:click={()=>select_group(group.id)}>
@@ -122,7 +122,7 @@
         padding: 10px;
         padding-bottom: 20px;
         display: grid;
-        grid-template-columns: 5fr 3fr 5fr;
+        grid-template-columns: 5fr 4fr 4fr;
         background-color: var(--background-1);
         box-shadow: var(--window-shadow);
         gap: 10px;

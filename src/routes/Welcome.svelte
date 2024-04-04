@@ -5,7 +5,7 @@
 <main>
     <FractalBackground />
     <div id="text-container">
-        <h1>Welcome to <div>BiB-USTHB</div></h1>
+        <h1>Welcome to <span>BiB-USTHB</span></h1>
         <h2>The unofficial student resource sharing website</h2>
         <SearchBar />
     </div>
@@ -29,7 +29,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        padding-top: 60px;
+        padding-top: 100px;
         text-align: center;
     }
     h1{
@@ -39,7 +39,7 @@
         font-size: 5rem;
         font-weight: 700;
     }
-    h1 div{
+    h1 span{
         color: var(--first-title-color);
         display: inline-block;
     }
