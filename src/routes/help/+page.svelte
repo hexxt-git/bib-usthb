@@ -31,7 +31,7 @@
     </p>
     <h2>Privacy</h2>
     <p>
-        &ensp; using this website you're completly anonymous, we don't collect any personal information about you, we don't use cookies and we don't track you. the only information we collect is the one you provide us with when you upload a file, and that information is only used to provide the service and to improve it.
+        &ensp; using this website you're completly anonymous, we don't collect any personal information about you, and we don't track you. anonymous user analytics is kept for the sake of the websites development. so the only information we collect is the one you provide us with when you upload a file, and that information is only used to provide the service and to improve it.
     </p>
 </main>
 <Footer />
