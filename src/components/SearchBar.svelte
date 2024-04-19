@@ -1,5 +1,5 @@
 <script>
-	import { search } from "./helper";
+	import { search } from "./api-calls";
     let query = "";
     
 </script>

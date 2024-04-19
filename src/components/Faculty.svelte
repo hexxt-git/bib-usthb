@@ -18,7 +18,8 @@
     }
 
     $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id).filter(group => group.short != 'other').sort((a, b) => a.name.localeCompare(b.name));
-    import {load} from './helper.js';
+    
+    import {load} from './api-calls';
 </script>
 
 <main id="{faculty.short}-page">

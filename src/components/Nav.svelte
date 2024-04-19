@@ -1,7 +1,6 @@
 <script>
     import Bubbles from "./Bubbles.svelte";
-    import { theme_store } from "./theme_store.js";
-    import { switch_theme } from "./theme_store.js";
+    import { theme_store, switch_theme } from "./theme_store.js";
 </script>
 
 <nav>

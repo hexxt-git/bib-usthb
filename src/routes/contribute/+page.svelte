@@ -1,9 +1,7 @@
 <script>
-    import Nav from '../Nav.svelte';
-    import Footer from '../Footer.svelte';
     import {onMount} from 'svelte';
-    import {load, upload} from '../helper.js';
-    import {notify, delete_notification} from '../notification_store'
+    import {load, upload} from "/src/components/api-calls";
+    import {notify, delete_notification} from '/src/components/notification_store'
     import { Confetti } from "svelte-confetti"
 
     let faculties = []
@@ -155,7 +153,7 @@
     "
  ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
 {/if}
-<Nav />
+
 <main>
     <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>
     <p>
@@ -294,7 +292,7 @@
         {/if}
     </form>
 </main>
-<Footer />
+
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);

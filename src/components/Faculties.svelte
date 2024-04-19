@@ -1,5 +1,5 @@
 <script>
-    import { load } from './helper.js';
+    import { load } from './api-calls.js';
     import { notify } from './notification_store.js';
 
     let scroll_to_fac = fac => {
