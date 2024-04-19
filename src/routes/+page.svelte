@@ -1,7 +1,7 @@
 <script> /* this whole code base requires a restructure */
     import Welcome from '/src/components/Welcome.svelte';
     import Faculties from '/src/components/Faculties.svelte';
-    import Faculty from '/src/components/Faculty.svelte';
+    import Faculty from '/src/components/subcomponents/Faculty.svelte';
     
     import { load } from '/src/components/api-calls';
 	import { notify } from '/src/components/notification_store';

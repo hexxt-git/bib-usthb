@@ -1,5 +1,5 @@
 <script>
-    import Notification from './Notification.svelte'
+    import Notification from './subcomponents/Notification.svelte'
     import {notification_store} from './notification_store.js'
     import {clear_notifications} from './notification_store.js'
 

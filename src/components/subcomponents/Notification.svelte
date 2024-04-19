@@ -4,7 +4,7 @@
     export let id = 0
     export let duration = 30*1000
     
-    import {delete_notification} from './notification_store'
+    import {delete_notification} from '../notification_store'
 
     setTimeout(()=>{
         delete_notification(id)
