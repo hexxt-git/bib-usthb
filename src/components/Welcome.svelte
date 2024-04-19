@@ -1,6 +1,6 @@
 <script>
     import FractalBackground from "./FractalBackground.svelte";
-    import SearchBar from "./SearchBar.svelte";
+    import SearchBar from "./subcomponents/SearchBar.svelte";
 </script>
 <main>
     <FractalBackground />
