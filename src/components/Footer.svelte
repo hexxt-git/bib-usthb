@@ -1,5 +1,5 @@
 <script>
-    import Bubbles from "./Bubbles.svelte";
+    import Bubbles from "./subcomponents/Bubbles.svelte";
     import { theme_store } from "./theme_store.js";
     import { switch_theme } from "./theme_store.js";
 </script>

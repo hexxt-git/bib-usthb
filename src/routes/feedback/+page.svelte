@@ -1,6 +1,4 @@
 <script>
-    import Nav from '../Nav.svelte';
-    import Footer from '../Footer.svelte';
     import { Confetti } from "svelte-confetti"
     let confetti = false /*   can't do both confetti and submit this way x(   */
     let send_confetti = ()=>{
@@ -34,7 +32,6 @@
     ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
 {/if}
 
-<Nav />
 <main>
     <h1>BiB-USTHB feedback and support page</h1>
     <p>
@@ -82,7 +79,7 @@
         <button type="submit">submit</button>
     </form>
 </main>
-<Footer />
+
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);

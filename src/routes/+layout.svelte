@@ -1,9 +1,11 @@
 <script>
-    import { theme_store } from "./theme_store.js"
-	import { onMount } from "svelte";
+    import { theme_store } from "/src/components/theme_store.js"
+    import { onMount } from "svelte";
 
-    import NotificationSystem from "./NotificationSystem.svelte";    
-    import LoadingScreen from "./LoadingScreen.svelte";
+    import NotificationSystem from "/src/components/NotificationSystem.svelte";    
+    import LoadingScreen from "/src/components/LoadingScreen.svelte";
+    import Nav from "/src/components/Nav.svelte"
+	import Footer from "/src/components/Footer.svelte";
 
     let do_wait_for_theme_load = true;
     let mounted = !do_wait_for_theme_load;
@@ -21,7 +23,9 @@
 </script>
 
 {#if mounted}
+    <Nav />
     <slot />
+    <Footer />
     <NotificationSystem />
 {:else}
     <LoadingScreen />

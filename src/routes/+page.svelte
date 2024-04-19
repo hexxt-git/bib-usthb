@@ -1,12 +1,10 @@
 <script> /* this whole code base requires a restructure */
-    import Nav from './Nav.svelte';
-    import Welcome from './Welcome.svelte';
-    import Faculties from './Faculties.svelte';
-    import Faculty from './Faculty.svelte';
-    import Footer from './Footer.svelte';
+    import Welcome from '/src/components/Welcome.svelte';
+    import Faculties from '/src/components/Faculties.svelte';
+    import Faculty from '/src/components/subcomponents/Faculty.svelte';
     
-    import { load } from './helper.js';
-	import { notify } from './notification_store';
+    import { load } from '/src/components/api-calls';
+	import { notify } from '/src/components/notification_store';
 	import { onMount } from 'svelte';
     
     // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
@@ -33,7 +31,6 @@
 </script>
 
 <main>
-    <Nav />
     <Welcome />
     <Faculties />
 
@@ -49,10 +46,8 @@
             please contact support and try again later
         </p>
     {/await}
-
-    <Footer />
-
 </main>
+
 <style>
     main{
         margin: 0px;

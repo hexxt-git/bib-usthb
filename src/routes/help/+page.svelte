@@ -1,8 +1,3 @@
-<script>
-    import Nav from '../Nav.svelte';
-    import Footer from '../Footer.svelte';
-</script>
-<Nav />
 <main>
     <h1><span>BiB-USTHB</span> help page&nbsp;</h1>
     <p>
@@ -34,7 +29,7 @@
         &ensp; using this website you're completly anonymous, we don't collect any personal information about you, and we don't track you. anonymous user analytics is kept for the sake of the websites development. so the only information we collect is the one you provide us with when you upload a file, and that information is only used to provide the service and to improve it.
     </p>
 </main>
-<Footer />
+
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);
