@@ -1,11 +1,14 @@
 <script>
     import { theme_store } from "/src/components/theme_store.js"
     import { onMount } from "svelte";
+    import { notify } from "/src/components/notification_store.js"
+    import { fullnav } from "/src/components/fullnav_store.js"
 
     import NotificationSystem from "/src/components/NotificationSystem.svelte";    
     import LoadingScreen from "/src/components/LoadingScreen.svelte";
     import Nav from "/src/components/Nav.svelte"
 	import Footer from "/src/components/Footer.svelte";
+	import FullNav from "../components/FullNav.svelte";
 
     let do_wait_for_theme_load = true;
     let mounted = !do_wait_for_theme_load;
@@ -20,13 +23,34 @@
     import { inject } from '@vercel/analytics'
     inject()
 
+    onMount(()=>{
+        setTimeout(()=>
+            notify({
+                state: "notification",
+                message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
+                duration: 20*1000
+            }),
+        1000)
+        setTimeout(()=>
+            notify({
+                state: "notification",
+                message: "if you notice a module or faculty missing, please contact us through the support page bib-usthb.com/feedback",
+                duration: 20*1000
+            }),
+        2000)
+    })
+
 </script>
 
 {#if mounted}
     <Nav />
+    {#if $fullnav}
+            <FullNav />
+    {:else}
+        <NotificationSystem />
+    {/if}
     <slot />
     <Footer />
-    <NotificationSystem />
 {:else}
     <LoadingScreen />
 {/if}
@@ -52,6 +76,7 @@
             --background-0: #ffffff;
             --background-1: #f4f5f3;
             --background-2: #eeefee;
+            --nav-background: #e3e7dfc3;
             
             --strong-shadow: #0006 0px 0px 5px;
             --medium-shadow: #0005 0px 0px 10px;
@@ -115,6 +140,7 @@
             --background-1: #222526;
             --background-2: #26292a;
             --background-3: #282828;
+            --nav-background: #070808f5;
             
             --strong-shadow: #8882 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
@@ -181,6 +207,7 @@
             --background-1: #1d2736;
             --background-2: #1c2b3f;
             --background-3: #282c30;
+            --nav-background: #0e1120f8;
             
             --strong-shadow: #8882 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
@@ -248,6 +275,7 @@
             --background-1: #25201e;
             --background-2: #2b2323;
             --background-3: #2f2b2a;
+            --nav-background: #0e0c0cf5;
             
             --strong-shadow: #8882 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;

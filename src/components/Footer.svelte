@@ -8,14 +8,6 @@
     <div>
         made by <a href="https://9EED.github.io/" target="_blank"> Zeghdani Salah </a> and <a href="https://laindev.me/" target="_blank"> Aymen charfaoui </a>
     </div>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div id="mobile-links">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div on:click={switch_theme}> switch website from <span>{$theme_store} mode </span></div>
-            <div>
-                having an issues? visit our <a href="/help">help</a> page
-            </div>
-        </div>
     <div>
         kept alive by your <a href="/contribute/">contributions</a> and <a href="/feedback/">feedback</a>
     </div>
@@ -31,23 +23,20 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        gap: 5px;
         background-color: var(--background-1);
         box-shadow: var(--strong-shadow);
         position: relative;
         overflow: hidden;
         color: var(--highlight-color);
         font-family: var(--main-font);
+        font-size: var(--text-1);
     }
-    footer a, footer span{
+    footer a{
         color: var(--brand-color);
         text-decoration: none;
     }
-    footer a:hover, footer span:hover{
+    footer a:hover{
         text-decoration: underline;
-    }
-    @media (min-width: 800px), (min-aspect-ratio: 3/4){
-        #mobile-links{
-            display: none;
-        }
     }
 </style>

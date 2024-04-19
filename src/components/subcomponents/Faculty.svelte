@@ -10,25 +10,38 @@
     let select_group = (id) => {
         selected_module_id = -1;
         if(selected_group_id === id) selected_group_id = -1;
-        else selected_group_id = id;
+        else{
+            selected_group_id = id;
+            if(window.innerWidth < 700) scroll_to(faculty.short + '-modules')
+        }
     };
     let select_module = (id) => {
         if(selected_module_id === id) selected_module_id = -1;
-        else selected_module_id = id;
+        else{
+            selected_module_id = id;
+            if(window.innerWidth < 700) scroll_to(faculty.short + '-files')
+        }
     }
 
     $: modules = faculty.modules.filter(m=>m.group.id===selected_group_id).filter(group => group.short != 'other').sort((a, b) => a.name.localeCompare(b.name));
     
+    let scroll_to = id => {
+        window.open('./#'+id, '_self')
+        setTimeout(()=>scrollBy(0, -80), 500)
+    }
+
     import {load} from '/src/components/api-calls';
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <main id="{faculty.short}-page">
-    <h2>{faculty.name}&nbsp;</h2>
+    <h2 on:click={e => e.key? 0: scroll_to(faculty.short+'-page')}>{faculty.name}&nbsp;</h2>
     <div id="navigator">
         {#if groups.length == 0}
             no contributions were made to this faculty yet. we encourage you to be the first
         {/if}
-        <div class="column">
+        <div class="column" id="{faculty.short}-groups">
             {#each groups as group}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -43,7 +56,7 @@
         {#if selected_group_id != -1}
         <hr>
         {/if}
-        <div class="column">
+        <div class="column" id="{faculty.short}-modules">
             {#each modules as module}
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -72,7 +85,7 @@
         {#if selected_group_id != -1 && selected_module_id != -1}
         <hr>
         {/if}
-        <div class="column">
+        <div class="column" id="{faculty.short}-files">
             {#if selected_module_id !== -1}
             {#await load(`https://walrus-app-mwr59.ondigitalocean.app/api/module/${selected_module_id}/getcount/`) then counts}
                 <a class="item" href="https://drive.google.com/drive/folders/{faculty.modules.find(mod=>mod.id===selected_module_id).cour_drive_id}" target="_blank">

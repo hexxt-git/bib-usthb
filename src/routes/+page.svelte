@@ -4,29 +4,10 @@
     import Faculty from '/src/components/subcomponents/Faculty.svelte';
     
     import { load } from '/src/components/api-calls';
-	import { notify } from '/src/components/notification_store';
-	import { onMount } from 'svelte';
-    
-    // load("https://walrus-app-mwr59.ondigitalocean.app/api/fac/all").then(faculties => {
-    //     console.table(faculties);
-    // })
-
-    onMount(()=>{
-        setTimeout(()=>
-            notify({
-                state: "notification",
-                message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
-                duration: 30*1000
-            }),
-        800)
-        setTimeout(()=>
-            notify({
-                state: "notification",
-                message: "if you notice a module or faculty missing, please contact us through the support page bib-usthb.com/feedback",
-                duration: 30*1000
-            }),
-        1800)
-    })
+    /*
+	generate the icons with
+	    npx @vite-pwa/assets-generator --preset minimal .\static\favicon.png
+    */
 
 </script>
 

@@ -21,7 +21,7 @@
         right: 0;
         display: flex;
         flex-direction: column-reverse;
-        z-index: 2;
+        z-index: 3;
         gap: 15px;
         padding: 15px;
     }

@@ -1,26 +1,35 @@
 <script>
     import Bubbles from "./subcomponents/Bubbles.svelte";
     import { theme_store, switch_theme } from "./theme_store.js";
+    import { fullnav } from "./fullnav_store"
 </script>
-
 <nav>
     <Bubbles z_index=-1 width={150} height={10} opacity=5 />
+    
     <a id="nav-logo" href="/">BiB-USTHB</a>
-    <div>
-    <a href="/#faculties-page">faculties</a>
-    <!-- <a href="/#footer">creators</a> -->
-    <a href="/help">help</a>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <span on:click={switch_theme}> {$theme_store} mode </span>
+    
+    <div id="desktop-links">
+        <a href="/#faculties-page">faculties</a>
+        <!-- <a href="/#footer">creators</a> -->
+        <a href="/help">help</a>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <span on:click={switch_theme}> {$theme_store} mode </span>
     </div>
-    <!--<input type="search" placeholder="search..." id="nav-search">-->
-    <a id="nav-contribute" href="/contribute/">contribute</a>
+    
+    <div id="right">
+        <a id="nav-contribute" href="/contribute/">contribute</a>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div id="fullnav-toggle" on:click={()=>fullnav.update(old => !old)}>
+            ≡
+        </div>
+    </div>
 </nav>
 
 <style>
     nav{
-        z-index: 3;
+        z-index: 5;
         position: sticky;
         top: 0;
         height: var(--nav-height);
@@ -28,7 +37,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0px 50px;
+        padding: 0 50px;
         background-color: var(--background-1);
         color: var(--text-color);
         font-size: var(--text-1);
@@ -36,7 +45,7 @@
         box-shadow: var(--strong-shadow);
         overflow: hidden;
     }
-    div{
+    #desktop-links{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -66,9 +75,8 @@
     #nav-contribute{
         color: var(--background-0);
         background-color: var(--brand-color);
-        padding: 7px 20px;
         width: 140px;
-        height: 42px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -80,24 +88,31 @@
         font-size: var(--text-0);
         letter-spacing: 1px;
     }
-    @media (max-width: 700px), (max-aspect-ratio: 3/4) {
-        div{
+    #fullnav-toggle{
+        color: var(--background-0);
+        background-color: var(--brand-color);
+        border-radius: var(--element-radius);
+        height: 40px;
+        width: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+        font-size: 32px;
+        font-family: monospace;
+        padding-bottom: 2px;
+    }
+    #right{
+        display: flex;
+        gap: 10px;
+    }
+    @media (max-width: 800px), (max-aspect-ratio: 3/4) {
+        #desktop-links, #nav-contribute{
             display: none;
         }
-    }
-    @media (max-width: 500px) {
         nav{
-            padding: 0px 30px;
-        }
-        #nav-logo{
-            min-width: 140px;
-            font-size: 1.5em;
-        }
-        #nav-contribute{
-            font-size: 1em;
-            height: 32px;
-            width: 120px;
-            border-radius: 13px;
+            padding: 0 20px 0 30px;
         }
     }
 </style>
