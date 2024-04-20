@@ -1,3 +1,4 @@
+<!-- this is no longer in use -->
 <script>
     function madelbrot(x, y){
         let max = 20;
