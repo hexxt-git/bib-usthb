@@ -1,6 +1,5 @@
 <script>
 	import { switch_theme } from "./theme_store";
-	import { fullnav } from "./fullnav_store";
     import { close_nav } from "./fullnav_store"
 </script>
 

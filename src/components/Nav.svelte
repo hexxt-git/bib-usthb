@@ -1,14 +1,16 @@
 <script>
     import Bubbles from "./subcomponents/Bubbles.svelte";
     import { theme_store, switch_theme } from "./theme_store.js";
-    import { fullnav } from "./fullnav_store";
-    import { close_nav, open_nav } from "./fullnav_store";
+    import { close_nav, switch_nav } from "./fullnav_store";
 
+    let try_close_nav = e => {
+        if(e.target.id !== 'fullnav-toggle') close_nav()
+    }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<nav on:click={close_nav}>
+<nav on:click={try_close_nav}>
     <Bubbles z_index=-1 width={150} height={10} opacity=7 />
     
     <a id="nav-logo" href="/">BiB-USTHB</a>
@@ -26,7 +28,7 @@
         <a id="nav-contribute" href="/contribute/">contribute</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <button id="fullnav-toggle" on:click={open_nav}>
+        <button id="fullnav-toggle" on:click={switch_nav}>
             ≡
         </button>
     </div>
