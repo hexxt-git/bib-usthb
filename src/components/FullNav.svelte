@@ -1,10 +1,7 @@
 <script>
-	import { writable } from "svelte/store";
 	import { switch_theme } from "./theme_store";
 	import { fullnav } from "./fullnav_store";
-    let close_nav = () => {
-        fullnav.set(false)
-    }
+    import { close_nav } from "./fullnav_store"
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -18,7 +15,7 @@
     
     <hr style="animation-delay: 150ms;">
 
-    <a on:click={close_nav} href="/contribute/">Contrinute</a>
+    <a on:click={close_nav} href="/contribute/">Contribute</a>
     
     <hr style="animation-delay: 300ms;">
 
@@ -27,9 +24,9 @@
     <hr style="animation-delay: 450ms;">
 
     <!-- svelte-ignore a11y-missing-attribute -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <a on:click={switch_theme}>themes</a>
+    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+    <a on:keypress={switch_theme} on:click={switch_theme} tabindex="0">themes</a>
     
     <hr style="animation-delay: 600ms;">
 
@@ -51,6 +48,7 @@
         flex-direction: column;
         background-color: var(--nav-background);
         padding: 80px 0;
+        nav-index: 0;
     }
     a{
         color: var(--highlight-color);
@@ -66,12 +64,17 @@
         align-items: center;
         justify-content: center;
     }
+    a:focus{
+        outline: none;
+        color: var(--brand-color);
+    }
     hr{
         width: 0%;
         opacity: 0%;
         max-width: 400px;
         animation: set-width 450ms ease-out forwards ;
         border-color: var(--brand-color);
+        border-style: solid;
     }
     @keyframes set-width{
         0%{

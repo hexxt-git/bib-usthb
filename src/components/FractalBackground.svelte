@@ -50,10 +50,13 @@
 </div>
 
 <style>
+    div{
+        filter: blur(1px);
+        opacity: var(--fractal-opacity);
+    }
     .dot{
         position: absolute;
-        background: #00000012;
+        background: #000;
         border-radius: 100%;
-        filter: blur(1px);
     }
 </style>

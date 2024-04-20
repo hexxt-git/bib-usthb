@@ -1,9 +1,14 @@
 <script>
     import Bubbles from "./subcomponents/Bubbles.svelte";
     import { theme_store, switch_theme } from "./theme_store.js";
-    import { fullnav } from "./fullnav_store"
+    import { fullnav } from "./fullnav_store";
+    import { close_nav, open_nav } from "./fullnav_store";
+
 </script>
-<nav>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<nav on:click={close_nav}>
     <Bubbles z_index=-1 width={150} height={10} opacity=5 />
     
     <a id="nav-logo" href="/">BiB-USTHB</a>
@@ -21,9 +26,9 @@
         <a id="nav-contribute" href="/contribute/">contribute</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div id="fullnav-toggle" on:click={()=>fullnav.update(old => !old)}>
+        <button id="fullnav-toggle" on:click={open_nav}>
             ≡
-        </div>
+        </button>
     </div>
 </nav>
 
@@ -102,6 +107,7 @@
         font-size: 32px;
         font-family: monospace;
         padding-bottom: 2px;
+        border: none;
     }
     #right{
         display: flex;

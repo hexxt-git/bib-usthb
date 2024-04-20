@@ -34,6 +34,7 @@
         margin: 0px;
         font-family: var(--main-font);
         background-color: var(--background-0);
-        color: var(--text-color)
+        color: var(--text-color);
+        min-height: 150vh;
     }
 </style>
