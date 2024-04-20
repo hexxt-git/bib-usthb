@@ -529,9 +529,13 @@
         font-family: var(--main-font);
         font-size: var(--text-1);
         padding: 10px;
+        border-color: var(--text-color-weak);
     }
     textarea:focus{
         outline: none;
+    }
+    textarea::placeholder{
+        color: var(--text-color-weak);
     }
     button[type="submit"]{
         padding: 10px 20px;

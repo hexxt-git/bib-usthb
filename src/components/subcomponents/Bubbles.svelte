@@ -20,11 +20,9 @@
         background-color: hsla(0, 0%, 0%, {opacity}%);
         width: {dot_size(x, y)}px;
         height: {dot_size(x, y)}px;
-        position: absolute;
         top: {4+y*(size+offset)}px;
         left: {4+x*(size+offset)}px;
-        border-radius: 100%;
-    "></div>
+    " class="dot"></div>
     {/each}
     {/each}
     </div>
@@ -43,5 +41,10 @@
         position: relative;
         width: 100;
         height: 100%;
+    }
+    .dot{
+        border-radius: 100%;
+        position: absolute;
+
     }
 </style>

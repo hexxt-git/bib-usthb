@@ -1,0 +1,81 @@
+<!-- 
+
+    because Im an illiterate who can only use web technology, i made this in javascript and i take a full size screenshot using browsers' dev tools
+
+ -->
+
+<head>
+    <title>Bakcground generator</title>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+    const SCALE = 1;
+
+    function madelbrot(x, y){
+        let max = 30;
+        let a0 = 0;
+        let b0 = 0;
+        let i = 0;
+        while(i < max && a0*a0 + b0*b0 < 4){
+            let a = a0*a0 - b0*b0 + x;
+            let b = 2*a0*b0 + y;
+            a0 = a;
+            b0 = b;
+            i++;
+        }
+        return i / max;
+    }
+    function julia(x, y){
+        let max = 30;
+        let a0 = x;
+        let b0 = y;
+        let i = 0;
+        while(i < max && a0*a0 + b0*b0 < 4){
+            let a = a0*a0 - b0*b0 - 0.8;
+            let b = 2*a0*b0 + 0.156;
+            a0 = a;
+            b0 = b;
+            i++;
+        }
+        return i / max;
+    }
+    function radius(x, y){
+        let madelx = (x-90)/20;
+        let madely = (y-25)/20;
+        let juliax = (x-25)/15;
+        let juliay = (y-45)/15;
+        let result = 10 * (madelbrot(madelx, madely) + julia(juliax, juliay));
+        return result > 10 ? 10 : result < 4 ? Math.random()*4 : result;
+    }
+
+    const container = document.getElementById('container');
+    
+    for(let x = 0 ; x < 100*SCALE ; x++){
+        console.log(x/SCALE+'% done')
+        for(let y = 0 ; y < 75*SCALE ; y++){
+            const child = document.createElement('div')
+            child.style = ` left: ${x*20*SCALE}px;
+                            top: ${y*20*SCALE}px;
+                            padding: ${radius(x/SCALE,y/SCALE)*SCALE}px;
+                          `
+            child.className = 'dot'
+            container.appendChild(child)
+        }
+    }
+
+</script>
+
+<style>
+    body{
+        margin: 0;
+    }
+    .dot{
+        position: absolute;
+        background: #000;
+        border-radius: 100%;
+    }
+</style>

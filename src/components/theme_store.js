@@ -1,6 +1,6 @@
 import { writable } from "svelte/store"
 
-let themes = ['light', 'dark', 'ocean', 'fire']
+let themes = ['light', 'dark', 'ocean', 'fire', 'bubble', 'sun']
 export let theme_store = writable('ocean')
 
 if(typeof window !== 'undefined'){

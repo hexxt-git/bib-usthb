@@ -133,7 +133,7 @@
     }
     #navigator{
         margin: 30px var(--side-margin) 50px var(--side-margin);
-        padding: 10px;
+        padding: 15px;
         padding-bottom: 20px;
         display: grid;
         grid-template-columns: 5fr 4fr 4fr;
