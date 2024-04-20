@@ -9,7 +9,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <nav on:click={close_nav}>
-    <Bubbles z_index=-1 width={150} height={10} opacity=5 />
+    <Bubbles z_index=-1 width={150} height={10} opacity=7 />
     
     <a id="nav-logo" href="/">BiB-USTHB</a>
     

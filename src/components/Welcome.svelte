@@ -1,9 +1,10 @@
 <script>
-    import FractalBackground from "./FractalBackground.svelte";
     import SearchBar from "./subcomponents/SearchBar.svelte";
 </script>
 <main>
-    <FractalBackground />
+    <div id="background">
+        <img src="/images/FractalBackgroundSmall.png" alt="">
+    </div>
     <div id="text-container">
         <h1>Welcome to <span>BiB-USTHB</span></h1>
         <h2>The unofficial student resource sharing website</h2>
@@ -13,6 +14,17 @@
 </main>
 
 <style>
+    #background{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #background img{
+        height: 100%;
+        min-width: 100%;
+        mix-blend-mode: darken;
+        opacity: var(--fractal-opacity);
+    }
     main{
         height: calc(100vh - var(--nav-height));
         position: relative;
