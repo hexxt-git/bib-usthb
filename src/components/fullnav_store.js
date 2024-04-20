@@ -7,7 +7,9 @@ export const close_nav = () => {
 }
 
 export const open_nav = () => {
-    setTimeout(() => {
-        fullnav.set(true)
-    }, 5)
+    fullnav.set(true)
+}
+
+export const switch_nav = () => {
+    fullnav.update(old => !old)
 }

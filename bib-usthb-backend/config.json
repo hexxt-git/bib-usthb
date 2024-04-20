@@ -1,0 +1,13 @@
+{
+  "token": "add here",
+  "refresh_token": "add here",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "client_id": "add here",
+  "client_secret": "add here",
+  "scopes": [
+    "https://www.googleapis.com/auth/drive"
+  ],
+  "universe_domain": "googleapis.com",
+  "account": "",
+  "expiry": "add here"
+}
