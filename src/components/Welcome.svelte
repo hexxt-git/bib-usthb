@@ -75,7 +75,7 @@
     @media (max-width: 800px), (orientation: portrait){
         #text-container{
             padding-bottom: 200px;
-            gap: 20px;
+            gap: 10px;
         }
         h1{
             font-size: 3rem;
@@ -83,8 +83,8 @@
             flex-direction: column;
         }
         h2{
-            font-size: 1.75em;
-            display: none;
+            font-size: 1.5em;
+            max-width: 80%;
         }
     }
 </style>
