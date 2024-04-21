@@ -1,10 +1,9 @@
 <script>
     import SearchBar from "./subcomponents/SearchBar.svelte";
+    $: use_small_background = window?.innerWidth < window?.innerHeight;
 </script>
 <main>
-    <div id="background">
-        <img src="/images/FractalBackgroundSmall.png" alt="">
-    </div>
+    <div id="background" style="background-image: url(/images/FractalBackground{use_small_background ? 'Small2':'Edited'}.png)"></div>
     <div id="text-container">
         <h1>Welcome to <span>BiB-USTHB</span></h1>
         <h2>The unofficial student resource sharing website</h2>
@@ -18,12 +17,12 @@
         position: absolute;
         top: 0;
         left: 0;
-    }
-    #background img{
+        width: 100%;
         height: 100%;
-        min-width: 100%;
+        background-image: url(/images/FractalBackgroundSmall.png);
         mix-blend-mode: darken;
         opacity: var(--fractal-opacity);
+        background-size: cover;
     }
     main{
         height: calc(100vh - var(--nav-height));
