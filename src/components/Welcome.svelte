@@ -84,7 +84,6 @@
         }
         h2{
             font-size: 1.5em;
-            max-width: 80%;
         }
     }
 </style>
