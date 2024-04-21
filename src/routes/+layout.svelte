@@ -90,7 +90,7 @@
             --first-title-color: #081808;
             --highlight-color: #000;
 
-            --title-font: 'Rubik', sans-serif;
+            --title-font: 'Roboto', sans-serif;
             --main-font: 'Roboto', sans-serif;
         
             --title-1: 2em;
@@ -155,7 +155,7 @@
             --first-title-color: #56d935;
             --highlight-color: #f7f7f7;
 
-            --title-font: 'Rubik', sans-serif;
+            --title-font: 'Roboto', sans-serif;
             --main-font: 'Roboto', sans-serif;
         
             --title-1: 2em;
@@ -223,7 +223,7 @@
             --first-title-color: #71abee;
             --highlight-color: #f7f7f7;
 
-            --title-font: 'Varela Round', sans-serif;
+            --title-font: 'Rubik', sans-serif;
             --main-font: 'Nunito', sans-serif;
         
             --title-1: 2em;
