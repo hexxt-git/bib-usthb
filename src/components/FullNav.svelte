@@ -29,6 +29,10 @@
     
     <hr style="animation-delay: 600ms;">
 
+    <a on:click={close_nav} href="/help/#app">app download</a>
+
+    <hr style="animation-delay: 800ms;">
+
     <a on:click={close_nav} href="/help/">Help</a>
 </nav>
 

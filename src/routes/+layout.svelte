@@ -95,7 +95,7 @@
         
             --title-1: 2em;
             --title-2: 1.5em;
-            --title-3: 1.2em;
+            --title-3: 1em;
 
             --nav-height: 70px;
             --side-margin: 120px;
@@ -160,7 +160,7 @@
         
             --title-1: 2em;
             --title-2: 1.5em;
-            --title-3: 1.2em;
+            --title-3: 1em;
 
             --nav-height: 70px;
             --side-margin: 120px;
@@ -228,7 +228,7 @@
         
             --title-1: 2em;
             --title-2: 1.5em;
-            --title-3: 1.2em;
+            --title-3: 1em;
 
             --nav-height: 70px;
             --side-margin: 120px;
@@ -297,7 +297,7 @@
         
             --title-1: 2em;
             --title-2: 1.5em;
-            --title-3: 1.2em;
+            --title-3: 1em;
 
             --nav-height: 70px;
             --side-margin: 120px;
@@ -336,7 +336,7 @@
     <style>
         :root{
             --brand-color: #e94dcf;
-            --brand-color-weak: #a92897;
+            --brand-color-weak: #a528a9;
             --brand-color-weaker: #e43ece;
 
             --success-color: #29af1c;
@@ -358,7 +358,7 @@
             --text-color: #fff1f9;
             --text-color-weak: #bd82d8;
             --title-color: #ffffff;
-            --first-title-color: #ff50ff;
+            --first-title-color: #fc69fc;
             --highlight-color: #ffffff;
 
             --title-font: 'Pacifico', sans-serif;
@@ -366,7 +366,7 @@
         
             --title-1: 2em;
             --title-2: 1.5em;
-            --title-3: 1.2em;
+            --title-3: 1em;
 
             --nav-height: 90px;
             --side-margin: 150px;
@@ -434,7 +434,7 @@
     
         --title-1: 2.2em;
         --title-2: 1.6em;
-        --title-3: 1.3em;
+        --title-3: 1em;
 
         --nav-height: 70px;
         --side-margin: 110px;
