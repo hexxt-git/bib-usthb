@@ -1,8 +1,6 @@
 <script>
-    import { onMount } from 'svelte';
-    //import {load, upload} from "/src/components/api-calls";
     import { notify } from '/src/components/notification_store'
-    import { Confetti } from "svelte-confetti"
+    import { shoot_confetti } from "/src/components/confetti_store"
 
     let faculties = []
 
@@ -53,7 +51,6 @@
 
     let formElement;
     let submitting = false;
-    let confetti = false;
     
     let submit = async (e) => {
         if(files.length === 0) {
@@ -101,8 +98,7 @@
             if(allok){
                 notify({state: 'success', message: 'all files uploaded successfully', duration: 30*1000})
                 notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 30*1000})
-                confetti = true;
-                setTimeout(_=>{confetti = false}, 8000);
+                shoot_confetti()
             } else {
                 notify({state: 'error', message: 'some files failed to upload', duration: 30*1000});
             }
@@ -114,22 +110,6 @@
         uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
     }, 500);
 </script>
-
-{#if confetti}
-<div style="
-    position: fixed;
-    top: -50px;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 10;
-    "
- ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
-{/if}
 
 <main>
     <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>

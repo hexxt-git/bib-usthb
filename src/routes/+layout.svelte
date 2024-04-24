@@ -4,11 +4,12 @@
     import { notify } from "/src/components/notification_store.js"
     import { fullnav } from "/src/components/fullnav_store.js"
 
-    import NotificationSystem from "/src/components/NotificationSystem.svelte";    
+    import NotificationSystem from "/src/components/NotificationSystem.svelte";
+    import ConfettiSystem from "/src/components/ConfettiSystem.svelte";   
     import LoadingScreen from "/src/components/LoadingScreen.svelte";
     import Nav from "/src/components/Nav.svelte"
 	import Footer from "/src/components/Footer.svelte";
-	import FullNav from "../components/FullNav.svelte";
+	import FullNav from "/src/components/FullNav.svelte";
 
     let do_wait_for_theme_load = true;
     let mounted = !do_wait_for_theme_load;
@@ -49,6 +50,7 @@
             <FullNav />
     {:else}
         <NotificationSystem />
+        <ConfettiSystem />
     {/if}
     <slot />
     <Footer />

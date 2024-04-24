@@ -1,45 +1,33 @@
 <script>
-    import { Confetti } from "svelte-confetti"
-    let confetti = false /*   can't do both confetti and submit this way x(   */
-    let send_confetti = ()=>{
-        confetti = true
-        setTimeout(()=>{confetti = true}, 8000)
-    }
+    import {shoot_confetti} from "/src/components/confetti_store"
+    import Main from "/src/items/Main.svelte";
+    import H1 from "/src/items/H1.svelte";
+    import H2 from "/src/items/H2.svelte";
+    import H3 from "/src/items/H3.svelte";
+    import P from "/src/items/P.svelte";
+    import A from "/src/items/A.svelte";
+
     let name = ''
     let email = ''
     let domain = ''
     let usthb_student = false
-    const submit = ()=>{
-        send_confetti()
+    
+    const submit = e =>{
+        shoot_confetti()
         if(!name) name = 'anonymous'
         if(!email) email = 'anonymous@mail'
         if(!domain) domain = 'unknown'
     }
 </script>
-{#if confetti}
-    <div style="
-        position: fixed;
-        top: -50px;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 10;
-        "
-    ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
-{/if}
 
-<main>
-    <h1>BiB-USTHB feedback and support page</h1>
-    <p>
-        &nbsp;&nbsp;&nbsp;In this page you can reach us, the developers and maintainers of the website. we're always looking for new ways to improve our service, so plesae write any suggestions or complaints you have on here. you can also reach us through email <a href="mailto:bibusthb@gmail.com" target="_blank">bibusthb@gmail.com</a> and github <a href="https://github.com/9EED/bib-usthb/issues" target="_blank">reports</a>.<br>
+<Main>
+    <H1>BiB-USTHB feedback and support page</H1>
+    <P>
+        &nbsp;&nbsp;&nbsp;In this page you can reach us, the developers and maintainers of the website. we're always looking for new ways to improve our service, so plesae write any suggestions or complaints you have on here. you can also reach us through email <A href="mailto:bibusthb@gmail.com" target="_blank">bibusthb@gmail.com</A> and github <A href="https://github.com/9EED/bib-usthb/issues" target="_blank">reports</A>.<br>
         &nbsp;&nbsp;&nbsp;adding personal details is optional but that is how we can get back to you on updates.
-    </p>
-    <h2>feedback form</h2>
-    <form method="POST" on:submit={()=>submit()}> 
+    </P>
+    <H2>feedback form</H2>
+    <form method="POST" on:submit={submit}> 
         <div class="text-input">
             <label for="name">name:</label>
             <input type="text" id="name" name="name" bind:value={name}>
@@ -78,46 +66,9 @@
         </div>
         <button type="submit">submit</button>
     </form>
-</main>
+</Main>
 
 <style>
-    main {
-        padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 187px);
-        font-family: var(--main-font);
-        background-color: var(--background-0);
-        color: var(--text-color);
-    }
-    h1{
-        margin: 0;
-        padding: 20px 0px 0px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-1);
-        color: var(--title-color);
-    }
-    h2{
-        margin: 10px 0px 0px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-2);
-        color: var(--title-color);
-    }
-    p{
-        margin: 10px 0;
-        font-size: var(--text-1);
-        word-spacing: 1px;
-    }
-    a{
-        color: var(--brand-color);
-        text-decoration: underline;
-    }
     form{
         background-color: var(--background-1);
         border-radius: var(--element-radius);
