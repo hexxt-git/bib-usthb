@@ -20,7 +20,8 @@
         <a href="/help">help</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span on:click={switch_theme}> {$next_theme} mode </span>
+        <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+        <span on:click={switch_theme} on:keypress={switch_theme} tabindex="0"> {$next_theme} mode </span>
     </div>
     
     <div id="right">

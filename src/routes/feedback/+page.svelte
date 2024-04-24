@@ -51,10 +51,10 @@
         <TextInput label='name' store={name} />
         <TextInput label='email' store={email} style="grid-row:2/3; grid-column:1/2" />
         <CheckboxInput label="are you a usthb student" store={usthb_student} />
-        <TextInput label='study field' store={email} />
+        <TextInput label='study field' store={domain} />
         <SelectionInput label='topic' options={feedback_types} style="grid-column: 1 / -1" />
         <TextArea label="details" placeholder="details here.." rows="4" required={true} style="grid-column: 1/-1;" />
-        <Submit />
+        <Submit>submit</Submit>
     </form>
 </Main>
 

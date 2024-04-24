@@ -15,7 +15,7 @@
 </script>
 
 <div style={style}>
-    <label for={label}>{label}: </label>
+    <label for={label}>{label}{label?':':''} </label>
     <textarea name={label} id={label} placeholder={placeholder} rows={rows} required={required} bind:value={local_value} on:input={handle_input}></textarea>
 </div>
 

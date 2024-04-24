@@ -1,30 +1,56 @@
 <script>
     import { notify } from '/src/components/notification_store'
-    import { shoot_confetti } from "/src/components/confetti_store"
+    import { writable } from "svelte/store";
+    import {shoot_confetti} from "/src/components/confetti_store"
+    import Main from "/src/items/Main.svelte";
+    import H1 from "/src/items/H1.svelte";
+    import H2 from "/src/items/H2.svelte";
+    import P from "/src/items/P.svelte";
+    import A from "/src/items/A.svelte";
+    import TextInput from "/src/items/TextInput.svelte";
+    import TextArea from "/src/items/TextArea.svelte";
+	import Submit from "/src/items/Submit.svelte";
+	import SelectionInput from "../../items/SelectionInput.svelte";
+	import CheckboxInput from "../../items/CheckboxInput.svelte";
+	import FileInput from '../../items/FileInput.svelte';
 
-    let faculties = []
-
-    class File{
-        constructor(file=-1){
-            this.file = file;
+    class Resource{
+        constructor(file){
+            this.file_store = writable(file);
+            this.file = file
+            
+            this.file_store.subscribe(new_file => this.file = new_file)
+        
         }
     }
 
     let personal_details = {}
-    let files = [];
+    let resources = [];
+
+    let name = writable('')
+    let email = writable('')
+    let domain = writable('')
+    let usthb_student = writable(false)
+    let additional = writable('')
+
+    name.subscribe(value => personal_details.name = value)
+    email.subscribe(value => personal_details.email = value)
+    domain.subscribe(value => personal_details.domain = value)
+    usthb_student.subscribe(value => personal_details.usthb_student = value)
+    additional.subscribe(value => personal_details.additional = value)
     
     let string_trunc = (string, length) => string.length > length ? string.substr(0, length-3) + '...' : string;
 
-    // when files are dropped or added, we break them down into individual files
-    let add_file = (file=-1)=>{
-        let copy_file = new File(file)
-        if(files.length > 0){
+    // files
+    let add_resource = (file=-1)=>{
+        let new_resource = new Resource(file)
+        if(resources.length > 0){
             // copy last files settings
         }
         
-        files = [...files, copy_file];
+        resources = [...resources, new_resource]
     }
-    let handle_file_prompt = ()=>{
+    let prompt_for_file = ()=>{
         let input = document.createElement('input');
         input.type = 'file';
         input.multiple = true;
@@ -34,7 +60,7 @@
             for (const file of new_files) {
                 let data_transfer = new DataTransfer();
                 data_transfer.items.add(file);
-                add_file(data_transfer.files);
+                add_resource(data_transfer.files);
             }
         }
     }
@@ -45,14 +71,15 @@
         for (const file of files) {
             let data_transfer = new DataTransfer();
             data_transfer.items.add(file);
-            add_file(data_transfer.files);
+            add_resource(data_transfer.files);
         }
     }
 
     let formElement;
     let submitting = false;
-    
+
     let submit = async (e) => {
+        console.log(personal_details, files)
         if(files.length === 0) {
             notify({state:'error', message:'please upload atleast one file', duration: 30*1000})
 
@@ -104,6 +131,10 @@
             }
         }
     }
+
+    let delte_resource = (resource) => {
+        resources = resources.filter(r => r != resource);
+    }
     
     let uploading_dots = '';
     setInterval(()=>{
@@ -111,142 +142,78 @@
     }, 500);
 </script>
 
-<main>
-    <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>
-    <p>
-        &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have. If you can't find a module or faculty that is because the website is still in its early phase and we're looking for people to help us fill them up, you can help us with that on the <a href="/feedback/">feedback</a> page.
-    </p>
+<Main>
+    <H1><span>BiB-USTHB</span> contribution page&nbsp;</H1>
+    <P>
+       &ensp; This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have. If you can't find a module or faculty that is because the website is still in its early phase and we're looking for people to help us fill them up, you can help us with that on the <A href="/feedback/">feedback</A> page.
+    </P>
     <form bind:this={formElement} on:submit={submit}>
-        <h2>personal details</h2>
-        <p>
-            adding personal details is optional but that is how we can get back to you on updates.
-        </p>
+        
+        <H2>personal details</H2>
+        <P>
+            &ensp; adding personal details is optional but that is how we can get back to you on updates.
+        </P>
         <div class="personal-detail-container">
-            <div class="text-input">
-                <label for="name">name:</label>
-                <input type="text" id="name" name="name" bind:value={personal_details.name}>
-            </div>
-            <div class="email-input">
-                <label for="email">email:</label>
-                <input type="email" id="email" name="email" bind:value={personal_details.email}>
-            </div>
-            <div class="checkbox-input">
-                <label for="usthb_student">are you a USTHB student: </label>
-                <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
-            </div>
-            <div class="text-input">
-                <label for="domain">study field:</label>
-                <input type="text" id="domain" name="domain" bind:value={personal_details.domain}>
-            </div>
+            <TextInput label='name' store={name} />
+            <TextInput label='email' store={email} style="grid-row:2/3; grid-column:1/2" />
+            <CheckboxInput label="are you a usthb student" store={usthb_student} />
+            <TextInput label='study field' store={domain} />
         </div>
-        <h2>file uploads</h2>
-        <!-- <button type="button" on:click={()=>{
-            console.log(files);
-        }}>log</button> -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="file-container">
-            {#each files as file, index}
-            <div class="file">
 
-                <div class="file-input">
-                    <label for="file-{index}">file:
-                        {#if !file.file[0]}<span>upload</span>
-                        {:else}
-                            <span>change</span>
-                            {#if file.file[0].name.length > 83}
-                                <div>{file.file[0].name.slice(0, 80)}...</div>
-                            {:else}
-                                <div>{file.file[0].name}</div>
-                            {/if}
-                        {/if}
-                    </label>
-                    <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file}>
-                </div>
-                <div class="select-input">
-                    <label for="file_faculty">faculty:</label>
-                    <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                        {#each faculties as faculty}
-                            <option value={faculty.id}>{ string_trunc(faculty.name, 30) }</option>
-                        {/each}
-                    </select>
-                </div>
+        <H2>file uploads</H2>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="resources-container">
+            
+            {#each resources as resource, index (resource)}
+            <div class="resource">
+                <FileInput store={resource.file_store} id={index} />
+                <SelectionInput options={[1,2,3]} />
+                <SelectionInput options={[1,2,3]} />
+                <SelectionInput options={[1,2,3]} />
+                <SelectionInput options={[1,2,3]} />
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <div class="file-delete" on:click={()=>{
-                    files.pop()
-                    files = [...files];
-                }}>delete</div>
+                <div class="resource-delete" on:click={() => delte_resource(resource)}>delete</div>
             </div>
             {/each}
+
             <div
                 on:dragover="{(e) => e.preventDefault()}"
                 on:dragenter="{(e) => e.preventDefault()}"
                 on:drop="{handle_file_drop}"
-                class="file-drop"
+                class="resource-drop"
             >
                 <span><div>
                     <img src="../images/upload.png" alt="" />
                     <p>drag and drop files</p>
-                    <p>or click <button type="button" on:click={handle_file_prompt}>here</button> to upload</p>
+                    <p>
+                        or click
+                        <button type="button" on:click={prompt_for_file}>here</button>
+                        to upload
+                    </p>
                 </div></span>
             </div>
+
         </div>
-        <h2>submission</h2>
-        <p>
-            &ensp; your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
-        </p>
-        <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
-        {#if submitting}
-            <button type="submit" disabled>
-                uploading{uploading_dots}
-            </button>
-        {:else}
-            <button type="submit">
-                submit
-            </button>
-        {/if}
+        <H2>submission</H2>
+        <P>
+            &ensp; your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <A href="../help" target="_blank">help</A> page.
+        </P>
+        
+        <TextArea label="" placeholder="is there anything you would like to add" rows="4" store={additional}/>
+        <br>
+        {#if submitting} <Submit disabled={true}> uploading{uploading_dots} </Submit>
+        {:else} <Submit> submit </Submit>{/if}
+
+
+        <!-- <button type="button" on:click={()=>{
+            console.log(resources, personal_details);
+        }}>log</button> -->
     </form>
-</main>
+</Main>
 
 <style>
-    main {
-        padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 187px);
-        font-family: var(--main-font);
-        background-color: var(--background-0);
-        color: var(--text-color);
-    }
-    h1{
-        margin: 0;
-        padding: 20px 0px 10px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-1);
-        color: var(--title-color);
-    }
-    h2{
-        margin: 10px 0px 10px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-2);
-        color: var(--title-color);
-    }
-    p{
-        margin: 0;
-        font-size: var(--text-1);
-        word-spacing: 1px;
-    }
-    a{
-        color: var(--brand-color);
-        text-decoration: underline;
-    }
     .personal-detail-container{
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -257,81 +224,27 @@
         box-shadow: var(--window-shadow);
         margin-top: 10px;
     }
-    .email-input{
-        grid-area: 2 / 1 / 3 / 2;
-    }
     @media (max-width: 925px), (orientation: portrait) {
         .personal-detail-container{
             grid-template-columns: 1fr;
         }
     }
-    .text-input, .email-input{
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-    }
-    .checkbox-input{
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .text-input input, .email-input input{
-        border: none;
-        border-bottom: 2px solid var(--brand-color);
-        font-family: var(--main-font);
-        font-size: var(--text-1);
-        padding: 5px 5px 0 10px;
-        border-radius: calc(var(--element-radius)/2) calc(var(--element-radius)/2) 0 0;
-        background-color: var(--background-2);
-        color: var(--highlight-color);
-    }
-    .text-input label, .email-input label{
-        padding: 5px 0 0 0;
-    }
-    .text-input input:focus, .email-input input:focus{
-        outline: none;
-    }
-    .file-input {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-    }
-    .file-input input{
-        display: none;
-    }
-    .file-input label span{
-        padding: 0 5px;
-        margin-left: 5px;
-        border: solid 1px #444;
-        border-radius: 8px;
-        cursor: pointer;
-        user-select: none;
-        font-weight: 400;
-        
-    }
-    .file-input label span:hover{
-        text-decoration: underline;
-    }
-    .file-input label div{
-        display: inline;
-        font-weight: 400;
-    }
-    .file-container{
+    .resources-container{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 20px;
     }
     @media (max-width: 1200px) {
-        .file-container{
+        .resources-container{
             grid-template-columns: 1fr 1fr;
         }
     }
     @media (max-width: 800px), (orientation: portrait) {
-        .file-container{
+        .resources-container{
             grid-template-columns: 1fr;
         }
     }
-    .file{
+    .resource{
         padding: 20px 20px 50px 20px;
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
@@ -343,29 +256,7 @@
         overflow: hidden;
         min-height: 230px;
     }
-    .file label{
-        font-weight: 500;
-    }
-    .file div{
-        padding-bottom: 5px;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        height: fit-content;
-    }
-    .select-input{
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-        overflow: hidden;
-    }
-    .select-input select{
-        max-width: 100%;
-        box-sizing: border-box;
-        outline: none;
-        border: solid 1px #444;
-        border-radius: 8px;
-    }
-    .file-delete{
+    .resource-delete{
         position: absolute;
         bottom: 5px;
         right: 10px;
@@ -376,17 +267,7 @@
         user-select: none;
         font-weight: 500;
     }
-    /* .file-text{
-        display: flex;
-        gap: 10px;
-    }
-    .file-text input{
-        border-radius: var(--element-radius);
-    }
-    .file-text input:focus{
-        outline: none;
-    } */
-    .file-drop{
+    .resource-drop{
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         background-color: var(--background-1);
@@ -395,17 +276,17 @@
         padding: 15px;
         color: var(--text-color-weak);
     }
-    .file-drop span, .file-drop div{
+    .resource-drop span, .resource-drop div{
         pointer-events: none;
     }
-    .file-drop span{
+    .resource-drop span{
         border: var(--brand-color) 2px dashed;
         border-radius: var(--element-radius);
         display: block;
         widows: 100%;
         height: 100%;
     }
-    .file-drop div{
+    .resource-drop div{
         width: 100%;
         height: 100%;
         display: flex;
@@ -414,14 +295,14 @@
         justify-content: center;
         gap: 10px;
     }
-    .file-drop p{
+    .resource-drop p{
         margin: 0;
     }
-    .file-drop img{
+    .resource-drop img{
         height: 80px;
         filter: var(--icon-filter-weak);
     }
-    .file-drop button{
+    .resource-drop button{
         border-radius: 8px;
         border: solid 1px var(--text-color-weak);
         padding: 0 5px;
@@ -432,40 +313,8 @@
         pointer-events: all !important;
         background-color: var(--background-3);
     }
-    .file-drop button:hover{
+    .resource-drop button:hover{
         text-decoration: underline;
     }
-    textarea{
-        margin-top: 10px;
-        width: 100%;
-        max-width: 100%;
-        background-color: var(--background-1);
-        border-radius: var(--element-radius);
-        color: var(--highlight-color);
-        font-family: var(--main-font);
-        font-size: var(--text-1);
-        padding: 10px;
-        border-color: var(--text-color-weak);
-    }
-    textarea:focus{
-        outline: none;
-    }
-    textarea::placeholder{
-        color: var(--text-color-weak);
-    }
-    button[type="submit"]{
-        padding: 10px 20px;
-        border: none;
-        border-radius: var(--element-radius);
-        box-shadow: var(--weak-shadow);
-        cursor: pointer;
-        user-select: none;
-        font-size: var(--text-1);
-        color: var(--background-0);
-        font-weight: 600;
-        margin-top: 20px;
-        margin-left: auto;
-        display: block;
-        background-color: var(--brand-color);
-    }
+
 </style>

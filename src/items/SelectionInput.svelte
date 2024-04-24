@@ -1,12 +1,19 @@
 <script>
+	import { writable } from "svelte/store";
+
     export let label = ''
     export let options = []
     export let style = ''
+    export let store = writable('');
+
+    let handle_input = e => {
+        store.set(e.target.value)
+    }
 </script>
 
 <div style={style}>
     <label for={label}>topic:</label>
-    <select name={label} id={label} value="" required>
+    <select name={label} id={label} value="" on:input={handle_input} required>
     {#each options as option}
         <option value={option}>{option}</option>
     {/each}
@@ -19,6 +26,7 @@
         grid-template-columns: auto 1fr;
         gap: 10px;
         overflow: hidden;
+        margin-bottom: 3px;
     }
     select{
         max-width: 100%;
