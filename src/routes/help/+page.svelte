@@ -38,6 +38,7 @@
         <P>
             &ensp; BiB-USTHB uses modern web technology to offer a fast, easy to use application. You can download the app on your phone or computer by following these steps:
         </P>
+        <!-- i should change this -->
         <div id="container">
             <div class="item">
                 <H3>On Mobile:</H3>
