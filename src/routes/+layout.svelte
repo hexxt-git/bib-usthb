@@ -22,7 +22,8 @@
 
     import { inject } from '@vercel/analytics'
     inject();
-
+    
+    /*
     onMount(()=>{
         setTimeout(()=>
             notify({
@@ -38,7 +39,7 @@
                 duration: 20*1000
             }),
         2000);
-    });
+    });*/
 
 </script>
 

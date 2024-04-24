@@ -1,3 +1,4 @@
+<!-- this should be prerendered to an image too -->
 <script> /* MAKE SURE THE PARENT ELEMENT DISPLAY IS RELATIVE*/
     export let opacity = 8;
     export let size = 16;

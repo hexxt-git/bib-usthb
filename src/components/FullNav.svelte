@@ -10,28 +10,24 @@
     
     <hr style="animation-delay: 0ms;">
 
-    <a on:click={close_nav} href="/#faculties-container">Faculties</a>
-    
-    <hr style="animation-delay: 150ms;">
-
     <a on:click={close_nav} href="/contribute/">Contribute</a>
-    
-    <hr style="animation-delay: 300ms;">
+
+    <hr style="animation-delay: 150ms;">
 
     <a on:click={close_nav} href="/feedback/">Feedback</a>
     
-    <hr style="animation-delay: 450ms;">
-
+    <hr style="animation-delay: 300ms;">
+    
     <!-- svelte-ignore a11y-missing-attribute -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
     <a on:keypress={switch_theme} on:click={switch_theme} tabindex="0">themes</a>
     
-    <hr style="animation-delay: 600ms;">
+    <hr style="animation-delay: 450ms;">
 
     <a on:click={close_nav} href="/help/#app">app download</a>
 
-    <hr style="animation-delay: 800ms;">
+    <hr style="animation-delay: 600ms;">
 
     <a on:click={close_nav} href="/help/">Help</a>
 </nav>

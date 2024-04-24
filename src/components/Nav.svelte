@@ -1,6 +1,6 @@
 <script>
     import Bubbles from "./subcomponents/Bubbles.svelte";
-    import { theme_store, switch_theme } from "./theme_store.js";
+    import { switch_theme, next_theme } from "./theme_store.js";
     import { close_nav, switch_nav } from "./fullnav_store";
 
     let try_close_nav = e => {
@@ -16,12 +16,11 @@
     <a id="nav-logo" href="/">BiB-USTHB</a>
     
     <div id="desktop-links">
-        <a href="/#faculties-page">faculties</a>
-        <!-- <a href="/#footer">creators</a> -->
+        <a href="/#">files</a>
         <a href="/help">help</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span on:click={switch_theme}> {$theme_store} mode </span>
+        <span on:click={switch_theme}> {$next_theme} mode </span>
     </div>
     
     <div id="right">

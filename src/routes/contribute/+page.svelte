@@ -1,59 +1,38 @@
 <script>
-    import {onMount} from 'svelte';
-    import {load, upload} from "/src/components/api-calls";
-    import {notify, delete_notification} from '/src/components/notification_store'
+    import { onMount } from 'svelte';
+    //import {load, upload} from "/src/components/api-calls";
+    import { notify } from '/src/components/notification_store'
     import { Confetti } from "svelte-confetti"
 
     let faculties = []
-    onMount(async ()=>{
-        try{
-            faculties = await load('https://walrus-app-mwr59.ondigitalocean.app/api/fac/all')
-            faculties = faculties.map(fac => {
-                fac.groups = fac.modules?.reduce((acc, module) => {
-                    if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
-                    return acc;
-                }, []);
-                return fac;
-            });
-        } catch (error) {
-            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 30*1000});
-        }
-        console.log(faculties);
-    });
 
     class File{
-        constructor(file=-1, faculty=-1, group=-1, module=-1, type=-1){
+        constructor(file=-1){
             this.file = file;
-            this.faculty = faculty;
-            this.group = group;
-            this.module = module;
-            this.type = type // exam or lesson ..
-            //console.log(this)
         }
     }
 
     let personal_details = {}
     let files = [];
     
+    let string_trunc = (string, length) => string.length > length ? string.substr(0, length-3) + '...' : string;
+
+    // when files are dropped or added, we break them down into individual files
     let add_file = (file=-1)=>{
-        let copy_file = files.length != 0 ? new File(
-            file,
-            files[files.length - 1].faculty,
-            files[files.length - 1].group,
-            files[files.length - 1].module,
-            files[files.length - 1].type,
-        ): new File(file);
+        let copy_file = new File(file)
+        if(files.length > 0){
+            // copy last files settings
+        }
         
         files = [...files, copy_file];
     }
-    let prompt_new_file = ()=>{
+    let handle_file_prompt = ()=>{
         let input = document.createElement('input');
         input.type = 'file';
         input.multiple = true;
         input.click();
         input.onchange = (e)=>{
             let new_files = e.target.files;
-            //console.log(new_files);
             for (const file of new_files) {
                 let data_transfer = new DataTransfer();
                 data_transfer.items.add(file);
@@ -61,12 +40,11 @@
             }
         }
     }
-    let handleDrop = (e)=>{
+    let handle_file_drop = (e)=>{
         e.preventDefault();
         let dt = e.dataTransfer;
         let files = dt.files;
-        //console.log(e.dataTransfer.files)
-        for (const file of files) { // this breaks them to lists of files so it works with svelte bind
+        for (const file of files) {
             let data_transfer = new DataTransfer();
             data_transfer.items.add(file);
             add_file(data_transfer.files);
@@ -76,6 +54,7 @@
     let formElement;
     let submitting = false;
     let confetti = false;
+    
     let submit = async (e) => {
         if(files.length === 0) {
             notify({state:'error', message:'please upload atleast one file', duration: 30*1000})
@@ -92,9 +71,11 @@
             let allok = true;
 
             let successfull_uploads = []
+            
             for (const file of files) {
-                console.log(file, personal_details)
+                console.log('trying to upload:', file, personal_details)
                 if(!file.file.length) continue;
+
                 try {
                     let response =  await upload(file, personal_details);
                     
@@ -108,26 +89,21 @@
                         successfull_uploads.push(file);
                         notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 30*1000})
                     }
-
                 } catch (error) {
                     allok = false;
-                    // response.json().then(data => { // this caused a fatal error once so i disabled it
-                    //     console.log(file.file[0].name, data);
-                    // });
+                    console.error(error)
                     notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
                 }
             }
             
             submitting = false;
+            files = files.filter(file => !successfull_uploads.includes(file));
             if(allok){
                 notify({state: 'success', message: 'all files uploaded successfully', duration: 30*1000})
                 notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 30*1000})
-                files = files.filter(file => !successfull_uploads.includes(file));
                 confetti = true;
-                setTimeout(()=>{
-                    confetti = false;
-                }, 8000);
-            } else if(files.length > 1){
+                setTimeout(_=>{confetti = false}, 8000);
+            } else {
                 notify({state: 'error', message: 'some files failed to upload', duration: 30*1000});
             }
         }
@@ -138,6 +114,7 @@
         uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
     }, 500);
 </script>
+
 {#if confetti}
 <div style="
     position: fixed;
@@ -205,60 +182,19 @@
                     </label>
                     <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file}>
                 </div>
-                {#if file.file !== -1}
-                    <div class="select-input">
-                        <label for="file_faculty">faculty:</label>
-                        <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                            {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
-                                <option value={faculty.id}>{
-                                    faculty.name.substring(0, 30) +
-                                    (faculty.name.length>27?'...':'')
-                                }</option>
-                            {/each}
-                        </select>
-                    </div>
-                    {#if file.faculty !== -1}
-                        {#if (faculties.find(fac => fac.id === file.faculty)?.groups).length > 2}
-                        <div class="select-input">
-                            <label for="file_module">module:</label>
-                            <select name="file_module" id="file_module" bind:value={file.group} required>
-                                {#each (faculties.find(fac => fac.id === file.faculty)?.groups||[]).filter(group => group.short != 'other') as group}
-                                    <option value={group.id}>{group.name}</option>
-                                {/each}
-                            </select>
-                        </div>
-                            {#if file.group !== -1}
-                            <div class="select-input">
-                                <label for="file_module">semester:</label>
-                                <select name="file_module" id="file_module" bind:value={file.module} required>
-                                    {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
-                                        <option value={module.id}>{module.name}</option>
-                                    {/each}
-                                </select>
-                            </div>
-                                {#if file.module !== -1}
-                                <div class="select-input">
-                                    <label for="file_type">type:</label>
-                                    <select name="file_type" id="file_type" bind:value={file.type} required>
-                                        <option value="exam">exam</option>
-                                        <option value="cour">lesson</option>
-                                        <option value="td">directed work (TD)</option>
-                                        <option value="tp">practical work (TP)</option>
-                                        <option value="other">other</option>
-                                    </select>
-                                </div>
-                                {/if}
-                            {/if}
-                        {:else}
-                            <p style="color: #e23131;">no modules have been inserted to this faculty yet. you can help us fill it up on the <a href="/feedback/" target="_blank" style="color: #e23131;">feedback</a> page</p>
-                        {/if}
-                    {/if}
-                {/if}
+                <div class="select-input">
+                    <label for="file_faculty">faculty:</label>
+                    <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
+                        {#each faculties as faculty}
+                            <option value={faculty.id}>{ string_trunc(faculty.name, 30) }</option>
+                        {/each}
+                    </select>
+                </div>
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <div class="file-delete" on:click={()=>{
-                    files.splice(index, 1);
+                    files.pop()
                     files = [...files];
                 }}>delete</div>
             </div>
@@ -266,13 +202,13 @@
             <div
                 on:dragover="{(e) => e.preventDefault()}"
                 on:dragenter="{(e) => e.preventDefault()}"
-                on:drop="{handleDrop}"
+                on:drop="{handle_file_drop}"
                 class="file-drop"
             >
                 <span><div>
                     <img src="../images/upload.png" alt="" />
                     <p>drag and drop files</p>
-                    <p>or click <button type="button" on:click={prompt_new_file}>here</button> to upload</p>
+                    <p>or click <button type="button" on:click={handle_file_prompt}>here</button> to upload</p>
                 </div></span>
             </div>
         </div>
