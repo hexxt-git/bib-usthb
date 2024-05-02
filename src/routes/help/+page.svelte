@@ -137,6 +137,7 @@
     }
     img{
         max-height: 50vh;
+        max-width: calc(100% - 40px);
     }
     .image-container{
         display: flex;
