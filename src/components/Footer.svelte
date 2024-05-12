@@ -17,11 +17,11 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        gap: 5px;
+        gap: 0;
         background-color: var(--background-1);
         box-shadow: var(--strong-shadow);
         overflow: hidden;
-        color: var(--highlight-color);
+        color: var(--text-color);
         font-family: var(--main-font);
         font-size: var(--text-1);
     }

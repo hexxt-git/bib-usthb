@@ -201,7 +201,7 @@
     <style>
         :root{
             --brand-color: #4381df;
-            --brand-color-weak: #223146;
+            --brand-color-weak: #1f2f44;
             --brand-color-weaker: #16537c;
 
             --success-color: #29af1c;
@@ -209,12 +209,12 @@
             --info-color: #4c58c0;
             
             --background-0: #171e2c;
-            --background-1: #1d2736;
+            --background-1: #1b2636;
             --background-2: #1c2b3f;
             --background-3: #282c30;
-            --nav-background: #0e1120f8;
+            --nav-background: #200e0ef8;
             
-            --strong-shadow: #8882 0px 0px 50px;
+            --strong-shadow: #6662 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
             --weak-shadow: #0003 0px 0px 14px;
             --window-shadow: #364f7522 0 5px 10px;
@@ -283,7 +283,7 @@
             --background-3: #2f2b2a;
             --nav-background: #0e0c0cf5;
             
-            --strong-shadow: #8882 0px 0px 50px;
+            --strong-shadow: #9662 0px 0px 50px;
             --medium-shadow: #0002 0px 5px 10px;
             --weak-shadow: #0003 0px 0px 14px;
             --window-shadow: #4442 0px 5px 10px;
