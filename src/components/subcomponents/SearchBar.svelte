@@ -1,12 +1,19 @@
 <script>
 	import { search } from "../api-calls";
     let query = "";
-    
+    const placeholderbase = "search for files and modules"
+    let placeholder = 'se'
+    let i = 0;
+    setInterval(() => {
+        placeholder = placeholderbase.slice(0, i)
+        i++;
+        if(i > placeholderbase.length + 50) i = 0;
+    }, 50)
 </script>
 
 <div id="container">
     <div class="input">
-        <input type="text" bind:value={query} placeholder="search for files and modules">
+        <input type="text" bind:value={query} placeholder={placeholder}>
         {#if query == ''}
         <img src="images/send.png" alt="">
         {/if}
