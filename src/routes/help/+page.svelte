@@ -1,10 +1,10 @@
 <script>
-    import Main from "/src/items/Main.svelte";
-    import H1 from "/src/items/H1.svelte";
-    import H2 from "/src/items/H2.svelte";
-    import H3 from "/src/items/H3.svelte";
-    import P from "/src/items/P.svelte";
-    import A from "/src/items/A.svelte";
+    import Main from "$lib/items/Main.svelte";
+    import H1 from "$lib/items/H1.svelte";
+    import H2 from "$lib/items/H2.svelte";
+    import H3 from "$lib/items/H3.svelte";
+    import P from "$lib/items/P.svelte";
+    import A from "$lib/items/A.svelte";
 </script>
 
 <Main>

@@ -1,11 +1,11 @@
 <script>
     import { onMount } from "svelte";
 
-    import NotificationSystem from "/src/components/NotificationSystem.svelte";
-    import ConfettiSystem from "/src/components/ConfettiSystem.svelte";
-    import LoadingScreen from "/src/components/LoadingScreen.svelte";
-    import Nav from "/src/components/Nav.svelte";
-    import Footer from "/src/components/Footer.svelte";
+    import NotificationSystem from "$lib/components/NotificationSystem.svelte";
+    import ConfettiSystem from "$lib/components/ConfettiSystem.svelte";
+    import LoadingScreen from "$lib/components/LoadingScreen.svelte";
+    import Nav from "$lib/components/Nav.svelte";
+    import Footer from "$lib/components/Footer.svelte";
 
     let mounted = false;
 
@@ -20,7 +20,7 @@
     inject();
 
     /*
-    import { notify } from "/src/components/notification_store.js";
+    import { notify } from "$lib/components/notification_store.js";
     onMount(()=>{
         setTimeout(()=>
             notify({

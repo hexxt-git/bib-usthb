@@ -1,6 +1,6 @@
 <script>
     import { Confetti } from "svelte-confetti"
-    import { confetti_array } from "/src/components/confetti_store"
+    import { confetti_array } from "$lib/components/confetti_store"
 </script>
 
 {#each $confetti_array as confetti (confetti.id)}

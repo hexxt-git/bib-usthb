@@ -1,14 +1,14 @@
 <script>
     import { writable } from "svelte/store";
-    import {shoot_confetti} from "/src/components/confetti_store"
-    import Main from "/src/items/Main.svelte";
-    import H1 from "/src/items/H1.svelte";
-    import H2 from "/src/items/H2.svelte";
-    import P from "/src/items/P.svelte";
-    import A from "/src/items/A.svelte";
-    import TextInput from "/src/items/TextInput.svelte";
-    import TextArea from "/src/items/TextArea.svelte";
-	import Submit from "/src/items/Submit.svelte";
+    import {shoot_confetti} from "$lib/components/confetti_store"
+    import Main from "$lib/items/Main.svelte";
+    import H1 from "$lib/items/H1.svelte";
+    import H2 from "$lib/items/H2.svelte";
+    import P from "$lib/items/P.svelte";
+    import A from "$lib/items/A.svelte";
+    import TextInput from "$lib/items/TextInput.svelte";
+    import TextArea from "$lib/items/TextArea.svelte";
+	import Submit from "$lib/items/Submit.svelte";
 	import SelectionInput from "../../items/SelectionInput.svelte";
 	import CheckboxInput from "../../items/CheckboxInput.svelte";
 

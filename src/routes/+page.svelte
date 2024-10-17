@@ -1,6 +1,6 @@
 <script>
-    import FileSystem from "/src/components/FileSystem.svelte";
-    import Welcome from "/src/components/Welcome.svelte";
+    import FileSystem from "$lib/components/FileSystem.svelte";
+    import Welcome from "$lib/components/Welcome.svelte";
 
     /* generate the icons with npx @vite-pwa/assets-generator --preset minimal .\static\favicon.png */
 </script>

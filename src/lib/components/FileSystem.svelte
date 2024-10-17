@@ -1,5 +1,5 @@
 <script>
-    import File from '/src/components/subcomponents/File.svelte'
+    import File from '$lib/components/subcomponents/File.svelte'
 </script>
 
 <main>

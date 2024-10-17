@@ -1,5 +1,4 @@
 <script>
-	import { search } from "../api-calls";
     let query = "";
     const placeholderbase = "search for files and modules"
     let placeholder = 'se'
@@ -9,6 +8,9 @@
         i++;
         if(i > placeholderbase.length + 50) i = 0;
     }, 50)
+    const search = (text, type) => {
+        console.log(text, type)
+    }
 </script>
 
 <div id="container">
