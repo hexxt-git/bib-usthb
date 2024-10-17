@@ -27,17 +27,17 @@
         setTimeout(()=>
             notify({
                 state: "notification",
-                message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
+                message: "The website is currently down, we are very sorry for the inconvenience. the new version will be up soon",
                 duration: 20*1000
             }),
         1000);
-        setTimeout(()=>
-            notify({
-                state: "notification",
-                message: "if you notice a module or faculty missing, please contact us through the support page bib-usthb.com/feedback",
-                duration: 20*1000
-            }),
-        2000);
+        // setTimeout(()=>
+        //     notify({
+        //         state: "notification",
+        //         message: "if you notice a module or faculty missing, please contact us through the support page bib-usthb.com/feedback",
+        //         duration: 20*1000
+        //     }),
+        // 2000);
     });
 
 </script>
