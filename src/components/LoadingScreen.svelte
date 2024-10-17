@@ -10,12 +10,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
         font-family: Arial;
         font-size: 30px;
         padding: 20px;
         padding-bottom: 30vh;
         text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100vw;
+        height: 100vh;
     }
     span{
         display: inline-block;

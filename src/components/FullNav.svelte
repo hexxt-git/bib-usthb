@@ -1,5 +1,4 @@
 <script>
-	import { switch_theme } from "./theme_store";
     import { close_nav } from "./fullnav_store"
 </script>
 
@@ -17,17 +16,10 @@
     <a on:click={close_nav} href="/feedback/">Feedback</a>
     
     <hr style="animation-delay: 300ms;">
-    
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-    <a on:keypress={switch_theme} on:click={switch_theme} tabindex="0">themes</a>
-    
-    <hr style="animation-delay: 450ms;">
 
     <a on:click={close_nav} href="/help/#app">app download</a>
 
-    <hr style="animation-delay: 600ms;">
+    <hr style="animation-delay: 450ms;">
 
     <a on:click={close_nav} href="/help/">Help</a>
 </nav>

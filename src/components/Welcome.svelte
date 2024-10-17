@@ -1,6 +1,19 @@
 <script>
     import SearchBar from "./subcomponents/SearchBar.svelte";
-    $: use_small_background = window?.innerWidth < window?.innerHeight;
+    let use_small_background = false
+    import { onMount } from "svelte";
+
+    function updateBackground() {
+        use_small_background = window.innerWidth < window.innerHeight;
+    }
+
+    onMount(() => {
+        updateBackground();
+        window.addEventListener('resize', updateBackground);
+        return () => {
+            window.removeEventListener('resize', updateBackground);
+        };
+    });
 </script>
 <main>
     <div id="background" style="background-image: url(/images/FractalBackground{use_small_background ? 'Small2':'Edited'}.png)"></div>
