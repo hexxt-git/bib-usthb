@@ -33,7 +33,8 @@
         font-family: var(--main-font);
         font-size: var(--text-1);
         padding: 10px;
-        border-color: var(--text-color-weak);
+        border: none;
+        border-bottom: 3px solid var(--brand-color);
     }
     textarea::placeholder{
         color: var(--text-color-weak);

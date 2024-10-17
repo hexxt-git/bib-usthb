@@ -27,14 +27,14 @@
     const feedback_types = [
         "website errors",
         "corrupted/missing module",
-        "inappropriately categoraized module",
+        "inappropriately categorized module",
         "corrupted/missing file",
-        "inappropriately categoraized file",
+        "inappropriately categorized file",
         "website design (UI)",
         "website layout (UX)",
         "contribution to the website",
         "additional feature requests",
-        "words of thanks and appretiation 🤗",
+        "words of thanks and appreciation 🤗",
         "other"
     ]
 

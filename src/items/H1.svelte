@@ -10,7 +10,7 @@
 <style>
     h1{
         margin: 0;
-        padding: 20px 0px 0px 0px;
+        padding: 25px 0px 0px 0px;
         text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;

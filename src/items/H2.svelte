@@ -9,7 +9,7 @@
 
 <style>
     h2{
-        margin: 10px 0px 0px 0px;
+        margin: 15px 0px 0px 0px;
         text-decoration: var(--brand-color) underline;
         user-select: none;
         cursor: pointer;

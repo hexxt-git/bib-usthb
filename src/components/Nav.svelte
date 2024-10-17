@@ -1,36 +1,20 @@
 <script>
     import Bubbles from "./subcomponents/Bubbles.svelte";
-    import { close_nav, switch_nav } from "./fullnav_store";
-
-    let try_close_nav = e => {
-        if(e.target.id !== 'fullnav-toggle') close_nav()
-    }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<nav on:click={try_close_nav}>
-    <Bubbles z_index=-1 width={150} height={10} opacity=7 />
-    
+<nav>
+    <Bubbles z_index="-1" width={150} height={10} opacity="7" />
+
     <a id="nav-logo" href="/">BiB-USTHB</a>
-    
-    <div id="desktop-links">
-        <a href="/#">files</a>
-        <a href="/help">help</a>
-    </div>
-    
+
     <div id="right">
-        <a id="nav-contribute" href="/contribute/">contribute</a>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <button id="fullnav-toggle" on:click={switch_nav}>
-            ≡
-        </button>
+        <a class="nav-button" href="/help">?</a>
+        <a class="nav-button" href="/contribute">contribute</a>
     </div>
 </nav>
 
 <style>
-    nav{
+    nav {
         z-index: 5;
         position: sticky;
         top: 0;
@@ -47,23 +31,7 @@
         box-shadow: var(--strong-shadow);
         overflow: hidden;
     }
-    #desktop-links{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-    }
-    a, span{
-        cursor: pointer;
-        color: var(--highlight-color);
-        font-size: var(--text-0);
-        text-decoration: transparent underline 1px;
-        transition: text-decoration 130ms ease-in-out;
-    }
-    a:hover, span:hover{
-        text-decoration: underline 2px;
-    }
-    #nav-logo{
+    #nav-logo {
         min-width: 210px;
         color: var(--brand-color);
         font-family: var(--title-font);
@@ -74,11 +42,15 @@
         text-decoration: none;
         padding-top: 3px;
     }
-    #nav-contribute{
+    #right{
+        display: flex;
+        gap: 10px;
+    }
+    .nav-button {
         color: var(--background-0);
         background-color: var(--brand-color);
-        width: 140px;
         height: 40px;
+        padding: 0 15px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -90,31 +62,8 @@
         font-size: var(--text-0);
         letter-spacing: 1px;
     }
-    #fullnav-toggle{
-        color: var(--background-0);
-        background-color: var(--brand-color);
-        border-radius: var(--element-radius);
-        height: 40px;
-        width: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        user-select: none;
-        cursor: pointer;
-        font-size: 32px;
-        font-family: monospace;
-        padding-bottom: 2px;
-        border: none;
-    }
-    #right{
-        display: flex;
-        gap: 10px;
-    }
     @media (max-width: 800px), (max-aspect-ratio: 3/4) {
-        #desktop-links, #nav-contribute{
-            display: none;
-        }
-        nav{
+        nav {
             padding: 0 20px 0 30px;
         }
     }

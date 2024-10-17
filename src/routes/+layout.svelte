@@ -1,18 +1,16 @@
 <script>
     import { onMount } from "svelte";
-    import { fullnav } from "/src/components/fullnav_store.js";
 
     import NotificationSystem from "/src/components/NotificationSystem.svelte";
     import ConfettiSystem from "/src/components/ConfettiSystem.svelte";
     import LoadingScreen from "/src/components/LoadingScreen.svelte";
     import Nav from "/src/components/Nav.svelte";
     import Footer from "/src/components/Footer.svelte";
-    import FullNav from "/src/components/FullNav.svelte";
 
     let mounted = false;
 
     onMount(() => {
-        setTimeout(() => (mounted = true, 100));
+        setTimeout(() => ((mounted = true), 100));
     });
 
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
@@ -44,14 +42,14 @@
 {#if !mounted}
     <LoadingScreen />
 {/if}
+
 <Nav />
-{#if $fullnav}
-    <FullNav />
-{:else}
-    <NotificationSystem />
-    <ConfettiSystem />
-{/if}
+
+<NotificationSystem />
+<ConfettiSystem />
+
 <slot />
+
 <Footer />
 
 <style>
@@ -81,6 +79,7 @@
         --title-color: #ffffff;
         --first-title-color: #71abee;
         --highlight-color: #f7f7f7;
+        --search-glow: #3687f018;
 
         --title-font: "Rubik", sans-serif;
         --main-font: "Nunito", sans-serif;

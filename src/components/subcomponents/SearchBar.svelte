@@ -54,6 +54,7 @@
         text-align: start;
         color: var(--highlight-color);
         z-index: 2;
+        box-shadow: var(--search-glow) -4px 10px 10px;
     }
     @media screen and (max-width: 900px), screen and (orientation: portrait){
         #container{
@@ -81,6 +82,7 @@
     }
     input::placeholder{
         color: var(--first-title-color);
+        opacity: 1;
     }
     hr{
         margin: 5px 0;
