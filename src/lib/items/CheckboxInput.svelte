@@ -24,5 +24,14 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        font-size: var(--text-0);
+    }
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    label {
+        cursor: pointer;
     }
 </style>

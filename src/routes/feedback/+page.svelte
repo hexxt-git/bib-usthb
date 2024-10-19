@@ -9,8 +9,8 @@
     import TextInput from "$lib/items/TextInput.svelte";
     import TextArea from "$lib/items/TextArea.svelte";
 	import Submit from "$lib/items/Submit.svelte";
-	import SelectionInput from "../../items/SelectionInput.svelte";
-	import CheckboxInput from "../../items/CheckboxInput.svelte";
+	import SelectionInput from "$lib/items/SelectionInput.svelte";
+	import CheckboxInput from "$lib/items/CheckboxInput.svelte";
 
     let name = writable('')
     let email = writable('')

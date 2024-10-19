@@ -31,7 +31,7 @@
         border-radius: var(--element-radius);
         color: var(--highlight-color);
         font-family: var(--main-font);
-        font-size: var(--text-1);
+        font-size: var(--text-0);
         padding: 10px;
         border: none;
         border-bottom: 3px solid var(--brand-color);

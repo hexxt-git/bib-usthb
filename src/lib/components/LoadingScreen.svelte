@@ -1,10 +1,9 @@
-
 <main>
     <div>loading into bib-usthb <span>⚙️</span></div>
 </main>
 
 <style>
-    main{
+    main {
         background-color: #080808;
         color: #fff;
         display: flex;
@@ -13,16 +12,16 @@
         font-family: Arial;
         font-size: 30px;
         padding: 20px;
-        padding-bottom: 30vh;
         text-align: center;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
-        width: 100vw;
         height: 100vh;
+        width: 100vw;
+        z-index: 100;
+        box-sizing: border-box;
     }
-    span{
+    span {
         display: inline-block;
         animation: spin 1s infinite linear;
     }

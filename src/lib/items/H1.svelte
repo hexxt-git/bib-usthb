@@ -1,9 +1,10 @@
 <script>
     export let id = '';
     export let className = '';
+    export let style = ''
 </script>
 
-<h1 id={id} class={className}>
+<h1 id={id} class={className} {style}>
     <slot />
 </h1>
 

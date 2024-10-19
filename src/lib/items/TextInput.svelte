@@ -1,44 +1,63 @@
 <script>
-	import { writable } from "svelte/store";
+    import { writable } from "svelte/store";
 
-    export let label = '';
-    export let store = writable(0)
-    export let style = ''
+    export let label = "";
+    export let store = writable("");
+    export let value = "";
+    export let style = "";
+    export let placeholder = "";
 
-    let local_value = ''
 
-    const handle_input = e => {
-        store.set(e.target.value)
-    }
+    const handle_input = (e) => {
+        store.set(e.target.value);
+    };
 
-    store.subscribe(value => local_value = value)
+    store.subscribe((value) => (value = value));
+    export let onInput = () => {};
 </script>
 
-<div style={style}>
-    <label for={label}>{label}: </label>
-    <input type='text' name={label} id={label} bind:value={local_value} on:input={handle_input}>
+<div {style}>
+    <label for={label}>{label}{label ? ":" : ""}</label>
+    <input
+        type="text"
+        name={label}
+        id={label}
+        bind:value={value}
+        {placeholder}
+        on:input={(event) => {
+            handle_input(event);
+            onInput(event);
+        }}
+    />
 </div>
 
 <style>
-    div{
+    div {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 10px;
     }
-    label{
+    label {
         padding: 5px 0 0 0;
+        font-size: var(--text-0);
     }
-    input{
+    input {
         border: none;
         border-bottom: 2px solid var(--brand-color);
         font-family: var(--main-font);
         font-size: var(--text-1);
-        padding: 5px 5px 0 10px;
-        border-radius: calc(var(--element-radius)/2) calc(var(--element-radius)/2) 0 0;
+        padding: 5px 10px 2px 10px;
+        border-radius: calc(var(--element-radius) / 2)
+            calc(var(--element-radius) / 2) 0 0;
         background-color: var(--background-2);
         color: var(--highlight-color);
+        min-width: 0;
     }
-    input:focus{
+    input:focus {
         outline: none;
+    }
+    input::placeholder {
+        color: var(--brand-color);
+        opacity: 0.8;
     }
 </style>

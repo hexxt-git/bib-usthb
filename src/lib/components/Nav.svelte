@@ -1,9 +1,5 @@
-<script>
-    import Bubbles from "./subcomponents/Bubbles.svelte";
-</script>
-
 <nav>
-    <Bubbles z_index="-1" width={150} height={10} opacity="7" />
+    <div id="background"></div>
 
     <a id="nav-logo" href="/">BiB-USTHB</a>
 
@@ -31,6 +27,18 @@
         box-shadow: var(--strong-shadow);
         overflow: hidden;
     }
+    #background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(/images/dots.png);
+        mix-blend-mode: darken;
+        opacity: 8%;
+        background-size: cover;
+        z-index: -1;
+    }
     #nav-logo {
         min-width: 210px;
         color: var(--brand-color);
@@ -49,8 +57,8 @@
     .nav-button {
         color: var(--background-0);
         background-color: var(--brand-color);
-        height: 40px;
-        padding: 0 15px;
+        height: 35px;
+        padding: 0 13px;
         display: flex;
         justify-content: center;
         align-items: center;

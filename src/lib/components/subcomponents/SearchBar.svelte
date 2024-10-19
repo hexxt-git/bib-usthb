@@ -1,14 +1,14 @@
 <script>
     let query = "";
-    const placeholderbase = "search for files and modules"
+    const searchPhrase = "search for files and modules"
     let placeholder = 'se'
     let i = 0;
     setInterval(() => {
-        placeholder = placeholderbase.slice(0, i)
+        placeholder = searchPhrase.slice(0, i)
         i++;
-        if(i > placeholderbase.length + 50) i = 0;
+        if(i > searchPhrase.length + 30) i = 0;
     }, 50)
-    const search = (text, type) => {
+    const search = async (text, type) => {
         console.log(text, type)
     }
 </script>
@@ -56,7 +56,7 @@
         text-align: start;
         color: var(--highlight-color);
         z-index: 2;
-        box-shadow: var(--search-glow) -4px 10px 10px;
+        box-shadow: var(--search-glow) 0 18px 10px -8px;
     }
     @media screen and (max-width: 900px), screen and (orientation: portrait){
         #container{
