@@ -24,11 +24,8 @@
         }
     }
 
-    $: sortMethod =
-        new URLSearchParams($page.url.search).get("sort") || sortMethods[0];
-    $: sortDirection =
-        new URLSearchParams($page.url.search).get("direction") ||
-        sortDirections[0];
+    $: sortMethod = new URLSearchParams($page.url.search).get("sort") || sortMethods[0];
+    $: sortDirection = new URLSearchParams($page.url.search).get("direction") || sortDirections[0];
     $: searchQuery = new URLSearchParams($page.url.search).get("search") || "";
 
     let filteredFiles = files;
@@ -37,10 +34,7 @@
     }
 
     const debouncedGoto = debounce((value) => {
-        goto(
-            null,
-            `?sort=${sortMethod}&direction=${sortDirection}&search=${value}`,
-        );
+        goto(null, `?sort=${sortMethod}&direction=${sortDirection}&search=${value}`);
     }, 1500);
 </script>
 
@@ -63,33 +57,15 @@
             />
             <div id="search-buttons">
                 <a
-                    href="?sort={sortMethods[
-                        (sortMethods.indexOf(sortMethod) + 1) %
-                            sortMethods.length
-                    ]}&direction={sortDirection}&search={searchQuery}"
-                    on:click={(e) => {
-                        const currentIndex = sortMethods.indexOf(sortMethod);
-                        const nextIndex =
-                            (currentIndex + 1) % sortMethods.length;
-                        sortMethod = sortMethods[nextIndex];
-                    }}
-                >
-                    sort: {sortMethod}
+                    href="?sort={sortMethods[0]}&direction={sortDirection}&search={searchQuery}"
+                    on:click={() => (sortMethods = [sortMethods.at(-1), ...sortMethods.slice(0, -1)])}
+                    >sort: {sortMethod}
                 </a>
                 <a
-                    href="?sort={sortMethod}&direction={sortDirections[
-                        (sortDirections.indexOf(sortDirection) + 1) %
-                            sortDirections.length
-                    ]}&search={searchQuery}"
-                    on:click={(e) => {
-                        const currentIndex =
-                            sortDirections.indexOf(sortDirection);
-                        const nextIndex =
-                            (currentIndex + 1) % sortDirections.length;
-                        sortDirection = sortDirections[nextIndex];
-                    }}
-                >
-                    {sortDirection}
+                    href="?sort={sortMethod}&direction={sortDirections[0]}&search={searchQuery}"
+                    on:click={() =>
+                        (sortDirections = [sortDirections.at(-1), ...sortDirections.slice(0, -1)])}
+                    >{sortDirection}
                 </a>
             </div>
         </div>

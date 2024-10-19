@@ -10,7 +10,7 @@
         : new URLSearchParams("");
 
     $: if (searchQueries.has("search")) {
-        searchQueries.delete("search");
+        searchQueries.set("search", "");
         searchQueries = searchQueries;
     }
 
