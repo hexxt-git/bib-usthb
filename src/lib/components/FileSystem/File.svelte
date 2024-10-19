@@ -4,29 +4,20 @@
     };
 
     import { page } from "$app/stores";
-    import { goto } from "$app/navigation";
 
-    $: searchQueries = $page 
+    $: searchQueries = $page
         ? new URLSearchParams($page.url.search)
         : new URLSearchParams("");
 
-    $: if (searchQueries.has('search')) {
-        searchQueries.delete('search');
+    $: if (searchQueries.has("search")) {
+        searchQueries.delete("search");
+        searchQueries = searchQueries;
     }
 
-    $: fileUrl = `/files/${file.label}?${searchQueries.toString()}`;
-
-    function handleNavigation(event) {
-        event.preventDefault();
-        const inMain = !$page.url.pathname.match("files");
-        const currentScroll = window.scrollY;
-        goto(fileUrl).then(() => {
-            if(!inMain) window.scrollTo(0, currentScroll);
-        });
-    }
+    $: fileUrl = `/files/${file.route}?${searchQueries.toString()}`;
 </script>
 
-<a href={fileUrl} on:click={handleNavigation}>
+<a href={fileUrl}>
     {file.label}
 </a>
 

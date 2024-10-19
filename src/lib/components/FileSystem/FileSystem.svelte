@@ -37,23 +37,11 @@
     }
 
     const debouncedGoto = debounce((value) => {
-        handleGoto(
+        goto(
             null,
             `?sort=${sortMethod}&direction=${sortDirection}&search=${value}`,
         );
     }, 1500);
-
-    function handleGoto(event, url) {
-        if (event) event?.preventDefault();
-        const currentScroll = window.scrollY;
-        const inMain = !$page.url.pathname.match("files");
-
-        const targetUrl = !inMain ? url : "/files" + url;
-
-        goto(targetUrl).then(() => {
-            if (!inMain) window.scrollTo(0, currentScroll);
-        });
-    }
 </script>
 
 <!-- todo: Save to localStorage which folder the user was last on and load it next time -->
@@ -80,17 +68,13 @@
                             sortMethods.length
                     ]}&direction={sortDirection}&search={searchQuery}"
                     on:click={(e) => {
-                        e.preventDefault();
                         const currentIndex = sortMethods.indexOf(sortMethod);
                         const nextIndex =
                             (currentIndex + 1) % sortMethods.length;
                         sortMethod = sortMethods[nextIndex];
-                        handleGoto(
-                            e,
-                            `?sort=${sortMethod}&direction=${sortDirection}&search=${searchQuery}`,
-                        );
                     }}
-                    >sort: {sortMethod}
+                >
+                    sort: {sortMethod}
                 </a>
                 <a
                     href="?sort={sortMethod}&direction={sortDirections[
@@ -98,18 +82,14 @@
                             sortDirections.length
                     ]}&search={searchQuery}"
                     on:click={(e) => {
-                        e.preventDefault();
                         const currentIndex =
                             sortDirections.indexOf(sortDirection);
                         const nextIndex =
                             (currentIndex + 1) % sortDirections.length;
                         sortDirection = sortDirections[nextIndex];
-                        handleGoto(
-                            e,
-                            `?sort=${sortMethod}&direction=${sortDirection}&search=${searchQuery}`,
-                        );
                     }}
-                    >{sortDirection}
+                >
+                    {sortDirection}
                 </a>
             </div>
         </div>
@@ -122,7 +102,7 @@
         </div>
         <div id="breadcrumbs">
             {#each routeLinks as { href, label }, index}
-                &nbsp;{index !== 0 ? '/': ''} <a {href}>{label}</a>
+                &nbsp;{index !== 0 ? "/" : ""} <a {href}>{label}</a>
             {/each}
         </div>
     </div>
@@ -188,10 +168,15 @@
     }
     #files {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 10px;
         height: 100%;
         padding-right: 5px;
+    }
+    @media screen and (max-width: 1900px) {
+        #files {
+            grid-template-columns: repeat(4, 1fr);
+        }
     }
     @media screen and (max-width: 1500px) {
         #files {
