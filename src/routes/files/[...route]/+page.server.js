@@ -1,55 +1,20 @@
-export async function load({ params }) {
-    const route = params?.route;
+import path from "path";
+import { secret } from "$env/static/private";
 
-    return { 
-        files: [
-            { label: "algebra", route: 'bib-usthb/math/algebra', lastModified: '2023-01-12T16:50:00', downloads: 51 }, 
-            { label: "calculus", route: 'bib-usthb/math/calculus', lastModified: '2023-02-11T15:40:00', downloads: 87 }, 
-            { label: "linear algebra", route: 'bib-usthb/math/linear-algebra', lastModified: '2023-03-10T14:30:00', downloads: 16 }, 
-            { label: "differential equations", route: 'bib-usthb/math/differential-equations', lastModified: '2023-04-09T13:20:00', downloads: 74 }, 
-            { label: "operating systems", route: 'bib-usthb/math/operating-systems', lastModified: '2023-05-08T12:10:00', downloads: 8 },
-            { label: "soccer", route: 'bib-usthb/sports/soccer', lastModified: '2023-06-18T11:15:00', downloads: 21 },
-            { label: "basketball", route: 'bib-usthb/sports/basketball', lastModified: '2023-07-17T10:05:00', downloads: 230 },
-            { label: "tennis", route: 'bib-usthb/sports/tennis', lastModified: '2023-08-16T09:55:00', downloads: 81 },
-            { label: "baseball", route: 'bib-usthb/sports/baseball', lastModified: '2023-09-15T08:45:00', downloads: 2 },
-            { label: "swimming", route: 'bib-usthb/sports/swimming', lastModified: '2023-10-14T07:35:00', downloads: 15 },
-            { label: "literature", route: 'bib-usthb/arts/literature', lastModified: '2023-11-13T06:25:00', downloads: 84 },
-            { label: "poetry", route: 'bib-usthb/arts/poetry', lastModified: '2023-12-12T05:15:00', downloads: 58 },
-            { label: "novels", route: 'bib-usthb/arts/novels', lastModified: '2024-01-11T04:05:00', downloads: 21 },
-            { label: "drama", route: 'bib-usthb/arts/drama', lastModified: '2024-02-10T03:55:00', downloads: 12 },
-            { label: "philosophy", route: 'bib-usthb/arts/philosophy', lastModified: '2024-03-09T02:45:00', downloads: 95 },
-            { label: "geometry", route: 'bib-usthb/math/geometry', lastModified: '2024-04-08T01:35:00', downloads: 1 },
-            { label: "trigonometry", route: 'bib-usthb/math/trigonometry', lastModified: '2024-05-07T00:25:00', downloads: 35 },
-            { label: "volleyball", route: 'bib-usthb/sports/volleyball', lastModified: '2024-06-06T23:15:00', downloads: 81 },
-            { label: "rugby", route: 'bib-usthb/sports/rugby', lastModified: '2024-07-05T22:05:00', downloads: 15 },
-            { label: "painting", route: 'bib-usthb/arts/painting', lastModified: '2024-08-04T21:55:00', downloads: 48 },
-            { label: "sculpture", route: 'bib-usthb/arts/sculpture', lastModified: '2024-09-03T20:45:00', downloads: 55 },
-            { label: "ethics", route: 'bib-usthb/arts/ethics', lastModified: '2024-10-02T19:35:00', downloads: 30 },
-            { label: "logic", route: 'bib-usthb/arts/logic', lastModified: '2024-10-19T18:25:00', downloads: 8 },
-            { label: "statistics", route: 'bib-usthb/math/statistics', lastModified: '2023-01-15T12:30:00', downloads: 45 },
-            { label: "probability", route: 'bib-usthb/math/probability', lastModified: '2023-02-20T11:20:00', downloads: 67 },
-            { label: "machine learning", route: 'bib-usthb/computer-science/machine-learning', lastModified: '2023-03-25T10:10:00', downloads: 120 },
-            { label: "artificial intelligence", route: 'bib-usthb/computer-science/artificial-intelligence', lastModified: '2023-04-30T09:00:00', downloads: 98 },
-            { label: "data structures", route: 'bib-usthb/computer-science/data-structures', lastModified: '2023-05-05T08:50:00', downloads: 76 },
-            { label: "algorithms", route: 'bib-usthb/computer-science/algorithms', lastModified: '2023-06-10T07:40:00', downloads: 89 },
-            { label: "networking", route: 'bib-usthb/computer-science/networking', lastModified: '2023-07-15T06:30:00', downloads
-                : 54 },
-            { label: "databases", route: 'bib-usthb/computer-science/databases', lastModified: '2023-08-20T05:20:00', downloads: 73 },
-            { label: "web development", route: 'bib-usthb/computer-science/web-development', lastModified: '2023-09-25T04:10:00', downloads: 110 },
-            { label: "mobile development", route: 'bib-usthb/computer-science/mobile-development', lastModified: '2023-10-30T03:00:00', downloads: 65 },
-            { label: "cloud computing", route: 'bib-usthb/computer-science/cloud-computing', lastModified: '2023-11-04T02:50:00', downloads: 92 },
-            { label: "cyber security", route: 'bib-usthb/computer-science/cyber-security', lastModified: '2023-12-09T01:40:00', downloads: 58 },
-            { label: "quantum computing", route: 'bib-usthb/computer-science/quantum-computing', lastModified: '2024-01-14T00:30:00', downloads: 33 },
-            { label: "robotics", route: 'bib-usthb/computer-science/robotics', lastModified: '2024-02-19T23:20:00', downloads: 47 },
-            { label: "bioinformatics", route: 'bib-usthb/computer-science/bioinformatics', lastModified: '2024-03-26T22:10:00', downloads: 29 },
-            { label: "genomics", route: 'bib-usthb/biology/genomics', lastModified: '2024-04-01T21:00:00', downloads: 41 },
-            { label: "proteomics", route: 'bib-usthb/biology/proteomics', lastModified: '2024-05-06T19:50:00', downloads: 53 },
-            { label: "ecology", route: 'bib-usthb/biology/ecology', lastModified: '2024-06-11T18:40:00', downloads: 62 },
-            { label: "evolution", route: 'bib-usthb/biology/evolution', lastModified: '2024-07-16T17:30:00', downloads: 39 },
-            { label: "microbiology", route: 'bib-usthb/biology/microbiology', lastModified: '2024-08-21T16:20:00', downloads: 27 },
-            { label: "biochemistry", route: 'bib-usthb/biology/biochemistry', lastModified: '2024-09-26T15:10:00', downloads: 49 },
-            { label: "genetics", route: 'bib-usthb/biology/genetics', lastModified: '2024-10-31T14:00:00', downloads: 36 },
-        ].sort(()=>Math.random()-.5).sort(()=>Math.random()-.5).sort(()=>Math.random()-.5).slice(0,23),
-        route
+export async function load({ params }) {
+    try {
+        const route = params?.route || "";
+
+        const response = await fetch(path.join("http://localhost:3000/get", route), {
+            headers: { "x-api-token": secret },
+        });
+        if (response.status !== 200) throw response;
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error(error);
+        return {};
     }
 }

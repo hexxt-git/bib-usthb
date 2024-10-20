@@ -8,12 +8,12 @@
 
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
-    $: files = $page.data.files;
+    $: files = $page.data.directoryChildren;
 
-    $: route = $page.data.route;
-    let breadCrumbArray = [];
+    $: route = $page.data.path;
+    let breadCrumbArray = [{href: '/', label: 'home'}];
     $: if ($page) {
-        breadCrumbArray = [];
+        breadCrumbArray = [{href: '/', label: 'home'}];
         for (let directory of route?.split("/") ?? []) {
             breadCrumbArray.push({
                 href: (breadCrumbArray.at(-1)?.href ?? "/files") + "/" + directory,
@@ -27,25 +27,22 @@
     $: sortDirection = new URLSearchParams($page.url.search).get("direction") || sortDirections[0];
     $: searchQuery = new URLSearchParams($page.url.search).get("search") || "";
 
-    import Fuse from "fuse.js";
+    import createFuzzySearch from "@nozbe/microfuzz";
 
     let sortedFiles = [];
-    let fuse;
-
+    let fuzzySearch = console.error;
     $: if (files) {
-        const options = {
-            keys: ["label"],
-            threshold: 0.4,
-        };
-        fuse = new Fuse(files, options);
+        fuzzySearch = createFuzzySearch(files, {
+            key: "label",
+            getText: (item) => [item.label],
+        });
     }
 
     $: if (files || sortMethod || sortDirection || searchQuery) {
         let filesToSort = files;
-        searchQuery = searchQuery // do not remove this line
         if (searchQuery && searchQuery.length > 0) {
-            const searchResults = fuse.search(searchQuery);
-            filesToSort = searchResults.map((result) => result.item);
+            const searchResults = fuzzySearch(searchQuery);
+            filesToSort = searchResults.map(({ item }) => item);
         }
 
         const reverse = sortDirection === "reverse" ? -1 : 1;
@@ -103,7 +100,8 @@
                         if (!$page.url.pathname.match("files")) await goto("/files");
                         goto(`?sort=${sortMethods[0]}&direction=${sortDirection}&search=${searchQuery}`);
                     }}
-                    >sort: {sortMethod}
+                >
+                    sort: {sortMethod}
                 </a>
                 <a
                     href="?sort={sortMethod}&direction={sortDirections.at(-1)}&search={searchQuery}"
@@ -113,7 +111,8 @@
                         if (!$page.url.pathname.match("files")) await goto("/files");
                         goto(`?sort=${sortMethod}&direction=${sortDirections[0]}&search=${searchQuery}`);
                     }}
-                    >{sortDirection}
+                >
+                    {sortDirection}
                 </a>
             </div>
         </div>
