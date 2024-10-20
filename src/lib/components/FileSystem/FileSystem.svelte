@@ -4,7 +4,7 @@
     import File from "./File.svelte";
 
     let sortMethods = ["time", "active", "alphabetical"];
-    let sortDirections = ["ascending", "descending"];
+    let sortDirections = ["normal", "reverse"];
 
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
@@ -42,20 +42,19 @@
 
     $: if (files || sortMethod || sortDirection || searchQuery) {
         let filesToSort = files;
-
-        // Apply Fuse.js search if there's a search query
+        searchQuery = searchQuery // do not remove this line
         if (searchQuery && searchQuery.length > 0) {
             const searchResults = fuse.search(searchQuery);
             filesToSort = searchResults.map((result) => result.item);
         }
 
-        const reverse = sortDirection === "descending" ? -1 : 1;
+        const reverse = sortDirection === "reverse" ? -1 : 1;
         sortedFiles = filesToSort?.sort((a, b) => {
             switch (sortMethod) {
                 case "time":
-                    return (new Date(a.lastModified) - new Date(b.lastModified)) * reverse;
+                    return (new Date(b.lastModified) - new Date(a.lastModified)) * reverse;
                 case "active":
-                    return (a.downloads - b.downloads) * reverse;
+                    return (b.downloads - a.downloads) * reverse;
                 case "alphabetical":
                     return a.label.localeCompare(b.label) * reverse;
                 default:
@@ -119,11 +118,15 @@
             </div>
         </div>
         <div id="scrollContainer">
-            <div id="files">
-                {#each sortedFiles as file}
-                    <File {file} />
-                {/each}
-            </div>
+            {#if sortedFiles && sortedFiles.length}
+                <div id="files">
+                    {#each sortedFiles as file}
+                        <File {file} />
+                    {/each}
+                </div>
+            {:else}
+                <div id="notFound">No Files Found Here</div>
+            {/if}
         </div>
         <div id="breadcrumbs">
             {#each breadCrumbArray as { href, label }, index}
@@ -217,6 +220,11 @@
         #files {
             grid-template-columns: 1fr;
         }
+    }
+    #notFound {
+        font-size: 18px;
+        text-align: center;
+        margin: 40px 0;
     }
     #breadcrumbs a {
         color: var(--brand-color);

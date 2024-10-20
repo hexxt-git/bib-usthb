@@ -26,7 +26,7 @@ export async function load({ params }) {
             { label: "sculpture", route: 'bib-usthb/arts/sculpture', lastModified: '2024-09-03T20:45:00', downloads: 55 },
             { label: "ethics", route: 'bib-usthb/arts/ethics', lastModified: '2024-10-02T19:35:00', downloads: 30 },
             { label: "logic", route: 'bib-usthb/arts/logic', lastModified: '2024-10-19T18:25:00', downloads: 8 },
-        ].sort(() => Math.random() - 0.5),
+        ],
         route
     }
 }
