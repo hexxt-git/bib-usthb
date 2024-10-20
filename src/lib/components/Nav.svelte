@@ -5,6 +5,7 @@
 
     <div id="right">
         <a class="nav-button" href="/help">?</a>
+        <!-- glow or sparkles on this button -->
         <a class="nav-button" href="/contribute">contribute</a>
     </div>
 </nav>
