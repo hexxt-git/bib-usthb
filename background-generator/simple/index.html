@@ -7,17 +7,17 @@
 </html>
 
 <script>
-    const SCALE = 0.7;
+    const SCALE = 0.9;
 
     function radius(x, y){
-        let result = 12/Math.pow(x + y/3 , 0.18) + 0.4;
+        let result = 12/Math.pow(x + y/3 , 0.18) + 0.45 + Math.random()*.6;
         return Math.min(result, 9);
     }
 
     const container = document.getElementById('container');
     
-    for(let x = 0 ; x < 100*SCALE ; x++){
-        for(let y = 0 ; y < 40*SCALE ; y++){
+    for(let x = 0 ; x < 250*SCALE ; x++){
+        for(let y = 0 ; y < 80*SCALE ; y++){
             const child = document.createElement('div')
             child.style = ` left: ${x*20*SCALE}px;
                             top: ${y*20*SCALE}px;
@@ -33,8 +33,6 @@
 <style>
     body{
         margin: 0;
-        height: 100vh;
-        overflow: hidden;
         box-sizing: border-box;
     }
     .dot{

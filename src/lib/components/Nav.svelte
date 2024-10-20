@@ -34,7 +34,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url(/images/dots.png);
+        background-image: url(/images/dots.webp);
         mix-blend-mode: darken;
         opacity: 8%;
         background-size: cover;
