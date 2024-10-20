@@ -2,9 +2,8 @@
     import H1 from "$lib/items/H1.svelte";
     import TextInput from "$lib/items/TextInput.svelte";
     import File from "./File.svelte";
-    import { debounce } from "lodash-es";
 
-    let sortMethods = ["date", "active", "size"];
+    let sortMethods = ["time", "active", "alphabetical"];
     let sortDirections = ["ascending", "descending"];
 
     import { page } from "$app/stores";
@@ -12,15 +11,15 @@
     $: files = $page.data.files;
 
     $: route = $page.data.route;
-    let routeLinks = [];
+    let breadCrumbArray = [];
     $: if ($page) {
-        routeLinks = [];
+        breadCrumbArray = [];
         for (let directory of route?.split("/") ?? []) {
-            routeLinks.push({
-                href: (routeLinks.at(-1)?.href ?? "/files") + "/" + directory,
+            breadCrumbArray.push({
+                href: (breadCrumbArray.at(-1)?.href ?? "/files") + "/" + directory,
                 label: directory,
             });
-            routeLinks = routeLinks;
+            breadCrumbArray = breadCrumbArray;
         }
     }
 
@@ -28,14 +27,55 @@
     $: sortDirection = new URLSearchParams($page.url.search).get("direction") || sortDirections[0];
     $: searchQuery = new URLSearchParams($page.url.search).get("search") || "";
 
-    let filteredFiles = files;
-    $: if ((files, sortMethod, sortDirection, searchQuery)) {
-        filteredFiles = files; // todo
+    import Fuse from "fuse.js";
+
+    let sortedFiles = [];
+    let fuse;
+
+    $: if (files) {
+        const options = {
+            keys: ["label"],
+            threshold: 0.4,
+        };
+        fuse = new Fuse(files, options);
     }
 
-    const debouncedGoto = debounce((value) => {
-        goto(null, `?sort=${sortMethod}&direction=${sortDirection}&search=${value}`);
-    }, 1500);
+    $: if (files || sortMethod || sortDirection || searchQuery) {
+        let filesToSort = files;
+
+        // Apply Fuse.js search if there's a search query
+        if (searchQuery && searchQuery.length > 0) {
+            const searchResults = fuse.search(searchQuery);
+            filesToSort = searchResults.map((result) => result.item);
+        }
+
+        const reverse = sortDirection === "descending" ? -1 : 1;
+        sortedFiles = filesToSort?.sort((a, b) => {
+            switch (sortMethod) {
+                case "time":
+                    return (new Date(a.lastModified) - new Date(b.lastModified)) * reverse;
+                case "active":
+                    return (a.downloads - b.downloads) * reverse;
+                case "alphabetical":
+                    return a.label.localeCompare(b.label) * reverse;
+                default:
+                    return a.label.localeCompare(b.label) * reverse;
+            }
+        });
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    const debouncedGoto = debounce(async (value) => {
+        if (!$page.url.pathname.match("files")) await goto("/files");
+        goto(`?sort=${sortMethod}&direction=${sortDirection}&search=${value}`);
+    }, 3000);
 </script>
 
 <!-- todo: Save to localStorage which folder the user was last on and load it next time -->
@@ -57,27 +97,36 @@
             />
             <div id="search-buttons">
                 <a
-                    href="?sort={sortMethods[0]}&direction={sortDirection}&search={searchQuery}"
-                    on:click={() => (sortMethods = [sortMethods.at(-1), ...sortMethods.slice(0, -1)])}
+                    href="?sort={sortMethods.at(-1)}&direction={sortDirection}&search={searchQuery}"
+                    on:click={async (event) => {
+                        event.preventDefault();
+                        sortMethods = [sortMethods.at(-1), ...sortMethods.slice(0, -1)];
+                        if (!$page.url.pathname.match("files")) await goto("/files");
+                        goto(`?sort=${sortMethods[0]}&direction=${sortDirection}&search=${searchQuery}`);
+                    }}
                     >sort: {sortMethod}
                 </a>
                 <a
-                    href="?sort={sortMethod}&direction={sortDirections[0]}&search={searchQuery}"
-                    on:click={() =>
-                        (sortDirections = [sortDirections.at(-1), ...sortDirections.slice(0, -1)])}
+                    href="?sort={sortMethod}&direction={sortDirections.at(-1)}&search={searchQuery}"
+                    on:click={async (event) => {
+                        event.preventDefault();
+                        sortDirections = [sortDirections.at(-1), ...sortDirections.slice(0, -1)];
+                        if (!$page.url.pathname.match("files")) await goto("/files");
+                        goto(`?sort=${sortMethod}&direction=${sortDirections[0]}&search=${searchQuery}`);
+                    }}
                     >{sortDirection}
                 </a>
             </div>
         </div>
         <div id="scrollContainer">
             <div id="files">
-                {#each files ?? [] as file}
+                {#each sortedFiles as file}
                     <File {file} />
                 {/each}
             </div>
         </div>
         <div id="breadcrumbs">
-            {#each routeLinks as { href, label }, index}
+            {#each breadCrumbArray as { href, label }, index}
                 &nbsp;{index !== 0 ? "/" : ""} <a {href}>{label}</a>
             {/each}
         </div>

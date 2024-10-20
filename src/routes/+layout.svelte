@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
 
-    import "./style.css"
+    import "./style.css";
 
     import NotificationSystem from "$lib/components/NotificationSystem.svelte";
     import ConfettiSystem from "$lib/components/ConfettiSystem.svelte";
@@ -14,7 +14,7 @@
     onMount(() => {
         setTimeout(() => {
             mounted = true;
-        }, 100);
+        }, 500);
     });
 
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";

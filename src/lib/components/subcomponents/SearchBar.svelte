@@ -85,6 +85,10 @@
     input::placeholder{
         color: var(--first-title-color);
         opacity: 1;
+        transition: color 400ms ease;
+    }
+    #container:hover input::placeholder, input:focus::placeholder{
+        color: transparent;
     }
     hr{
         margin: 5px 0;
