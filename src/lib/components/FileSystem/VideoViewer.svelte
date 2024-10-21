@@ -1,16 +1,16 @@
 <script>
     import { page } from "$app/stores";
     import urlJoin from "url-join";
-
     $: filePath = urlJoin("/downloads/", $page.data.path);
 </script>
 
-<iframe src={filePath} frameborder="0" title={$page.data.label} />
+    <video src={filePath} controls></video>
 
 <style>
-    iframe {
-        width: 100%;
+    video {
+        display: block;
         height: 100%;
-        border-radius: 10px;
+        max-width: 100%;
+        margin: 0 auto;
     }
 </style>

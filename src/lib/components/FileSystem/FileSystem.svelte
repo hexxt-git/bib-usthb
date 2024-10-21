@@ -31,8 +31,7 @@
     #container {
         background-color: var(--background-1);
         border-radius: var(--window-radius);
-        height: 700px;
-        max-height: calc(85vh - var(--nav-height));
+        height: calc(90vh - var(--nav-height));
         padding: 30px 30px 15px 30px;
     }
     @media screen and (max-width: 700px) {
