@@ -17,10 +17,11 @@
 
     // console.log(file);
     $: fileUrl =
-        UrlJoin("/files", file.path.replaceAll(/\\\\|\/\/|\\/g, "/")) + `?${searchQueries.toString()}`;
+        UrlJoin("/files", file.path.replaceAll(/\\\\|\/\/|\\/g, "/") || "/") + `?${searchQueries.toString()}`;
 
     $: downloadUrl =
-        UrlJoin("/downloads", file.path.replaceAll(/\\\\|\/\/|\\/g, "/")) + `?${searchQueries.toString()}`;
+        UrlJoin("/downloads", file.path.replaceAll(/\\\\|\/\/|\\/g, "/") || "/") +
+        `?${searchQueries.toString()}`;
 
     function timeAgo(date) {
         const now = new Date();
@@ -56,7 +57,7 @@
         navigator.share({
             title: `${file.label} on BiB-USTHB.com`,
             text: "BiB-USTHB is the unofficial student resource sharing platform for all usthb students",
-            url: urlJoin("https://bib-usthb.com/", fileUrl),
+            url: urlJoin("https://bib-usthb.com/", fileUrl || '/'),
         });
     }
 

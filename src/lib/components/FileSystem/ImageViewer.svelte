@@ -1,7 +1,7 @@
 <script>
     import { page } from "$app/stores";
     import urlJoin from "url-join";
-    $: filePath = urlJoin("/downloads/", $page.data.path);
+    $: filePath = urlJoin("/downloads/", $page.data.path || '/');
 </script>
 
 <div id="container">

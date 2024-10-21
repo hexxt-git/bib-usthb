@@ -15,10 +15,10 @@
             {file.label}
         </h2>
         <div id="buttons">
-            <a href={urlJoin("/downloads", file.path)} target="_blank">
+            <a href={urlJoin("/downloads", file.path || '/')} target="_blank">
                 <img src="/images/maximize.svg" alt="" />
             </a>
-            <a href={urlJoin("/downloads", file.path)} download>
+            <a href={urlJoin("/downloads", file.path || '/')} download>
                 <img src="/images/download.svg" alt="" />
             </a>
         </div>

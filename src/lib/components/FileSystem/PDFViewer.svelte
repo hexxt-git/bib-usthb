@@ -2,7 +2,7 @@
     import { page } from "$app/stores";
     import urlJoin from "url-join";
 
-    $: filePath = urlJoin("/downloads/", $page.data.path);
+    $: filePath = urlJoin("/downloads/", $page.data.path || '/');
 </script>
 
 <iframe src={filePath} frameborder="0" title={$page.data.label} />
