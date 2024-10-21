@@ -57,7 +57,7 @@
     }
 
     const debouncedGoto = debounce(async (value) => {
-        if (!$page.url.pathname.match("files")) await goto("/files");
+        if (!/files/.test($page.url?.pathname)) await goto("/files");
         goto(`?sort=${sortMethod}&direction=${sortDirection}&search=${value}`);
     }, 3000);
 </script>
@@ -79,7 +79,7 @@
                 on:click={async (event) => {
                     event.preventDefault();
                     sortMethods = [sortMethods.at(-1), ...sortMethods.slice(0, -1)];
-                    if (!$page.url.pathname.match("files")) await goto("/files");
+                    if (!/files/.test($page.url?.pathname)) await goto("/files");
                     goto(`?sort=${sortMethods[0]}&direction=${sortDirection}&search=${searchQuery}`);
                 }}
             >
@@ -90,7 +90,7 @@
                 on:click={async (event) => {
                     event.preventDefault();
                     sortDirections = [sortDirections.at(-1), ...sortDirections.slice(0, -1)];
-                    if (!$page.url.pathname.match("files")) await goto("/files");
+                    if (!/files/.test($page.url?.pathname)) await goto("/files");
                     goto(`?sort=${sortMethod}&direction=${sortDirections[0]}&search=${searchQuery}`);
                 }}
             >

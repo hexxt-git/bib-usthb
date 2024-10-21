@@ -15,21 +15,21 @@
             {file.label}
         </h2>
         <div id="buttons">
-            <a href={urlJoin("/downloads", file.path || '/')} target="_blank">
+            <a href={urlJoin("/downloads", file?.path || '/')} target="_blank">
                 <img src="/images/maximize.svg" alt="" />
             </a>
-            <a href={urlJoin("/downloads", file.path || '/')} download>
+            <a href={urlJoin("/downloads", file?.path || '/')} download>
                 <img src="/images/download.svg" alt="" />
             </a>
         </div>
     </div>
-    {#if file.mimeType.match("image")}
+    {#if /image/.test(file?.mimeType)}
         <ImageViewer />
-    {:else if file.mimeType.match("video")}
+    {:else if /video/.test(file?.mimeType)}
         <VideoViewer />
-    {:else if file.mimeType.match("pdf")}
+    {:else if /pdf/.test(file?.mimeType)}
         <PDFViewer />
-    {:else if file.mimeType.match("text")}
+    {:else if /text/.test(file?.mimeType)}
         text
     {/if}
     <BreadCrumbs />
