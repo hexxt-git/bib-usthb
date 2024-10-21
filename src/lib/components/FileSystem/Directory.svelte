@@ -157,6 +157,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: background-color 200ms ease;
+    }
+    #search-buttons a:hover {
+        background-color: #213249;
     }
     #scrollContainer {
         height: fit-content;
@@ -196,9 +200,5 @@
         font-size: 18px;
         text-align: center;
         margin: 40px 0;
-    }
-    #fileFinder {
-        position: relative;
-        top: -80px;
     }
 </style>

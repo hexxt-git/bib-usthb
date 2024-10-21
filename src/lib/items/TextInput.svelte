@@ -52,6 +52,10 @@
         background-color: var(--background-2);
         color: var(--highlight-color);
         min-width: 0;
+        transition: background-color 200ms ease;
+    }
+    input:hover {
+        background-color: #213249;
     }
     input:focus {
         outline: none;

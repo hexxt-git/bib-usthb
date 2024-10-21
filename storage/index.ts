@@ -35,10 +35,20 @@ app.use((req, res, next) => {
 });
 app.use((req, res, next) => {
     const start = Date.now();
+
+    // const originalJson = res.json;
+    // res.json = function (body) {
+    //     console.log("Response JSON:", body);
+    //     return originalJson.call(this, body);
+    // };
+
     res.on("finish", () => {
         const duration = Date.now() - start;
-        console.log(`${req.method} ${req.originalUrl}`.padEnd(55, ' ')+`${res.statusCode} - ${duration}ms`);
+        console.log(
+            `${req.method} ${req.originalUrl}`.padEnd(55, " ") + ` ${res.statusCode} - ${duration}ms`
+        );
     });
+
     next();
 });
 
@@ -59,17 +69,19 @@ function incrementDownload(path: string) {
 }
 
 function getFileStats(path: string): Promise<{ visits: number; downloads: number }> {
-    return new Promise((res) => {
+    return new Promise((resolve, reject) => {
+        path = path.replaceAll(/\\\\|\/\/|\\/g, "/"); // common windows dev L
+        path = path.replace(/^\//, '')
         db.get(
             `SELECT visits, downloads FROM file_stats WHERE path = ?`,
             [path],
-            (err: any, row: { visits: number; downloads: number }) => {
+            (err: any, row: { visits: number; downloads: number } | undefined) => {
                 if (err) {
                     console.error(err);
-                    res({ visits: 0, downloads: 0 });
-                } else {
-                    res(row || { visits: 0, downloads: 0 });
+                    return reject(err);
                 }
+                if (!(row?.visits ?? 0 > 0)) console.log(`path not found in db: ${path}`);
+                resolve(row ?? { visits: 0, downloads: 0 });
             }
         );
     });
@@ -160,15 +172,15 @@ interface FileInfo {
     mimeType: string;
     lastModified: Date;
     size: number;
-    downloads: number;
-    visits: number;
+    downloads: number | null;
+    visits: number | null;
 }
 
 async function getFileInfo(path: string, recursive: boolean = true): Promise<FileInfo> {
     const fullPath = Path.join(__dirname, "uploads", path);
     const stat = fs.statSync(fullPath);
     const isDirectory = stat.isDirectory();
-    const mimeType = isDirectory ? "directory" : require('mime-types').lookup(fullPath) || "unknown";
+    const mimeType = isDirectory ? "directory" : require("mime-types").lookup(fullPath) || "unknown";
     const fileInfo: FileInfo = {
         label: Path.basename(path),
         path: path,
@@ -176,8 +188,8 @@ async function getFileInfo(path: string, recursive: boolean = true): Promise<Fil
         mimeType,
         lastModified: stat.mtime,
         size: stat.size,
-        downloads: 0,
-        visits: 0,
+        downloads: null,
+        visits: null,
     };
 
     const { visits, downloads } = await getFileStats(path);
@@ -185,11 +197,12 @@ async function getFileInfo(path: string, recursive: boolean = true): Promise<Fil
     fileInfo.downloads = downloads;
 
     if (isDirectory && recursive) {
-        const children = await Promise.all(
-            fs.readdirSync(fullPath).map(async (child) => {
-                return await getFileInfo(Path.join(path, child), false);
-            })
-        );
+        const children: FileInfo[] = [];
+        const childNames = fs.readdirSync(fullPath);
+        for (const child of childNames) {
+            const childInfo = await getFileInfo(Path.join(path, child), false);
+            children.push(childInfo);
+        }
         fileInfo.directoryChildren = children;
     }
 
