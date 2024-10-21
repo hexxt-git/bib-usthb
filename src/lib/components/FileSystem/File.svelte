@@ -12,7 +12,10 @@
         searchQueries = searchQueries;
     }
 
-    $: fileUrl = `/files/${file.route}?${searchQueries.toString()}`;
+    import UrlJoin from 'url-join'
+
+    console.log(file)
+    $: fileUrl = UrlJoin('/files', file.path.replaceAll(/\\\\|\/\/|\\/g, '/')) + `?${searchQueries.toString()}`;
 
     function timeAgo(date) {
         const now = new Date();
@@ -20,9 +23,9 @@
         if (seconds < 0) return "unknown";
 
         const intervals = {
-            y: 365 * 24 * 60 * 60,
-            m: 30 * 24 * 60 * 60,
-            d: 24 * 60 * 60,
+            y: 60 * 60 * 24 * 365,
+            m: 60 * 60 * 24 * 30,
+            d: 60 * 60 * 24,
             h: 60 * 60,
             min: 60,
         };
@@ -39,16 +42,27 @@
         }
 
         return result.length > 0 ? result.join(" ") + " ago" : "just now";
+
     }
+
+    let icon = 'file'
+    if (/image/.test(file.mimeType)) icon = 'image';
+    if (/video/.test(file.mimeType)) icon = 'video';
+    if (/audio/.test(file.mimeType)) icon = 'audio';
+    if (/pdf/.test(file.mimeType)) icon = 'pdf';
+    if (/zip|7z|compressed|archive|rar/i.test(file.mimeType)) icon = 'zip';
+    if(file.isDirectory) icon = 'directory'
+
 </script>
 
 <a href={fileUrl}>
     <h2>
-        <img src="/images/folder.svg" alt="{file.label} folder" />
+        <img src="/images/{icon}.svg" alt="go to {file.path}" />
+
         {file.label}
     </h2>
     <span>
-        Downloads: {file.downloads}
+        {file.downloads} download, {file.visits} visits
     </span>
     <span>
         Modified: {timeAgo(new Date(file.lastModified))}
@@ -74,11 +88,12 @@
         text-transform: capitalize;
         padding: 4px 6px;
         display: flex;
-        align-items: end;
-        gap: 5px;
+        align-items: center;
+        gap: 10px;
+        line-height: 120%;
     }
     h2 img {
-        width: 28px;
+        width: 30px;
         user-select: none;
         filter: invert(1);
     }

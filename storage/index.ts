@@ -33,6 +33,14 @@ app.use((req, res, next) => {
 
     next();
 });
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on("finish", () => {
+        const duration = Date.now() - start;
+        console.log(`${req.method} ${req.originalUrl}`.padEnd(55, ' ')+`${res.statusCode} - ${duration}ms`);
+    });
+    next();
+});
 
 function incrementVisit(path: string) {
     db.run(
@@ -111,6 +119,8 @@ app.get("/download/:path(*)", (req, res): any => {
     }
 
     if (fs.statSync(filePath).isDirectory()) {
+        // TODO: zip and upload maybe
+        // TODO: implement rate limits or smth
         return res.status(400).send("File is a Directory");
     }
 
@@ -158,7 +168,7 @@ async function getFileInfo(path: string, recursive: boolean = true): Promise<Fil
     const fullPath = Path.join(__dirname, "uploads", path);
     const stat = fs.statSync(fullPath);
     const isDirectory = stat.isDirectory();
-    const mimeType = isDirectory ? "directory" : "file";
+    const mimeType = isDirectory ? "directory" : require('mime-types').lookup(fullPath) || "unknown";
     const fileInfo: FileInfo = {
         label: Path.basename(path),
         path: path,

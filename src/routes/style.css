@@ -34,7 +34,7 @@
     --title-3: 1em;
 
     --nav-height: 70px;
-    --side-margin: 120px;
+    --side-margin: 90px;
 
     --text-0: 1.2em;
     --text-1: 1em;
@@ -58,7 +58,7 @@
 }
 @media screen and (max-width: 700px) {
     :root {
-        --side-margin: 20px;
+        --side-margin: 15px;
         --nav-height: 60px;
     }
 }
