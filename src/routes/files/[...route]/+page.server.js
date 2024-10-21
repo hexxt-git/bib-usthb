@@ -1,11 +1,11 @@
 import path from "path";
-import { secret } from "$env/static/private";
+import { secret, backendBase } from "$env/static/private";
 
 export async function load({ params }) {
     try {
         const route = params?.route || "";
 
-        const response = await fetch(path.join("http://localhost:3000/get", route), {
+        const response = await fetch(path.join(backendBase, "/get/", route), {
             headers: { "x-api-token": secret },
         });
         if (response.status !== 200) throw response;
