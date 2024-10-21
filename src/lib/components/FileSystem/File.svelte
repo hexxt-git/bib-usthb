@@ -60,7 +60,10 @@
         {file.label}
     </h2>
     <span>
-        {file.downloads} download, {file.visits} visits
+        {#if file.downloads}
+            {file.downloads} download,
+        {/if}
+        {file.visits} visits
     </span>
     <span>
         Modified: {timeAgo(new Date(file.lastModified))}

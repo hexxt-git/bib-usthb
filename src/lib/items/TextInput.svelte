@@ -36,6 +36,7 @@
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 10px;
+        min-width: 0;
     }
     label {
         padding: 5px 0 0 0;
@@ -53,6 +54,7 @@
         color: var(--highlight-color);
         min-width: 0;
         transition: background-color 200ms ease;
+        min-width: 0;
     }
     input:hover {
         background-color: #213249;

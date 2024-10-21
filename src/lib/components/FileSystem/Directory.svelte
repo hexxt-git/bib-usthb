@@ -1,7 +1,6 @@
 <script>
     import BreadCrumbs from "./BreadCrumbs.svelte";
 
-    import H1 from "$lib/items/H1.svelte";
     import TextInput from "$lib/items/TextInput.svelte";
     import File from "./File.svelte";
 
@@ -29,8 +28,8 @@
 
     $: if (files || sortMethod || sortDirection || searchQuery) {
         let filesToSort = files;
-        if (searchQuery && searchQuery.length > 0) {
-            const searchResults = fuzzySearch(searchQuery);
+        if (searchQuery && searchQuery.trim().length > 0) {
+            const searchResults = fuzzySearch(searchQuery.trim());
             filesToSort = searchResults.map(({ item }) => item);
         }
 

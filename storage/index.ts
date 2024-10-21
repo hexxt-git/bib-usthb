@@ -137,8 +137,8 @@ app.get("/download/:path(*)", (req, res): any => {
     }
 
     incrementDownload(path);
-
-    res.download(filePath, filePath, (err) => {
+    
+    res.sendFile(filePath, (err) => {
         if (err) res.status(500).send("Internal Error");
     });
 });

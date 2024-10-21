@@ -3,6 +3,7 @@
 
     import H1 from "$lib/items/H1.svelte";
     import { page } from "$app/stores";
+    import FileViewer from "./FileViewer.svelte";
 </script>
 
 <main>
@@ -13,6 +14,8 @@
     <div id="container">
         {#if $page.data.isDirectory}
             <Directory />
+        {:else}
+            <FileViewer />
         {/if}
     </div>
 </main>
