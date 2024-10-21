@@ -15,22 +15,33 @@
     $: sortDirection = new URLSearchParams($page.url.search).get("direction") || sortDirections[0];
     $: searchQuery = new URLSearchParams($page.url.search).get("search") || "";
 
-    import createFuzzySearch from "@nozbe/microfuzz";
+    import { onMount } from "svelte";
+    import MiniSearch from "minisearch";
 
     let sortedFiles = [];
-    let fuzzySearch = console.error;
-    $: if (files) {
-        fuzzySearch = createFuzzySearch(files, {
-            key: "label",
-            getText: (item) => [item.label],
-        });
-    }
+    let miniSearch;
+
+    onMount(() => {
+        if (files && files.length > 0) {
+            const allFields = Object.keys(files[0]);
+            miniSearch = new MiniSearch({
+                fields: allFields, // index all fields for full-text search
+                storeFields: ["path"], // we only need to store the path
+                idField: "path", // use path as the unique identifier
+            });
+            miniSearch.addAll(files);
+        }
+    });
 
     $: if (files || sortMethod || sortDirection || searchQuery) {
         let filesToSort = files;
         if (searchQuery && searchQuery.trim().length > 0) {
-            const searchResults = fuzzySearch(searchQuery.trim());
-            filesToSort = searchResults.map(({ item }) => item);
+            const searchResults = miniSearch?.search(searchQuery.trim(), {
+                fuzzy: 0.4,
+                prefix: true,
+            }) ?? [];
+            const matchingPaths = new Set(searchResults.map((result) => result.path));
+            filesToSort = files.filter((file) => matchingPaths.has(file.path));
         }
 
         const reverse = sortDirection === "reverse" ? -1 : 1;

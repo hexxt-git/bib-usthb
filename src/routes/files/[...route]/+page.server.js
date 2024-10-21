@@ -5,7 +5,7 @@ export async function load({ params }) {
     try {
         const route = params?.route || "";
 
-        const response = await fetch(path.join("http://154.250.11.160:25565/", "/get/", route), {
+        const response = await fetch(path.join(backendBase, "/get/", route), {
             headers: { "x-api-token": secret },
         });
         if (response.status !== 200) throw response;
