@@ -1,3 +1,3 @@
-import {load} from './[...route]/+server'
+import {GET} from './[...route]/+server'
 
-export {load}
+export {GET}
