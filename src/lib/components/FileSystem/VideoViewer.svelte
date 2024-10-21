@@ -4,7 +4,8 @@
     $: filePath = urlJoin("/downloads/", $page.data.path);
 </script>
 
-    <video src={filePath} controls></video>
+<!-- svelte-ignore a11y-media-has-caption -->
+<video src={filePath} controls></video>
 
 <style>
     video {

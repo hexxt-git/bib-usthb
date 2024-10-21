@@ -1,4 +1,5 @@
 <script>
+    import { browser } from "$app/environment";
     export let file = {
         label: "unknown",
     };
@@ -17,6 +18,9 @@
     // console.log(file);
     $: fileUrl =
         UrlJoin("/files", file.path.replaceAll(/\\\\|\/\/|\\/g, "/")) + `?${searchQueries.toString()}`;
+
+    $: downloadUrl =
+        UrlJoin("/downloads", file.path.replaceAll(/\\\\|\/\/|\\/g, "/")) + `?${searchQueries.toString()}`;
 
     function timeAgo(date) {
         const now = new Date();
@@ -45,6 +49,17 @@
         return result.length > 0 ? result.join(" ") + " ago" : "just now";
     }
 
+    function shareFile() {
+        if (!browser) return;
+        if (!navigator.canShare()) return;
+
+        navigator.share({
+            title: `${file.label} on BiB-USTHB.com`,
+            text: "BiB-USTHB is the unofficial student resource sharing platform for all usthb students",
+            url: urlJoin("https://bib-usthb.com/", fileUrl),
+        });
+    }
+
     let icon = "file";
     if (/image/.test(file.mimeType)) icon = "image";
     if (/video/.test(file.mimeType)) icon = "video";
@@ -52,9 +67,11 @@
     if (/pdf/.test(file.mimeType)) icon = "pdf";
     if (/zip|7z|compressed|archive|rar/i.test(file.mimeType)) icon = "zip";
     if (file.isDirectory) icon = "directory";
+
+    let opened = false;
 </script>
 
-<a href={fileUrl}>
+<a id="link" href={fileUrl}>
     <h2>
         <img src="/images/{icon}.svg" alt="go to {file.path}" />
         {file.label}
@@ -68,13 +85,18 @@
     <span>
         Modified: {timeAgo(new Date(file.lastModified))}
     </span>
-    <button id="open" on:click|preventDefault>
+    <button id="open" on:click|preventDefault={() => (opened = !opened)} on:focusout={() => (opened = true)}>
         <img src="/images/open.svg" alt="open" />
+        <div id="list" style={opened ? "display: flex;" : ""}>
+            <a href={fileUrl}>open</a>
+            <a href="" on:clicks={shareFile}>share</a>
+            <a href={downloadUrl} download>download</a>
+        </div>
     </button>
 </a>
 
 <style>
-    a {
+    #link {
         background-color: var(--background-2);
         color: var(--text-color);
         border-radius: 10px;
@@ -86,7 +108,7 @@
         padding: 8px;
         transition: background-color 100ms ease;
     }
-    a:hover {
+    #link:hover:not(:has(#open:hover)) {
         background-color: #213249;
     }
     h2 {
@@ -118,6 +140,7 @@
         border: none;
         height: fit-content;
         cursor: pointer;
+        position: relative;
     }
     #open img {
         width: 30px;
@@ -130,5 +153,29 @@
     }
     #open:hover img {
         background-color: #192335;
+    }
+    #list {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        background-color: var(--background-1);
+        color: var(--text-color);
+        gap: 5px;
+        border-radius: 8px;
+        display: flex;
+        z-index: 1;
+        box-shadow: var(--search-glow) 0 10px 15px -5px;
+        display: none;
+        overflow: hidden;
+    }
+    #list > a {
+        padding: 8px 15px;
+        color: var(--text-color);
+        text-decoration: none;
+        width: 100%;
+        text-align: start;
+    }
+    #list > a:hover {
+        background-color: #213249;
     }
 </style>
