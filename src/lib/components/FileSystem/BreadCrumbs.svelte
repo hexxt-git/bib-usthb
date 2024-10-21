@@ -16,7 +16,7 @@
         }
     }
     let enableBack;
-    $: back = $page.data.path.split("/").slice(0, -1).join("");
+    // $: back = $page.data.path.split("/").slice(0, -1).join("");
     $: enableBack = $page.data.path !== "/";
 </script>
 
