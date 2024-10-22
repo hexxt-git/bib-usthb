@@ -178,6 +178,7 @@
         overflow-y: auto;
         border-radius: 10px;
         scrollbar-width: thin;
+        padding-bottom: 60px;
     }
     #files {
         display: grid;

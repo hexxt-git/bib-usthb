@@ -1,10 +1,11 @@
 <script>
-	import { notify } from '$lib/components/notification_store.js';
+    import { goto } from "$app/navigation";
     export let file = {
         label: "unknown",
     };
 
     import { page } from "$app/stores";
+    import { onMount } from "svelte";
 
     $: searchQueries = $page ? new URLSearchParams($page.url.search) : new URLSearchParams("");
 
@@ -50,19 +51,43 @@
         return result.length > 0 ? result.join(" ") + " ago" : "just now";
     }
 
+    let canShare = false;
+    onMount(() => {
+        canShare = navigator?.canShare?.call() ?? false;
+    });
+
     function shareFile() {
-        if (!navigator?.canShare()) {
+        if (!navigator?.canShare?.call()) {
             console.error("unable to share!");
-            notify('can\'t share')
             return;
         }
-        notify('can share')
 
         navigator.share({
             title: `${file.label} on BiB-USTHB.com`,
             text: "BiB-USTHB is the unofficial student resource sharing platform for all usthb students",
             url: UrlJoin("https://bib-usthb.com/", fileUrl || "/"),
         });
+    }
+
+    function downloadFile() {
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = file.label;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function copyLink() {
+        const link = UrlJoin("https://bib-usthb.com/", fileUrl || "/");
+        navigator.clipboard.writeText(link).then(
+            () => {
+                console.log("Link copied to clipboard!");
+            },
+            (err) => {
+                console.error("Failed to copy the link: ", err);
+            },
+        );
     }
 
     let icon = "file";
@@ -74,6 +99,7 @@
     if (file.isDirectory) icon = "directory";
 
     let opened = false;
+    let openBtn;
 </script>
 
 <a id="link" href={fileUrl}>
@@ -92,20 +118,25 @@
     </span>
     <button
         id="open"
+        bind:this={openBtn}
         on:click|preventDefault={(event) => {
+            openBtn?.focus();
             opened = !opened;
-            event.target.focus();
-            console.log(event.target);
         }}
         on:focusout={() => {
-            // opened = false
+            setTimeout(() => {
+                opened = false;
+            }, 300);
         }}
     >
         <img src="/images/open.svg" alt="open" />
         <div id="list" style={opened ? "display: flex;" : ""}>
-            <a href={fileUrl}>open</a>
-            <a href="#fileFinder" on:click|preventDefault|stopPropagation={shareFile}>share</a>
-            <a href={downloadUrl} download>download</a>
+            <a href={fileUrl} on:click|preventDefault={() => goto(fileUrl)}>open</a>
+            {#if canShare}
+                <button on:click|preventDefault|stopPropagation={shareFile}>share</button>
+            {/if}
+            <button on:click={copyLink}>copy link</button>
+            <a href={downloadUrl} on:click|preventDefault={downloadFile} download>download</a>
         </div>
     </button>
 </a>
@@ -178,19 +209,27 @@
         gap: 5px;
         border-radius: 8px;
         display: flex;
+        flex-direction: column;
         z-index: 1;
         box-shadow: var(--search-glow) 0 10px 15px -5px;
         display: none;
         overflow: hidden;
     }
-    #list > a {
+    #list > a,
+    #list > button {
         padding: 8px 15px;
         color: var(--text-color);
         text-decoration: none;
         width: 100%;
         text-align: start;
+        background: none;
+        border: none;
+        display: inline;
+        cursor: pointer;
+        white-space: nowrap;
     }
-    #list > a:hover {
+    #list > a:hover,
+    #list > button:hover {
         background-color: #213249;
     }
 </style>

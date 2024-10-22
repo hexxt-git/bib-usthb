@@ -12,10 +12,10 @@
         <H1 style="margin: 0 auto 15px auto">File Finder</H1>
     </a>
     <div id="container">
-        {#if $page.data.isDirectory}
-            <Directory />
-        {:else}
+        {#if !$page.data.isDirectory}
             <FileViewer />
+        {:else}
+            <Directory />
         {/if}
     </div>
 </main>

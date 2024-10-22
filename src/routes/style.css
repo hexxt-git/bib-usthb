@@ -1,5 +1,5 @@
 :root {
-    --brand-color: #4381df;
+    --brand-color: #4584e2;
     --brand-color-weak: #1f2f44;
     --brand-color-weaker: #16537c;
 
@@ -72,4 +72,5 @@ body {
     font-family: var(--main-font);
     color: var(--text-color);
     margin: 0;
+    overflow-x: clip;
 }

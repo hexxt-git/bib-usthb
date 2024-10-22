@@ -1,3 +1,7 @@
+<script>
+    import Contribute from "./subcomponents/Contribute.svelte";
+</script>
+
 <nav>
     <div id="background"></div>
 
@@ -5,8 +9,7 @@
 
     <div id="right">
         <a class="nav-button" href="/help">?</a>
-        <!-- glow or sparkles on this button -->
-        <a class="nav-button" href="/contribute">contribute</a>
+        <Contribute />
     </div>
 </nav>
 
@@ -26,9 +29,8 @@
         font-size: var(--text-1);
         font-family: var(--main-font);
         box-shadow: var(--strong-shadow);
-        overflow: hidden;
     }
-    #background{
+    #background {
         position: absolute;
         top: 0;
         left: 0;
@@ -51,12 +53,12 @@
         text-decoration: none;
         padding-top: 3px;
     }
-    #right{
+    #right {
         display: flex;
         gap: 10px;
     }
     .nav-button {
-        color: var(--background-0);
+        color: black;
         background-color: var(--brand-color);
         height: 35px;
         padding: 0 13px;
@@ -70,6 +72,11 @@
         font-weight: 500;
         font-size: var(--text-0);
         letter-spacing: 1px;
+        box-shadow: var(--search-glow) 0 10px 5px -5px;
+        transition: 400ms ease;
+    }
+    .nav-button:hover {
+        box-shadow: #3687f01c 0 5px 5px 5px;
     }
     @media (max-width: 800px), (max-aspect-ratio: 3/4) {
         nav {
