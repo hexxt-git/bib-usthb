@@ -1,5 +1,5 @@
 <script>
-    import { browser } from "$app/environment";
+	import { notify } from '$lib/components/notification_store.js';
     export let file = {
         label: "unknown",
     };
@@ -51,13 +51,17 @@
     }
 
     function shareFile() {
-        if (!browser) return;
-        if (!navigator.canShare()) return;
+        if (!navigator?.canShare()) {
+            console.error("unable to share!");
+            notify('can\'t share')
+            return;
+        }
+        notify('can share')
 
         navigator.share({
             title: `${file.label} on BiB-USTHB.com`,
             text: "BiB-USTHB is the unofficial student resource sharing platform for all usthb students",
-            url: urlJoin("https://bib-usthb.com/", fileUrl || '/'),
+            url: UrlJoin("https://bib-usthb.com/", fileUrl || "/"),
         });
     }
 
@@ -86,11 +90,21 @@
     <span>
         Modified: {timeAgo(new Date(file.lastModified))}
     </span>
-    <button id="open" on:click|preventDefault={() => (opened = !opened)} on:focusout={() => (opened = true)}>
+    <button
+        id="open"
+        on:click|preventDefault={(event) => {
+            opened = !opened;
+            event.target.focus();
+            console.log(event.target);
+        }}
+        on:focusout={() => {
+            // opened = false
+        }}
+    >
         <img src="/images/open.svg" alt="open" />
         <div id="list" style={opened ? "display: flex;" : ""}>
             <a href={fileUrl}>open</a>
-            <a href="" on:clicks={shareFile}>share</a>
+            <a href="#fileFinder" on:click|preventDefault|stopPropagation={shareFile}>share</a>
             <a href={downloadUrl} download>download</a>
         </div>
     </button>

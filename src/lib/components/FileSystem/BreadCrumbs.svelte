@@ -27,10 +27,10 @@
         {/each}
     </div>
     <div id="buttons">
-        <a class={enableBack ? "" : "disabled"}>
+        <a href="#fileFinder" class={enableBack ? "" : "disabled"}>
             <img src="/images/arrow.svg" alt="arrow" class="reverse" />
         </a>
-        <a>
+        <a href="#fileFinder">
             <img src="/images/arrow.svg" alt="arrow" />
         </a>
     </div>

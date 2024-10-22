@@ -13,7 +13,10 @@ export async function load({ params }) {
 
         return data;
     } catch (error) {
-        console.error(error);
-        return {};
+        console.error(error)
+        return {
+            status: 500,
+            error: new Error("Failed to fetch data from the backend"),
+        };
     }
 }

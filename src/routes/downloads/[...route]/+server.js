@@ -13,6 +13,9 @@ export async function GET({ params }) {
         return response;
     } catch (error) {
         console.error(error);
-        return {};
+        return {
+            status: 500,
+            error: new Error("Failed to fetch data from the backend"),
+        };
     }
 }
