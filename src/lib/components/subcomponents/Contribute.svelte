@@ -4,9 +4,9 @@
     const config = {
         sparkles: {
             min: 5,
-            max: 8,
-            spawnChance: 0.80,
-            spawnInterval: 40,
+            max: 12,
+            spawnChance: 0.85,
+            spawnInterval: 60,
             initialSpread: {
                 x: 40,
                 y: 30,
@@ -21,7 +21,7 @@
                     max: 0.6,
                 },
                 y: {
-                    min: -0.5,
+                    min: -0.7,
                     max: 0,
                 },
                 rotation: {
@@ -169,7 +169,7 @@
         backdrop-filter: brightness(1.1) saturate(1.05);
     }
     a:hover img {
-        opacity: 0.1;
+        opacity: 0.2;
     }
     img {
         position: absolute;

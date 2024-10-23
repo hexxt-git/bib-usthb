@@ -1,10 +1,11 @@
 <script>
-	import VideoViewer from './VideoViewer.svelte';
+    import VideoViewer from "./VideoViewer.svelte";
     import urlJoin from "url-join";
     import PDFViewer from "./PDFViewer.svelte";
     import BreadCrumbs from "./BreadCrumbs.svelte";
     import { page } from "$app/stores";
     import ImageViewer from "./ImageViewer.svelte";
+    import AudioViewer from "./AudioViewer.svelte";
 
     $: file = $page.data;
 </script>
@@ -15,21 +16,23 @@
             {file.label}
         </h2>
         <div id="buttons">
-            <a href={urlJoin("/downloads", file?.path || '/')} target="_blank">
+            <a href={urlJoin("/downloads", file?.path || "/")} target="_blank">
                 <img src="/images/maximize.svg" alt="" />
             </a>
-            <a href={urlJoin("/downloads", file?.path || '/')} download>
+            <a href={urlJoin("/downloads", file?.path || "/")} download>
                 <img src="/images/download.svg" alt="" />
             </a>
         </div>
     </div>
-    {#if /image/.test(file?.mimeType)}
+    {#if /image/i.test(file?.mimeType)}
         <ImageViewer />
-    {:else if /video/.test(file?.mimeType)}
+    {:else if /audio/i.test(file?.mimeType)}
+        <AudioViewer />
+    {:else if /video/i.test(file?.mimeType)}
         <VideoViewer />
-    {:else if /pdf/.test(file?.mimeType)}
+    {:else if /pdf/i.test(file?.mimeType)}
         <PDFViewer />
-    {:else if /text/.test(file?.mimeType)}
+    {:else if /text/i.test(file?.mimeType)}
         text
     {/if}
     <BreadCrumbs />
@@ -61,6 +64,8 @@
         text-transform: uppercase;
         margin: 0;
         color: var(--highlight-color);
+        max-width: 100%;
+        word-break: break-all;
     }
     #container {
         display: grid;

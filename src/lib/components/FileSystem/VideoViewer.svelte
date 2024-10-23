@@ -1,17 +1,23 @@
 <script>
     import { page } from "$app/stores";
     import urlJoin from "url-join";
-    $: filePath = urlJoin("/downloads/", $page.data.path || '/');
+    $: filePath = urlJoin("/downloads/", $page.data.path || "/");
 </script>
 
-<!-- svelte-ignore a11y-media-has-caption -->
-<video src={filePath} controls></video>
+<div id="container">
+    <!-- svelte-ignore a11y-media-has-caption -->
+    <video src={filePath} controls></video>
+</div>
 
 <style>
+    #container{
+        display: flex;
+        justify-content: center;
+    }
     video {
-        display: block;
         height: 100%;
         max-width: 100%;
-        margin: 0 auto;
+        float: 40%;
+        border-radius: 5px;
     }
 </style>

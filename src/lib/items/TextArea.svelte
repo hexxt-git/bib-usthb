@@ -26,7 +26,7 @@
     textarea{
         margin-top: 5px;
         width: 100%;
-        max-width: calc(100vw - var(--side-margin)*2 - 40px);
+        max-width: calc(100vw - var(--side-margin)*2);
         background-color: var(--background-2);
         border-radius: var(--element-radius);
         color: var(--highlight-color);

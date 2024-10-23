@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import { page } from "$app/stores";
 
     $: route = $page.data.path;
@@ -15,24 +16,30 @@
             breadCrumbArray = breadCrumbArray;
         }
     }
-    let enableBack;
-    // $: back = $page.data.path.split("/").slice(0, -1).join("");
-    $: enableBack = $page.data.path !== "/";
+
+    function goBack() {
+        // i give up on making a custom method
+        window.history.back();
+    }
+    function goForward() {
+        window.history.forward();
+    }
 </script>
 
 <nav>
     <div id="breadcrumbs">
         {#each breadCrumbArray as { href, label }, index}
-            &nbsp;{index !== 0 ? "/" : ""} <a {href}>{label}</a>
+            &nbsp;{index !== 0 ? "/" : ""}
+            <a {href}>{label}</a>
         {/each}
     </div>
     <div id="buttons">
-        <a href="#fileFinder" class={enableBack ? "" : "disabled"}>
+        <button on:click={goBack}>
             <img src="/images/arrow.svg" alt="arrow" class="reverse" />
-        </a>
-        <a href="#fileFinder">
+        </button>
+        <button on:click={goForward}>
             <img src="/images/arrow.svg" alt="arrow" />
-        </a>
+        </button>
     </div>
 </nav>
 
@@ -41,30 +48,45 @@
         display: flex;
         justify-content: space-between;
         align-items: end;
+        max-width: 100%;
+    }
+    #breadcrumbs {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        max-width: 100%;
+        gap: 3px;
     }
     #breadcrumbs a {
         color: var(--brand-color);
         text-decoration: none;
         font-size: var(--text-0);
+        max-width: 100%;
+        word-break: break-all;
+        
+        display: block;
     }
     #breadcrumbs a:hover {
         text-decoration: underline;
     }
-    #buttons a {
+    #buttons button {
         padding: 0 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
     }
-    #buttons a img {
-        width: 22px;
+    #buttons button img {
+        width: 26px;
         scale: 1;
         transition: scale 300ms ease;
     }
-    #buttons a:hover img {
+    #buttons button:hover img {
         scale: 1.1;
     }
     .reverse {
         transform: scaleX(-1);
     }
-    .disabled {
+    button:disabled {
         opacity: 0.6;
         cursor: default;
     }

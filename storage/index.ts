@@ -71,7 +71,8 @@ function incrementDownload(path: string) {
 function getFileStats(path: string): Promise<{ visits: number; downloads: number }> {
     return new Promise((resolve, reject) => {
         path = path.replaceAll(/\\\\|\/\/|\\/g, "/"); // common windows dev L
-        path = path.replace(/^\//, '')
+        path = path.replace(/^\//, "");
+        path = path || "/";
         db.get(
             `SELECT visits, downloads FROM file_stats WHERE path = ?`,
             [path],
@@ -87,16 +88,18 @@ function getFileStats(path: string): Promise<{ visits: number; downloads: number
     });
 }
 
-app.post("/upload/:path(*)?", upload.single("file"), (req, res): any => {
+app.post("/upload/:path(*)?", upload.single("file"), (req, res) => {
     const file = req.file;
     const path = (req.params.path as string) || ".";
 
-    if (!file) return res.status(400).send("File Required");
+    res.status(400).send("File Required");
+    if (!file) return;
 
     const targetPath = Path.resolve(Path.join(__dirname, "uploads", path));
     if (!targetPath.startsWith(BASE_DIR) || path.includes("..")) {
         fs.rmSync(file.path, { force: true });
-        return res.status(400).send("Unauthorized");
+        res.status(400).send("Unauthorized");
+        return;
     }
 
     const targetFilePath = Path.join(targetPath, file.originalname);
@@ -105,39 +108,45 @@ app.post("/upload/:path(*)?", upload.single("file"), (req, res): any => {
 
     if (fs.existsSync(targetFilePath)) {
         fs.rmSync(file.path, { force: true });
-        return res.status(400).send("File already exists");
+        res.status(400).send("File already exists");
+        return;
     }
 
     fs.rename(file.path, targetFilePath, (err) => {
         if (err) {
             fs.rmSync(file.path, { force: true });
-            return res.status(500).send("Internal Error");
+            res.status(500).send("Internal Error");
+            return;
         }
         res.send("ok");
     });
 });
 
-app.get("/download/:path(*)", (req, res): any => {
+app.get("/download/:path(*)", (req, res) => {
     const path = req.params.path as string;
 
-    if (!path) return res.status(400).send("Route Required");
+    res.status(400).send("Route Required");
+    if (!path) return;
     const filePath = Path.resolve(Path.join(__dirname, "uploads", path));
     if (!filePath.startsWith(BASE_DIR) || path.includes("..")) {
-        return res.status(400).send("Unauthorized");
+        res.status(400).send("Unauthorized");
+        return;
     }
 
     if (!fs.existsSync(filePath)) {
-        return res.status(404).send("File Not Found");
+        res.status(404).send("File Not Found");
+        return;
     }
 
     if (fs.statSync(filePath).isDirectory()) {
         // TODO: zip and upload maybe
         // TODO: implement rate limits or smth
-        return res.status(400).send("File is a Directory");
+        res.status(400).send("File is a Directory");
+        return;
     }
 
     incrementDownload(path);
-    
+
     res.sendFile(filePath, (err) => {
         if (err) res.status(500).send("Internal Error");
     });
@@ -209,6 +218,6 @@ async function getFileInfo(path: string, recursive: boolean = true): Promise<Fil
     return fileInfo;
 }
 
-app.listen(3000, () => {
-    console.log("listening on http://localhost:3000");
+app.listen(25565, () => {
+    console.log("listening on http://localhost:25565");
 });
