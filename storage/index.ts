@@ -36,18 +36,18 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     const start = Date.now();
 
-    // const originalJson = res.json;
-    // res.json = function (body) {
-    //     console.log("Response JSON:", body);
-    //     return originalJson.call(this, body);
-    // };
-
     res.on("finish", () => {
         const duration = Date.now() - start;
         console.log(
             `${req.method} ${req.originalUrl}`.padEnd(55, " ") + ` ${res.statusCode} - ${duration}ms`
         );
     });
+
+    const originalJson = res.json;
+    res.json = function (body) {
+        // console.log("Response JSON:", body);
+        return originalJson.call(this, body);
+    };
 
     next();
 });
@@ -125,8 +125,10 @@ app.post("/upload/:path(*)?", upload.single("file"), (req, res) => {
 app.get("/download/:path(*)", (req, res) => {
     const path = req.params.path as string;
 
-    res.status(400).send("Route Required");
-    if (!path) return;
+    if (!path) {
+        res.status(400).send("Route Required");
+        return;
+    }
     const filePath = Path.resolve(Path.join(__dirname, "uploads", path));
     if (!filePath.startsWith(BASE_DIR) || path.includes("..")) {
         res.status(400).send("Unauthorized");

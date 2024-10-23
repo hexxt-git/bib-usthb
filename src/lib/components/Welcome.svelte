@@ -1,6 +1,6 @@
 <script>
     import SearchBar from "./subcomponents/SearchBar.svelte";
-    let use_small_background = false
+    let use_small_background = false;
     import { onMount } from "svelte";
 
     function updateBackground() {
@@ -9,14 +9,18 @@
 
     onMount(() => {
         updateBackground();
-        window.addEventListener('resize', updateBackground);
+        window.addEventListener("resize", updateBackground);
         return () => {
-            window.removeEventListener('resize', updateBackground);
+            window.removeEventListener("resize", updateBackground);
         };
     });
 </script>
+
 <main>
-    <div id="background" style="background-image: url(/images/FractalBackground{use_small_background ? 'Small2':'Edited'}.png)"></div>
+    <div
+        id="background"
+        style="background-image: url(/images/FractalBackground{use_small_background ? 'Small' : 'Large'}.png)"
+    ></div>
     <div id="text-container">
         <h1>Welcome to <span>BiB-USTHB</span></h1>
         <h2>The unofficial student resource sharing website</h2>
@@ -26,7 +30,7 @@
 </main>
 
 <style>
-    #background{
+    #background {
         position: absolute;
         top: 0;
         left: 0;
@@ -37,13 +41,13 @@
         opacity: var(--fractal-opacity);
         background-size: cover;
     }
-    main{
+    main {
         height: calc(100vh - var(--nav-height));
         position: relative;
         background-color: var(--brand-color-weak);
         overflow: hidden;
     }
-    #text-container{
+    #text-container {
         position: absolute;
         top: 0;
         left: 0;
@@ -56,18 +60,18 @@
         padding-top: 100px;
         text-align: center;
     }
-    h1{
+    h1 {
         color: white;
         margin: 0;
         font-family: var(--title-font);
         font-size: 5rem;
         font-weight: 700;
     }
-    h1 span{
+    h1 span {
         color: var(--first-title-color);
         display: inline-block;
     }
-    h2{
+    h2 {
         color: white;
         margin: 0;
         font-family: var(--title-font);
@@ -76,7 +80,7 @@
         letter-spacing: 1px;
         padding: 0 30px;
     }
-    #closing-arc{
+    #closing-arc {
         background: var(--background-0);
         position: absolute;
         bottom: -50px;
@@ -84,17 +88,17 @@
         height: 100px;
         border-radius: 50% 50% 0 0;
     }
-    @media (max-width: 800px), (orientation: portrait){
-        #text-container{
+    @media (max-width: 800px), (orientation: portrait) {
+        #text-container {
             padding-bottom: 200px;
             gap: 10px;
         }
-        h1{
+        h1 {
             font-size: 3rem;
             display: flex;
             flex-direction: column;
         }
-        h2{
+        h2 {
             font-size: 1.5em;
         }
     }

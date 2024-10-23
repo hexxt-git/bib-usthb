@@ -66,7 +66,7 @@
 
         document?.addEventListener("click", handleOutsideInteraction);
         document?.addEventListener("contextmenu", handleOutsideInteraction);
-        
+
         return () => {
             document?.removeEventListener("click", handleOutsideInteraction);
             document?.removeEventListener("contextmenu", handleOutsideInteraction);
@@ -161,10 +161,10 @@
     function handleContextMenu(event) {
         // event.stopPropagation();
         event.preventDefault();
-        
+
         // Close any other open context menus first
         isContextMenuOpen = false;
-        
+
         // Small delay to ensure clean state before opening new menu
         setTimeout(() => {
             isContextMenuOpen = true;
@@ -194,10 +194,11 @@
         },
         {
             items: [
-                ...(file.isDirectory
-                    ? []
-                    : [{ label: "Download", action: handleDownload, icon: "⭳" }]),
+                ...(file.isDirectory ? [] : [{ label: "Download", action: handleDownload, icon: "⭳" }]),
                 ...(isShareAvailable ? [{ label: "Share", action: handleShare, icon: "↗️" }] : []),
+                ...(/pdf|image/.test(file.mimeType)
+                    ? [{ label: "Print", action: handlePrint, icon: "🖨️" }]
+                    : []),
             ],
         },
         {
@@ -206,14 +207,11 @@
                 { label: "Copy Filename", action: handleCopyFileName, icon: "📋" },
             ],
         },
-        {
-            items: [
-                ...(/pdf|image/.test(file.mimeType)
-                    ? [{ label: "Print", action: handlePrint, icon: "🖨️" }]
-                    : []),
+        // {
+        //     items: [
                 // { label: "File Info", action: () => goto(previewUrl + "&info=true"), icon: "ℹ️" },
-            ],
-        },
+        //     ],
+        // },
     ];
 </script>
 

@@ -10,7 +10,7 @@
 <style>
     main {
         padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 210px);
+        min-height: calc(100vh - 290px);
         font-family: var(--main-font);
         background-color: var(--background-0);
         color: var(--text-color);
