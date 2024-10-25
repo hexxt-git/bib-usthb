@@ -7,7 +7,22 @@
     import { page } from "$app/stores";
     import ImageViewer from "./ImageViewer.svelte";
     import AudioViewer from "./AudioViewer.svelte";
-    import TextViewer from "./TextViewer.svelte";
+
+    let isMobile = false;
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        const checkMobile = () => {
+            isMobile = window.innerWidth / window.innerHeight <= 1;
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+
+        return () => {
+            window.removeEventListener("resize", checkMobile);
+        };
+    });
 
     $: file = $page.data;
 </script>
@@ -32,11 +47,9 @@
         <AudioViewer />
     {:else if /video/i.test(file?.mimeType)}
         <VideoViewer />
-    {:else if /pdf/i.test(file?.mimeType)}
+    {:else if /pdf/i.test(file?.mimeType) && !isMobile}
         <PDFViewer />
-    <!-- {:else if /text/i.test(file?.mimeType)}
-        <TextViewer /> -->
-    {:else if /ms|openxmlformats|officedocument|google-apps|zip|rar/i.test(file?.mimeType)}
+    {:else if /ms|openxmlformats|officedocument|google-apps|text|pdf/i.test(file?.mimeType)}
         <DocsViewer />
     {:else}
         <div class="unavailable">

@@ -9,7 +9,8 @@
     import Nav from "$lib/components/Nav.svelte";
     import Footer from "$lib/components/Footer.svelte";
 
-    let mounted = false;
+    let mounted = true;
+    setTimeout(() => (mounted = false), 0);
 
     onMount(() => {
         setTimeout(() => {
