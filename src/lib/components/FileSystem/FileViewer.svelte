@@ -28,12 +28,21 @@
         <ImageViewer />
     {:else if /audio/i.test(file?.mimeType)}
         <AudioViewer />
-    {:else if /video/i.test(file?.mimeType)}
-        <VideoViewer />
+        <!-- {:else if /video/i.test(file?.mimeType)}
+        <VideoViewer /> -->
     {:else if /pdf/i.test(file?.mimeType)}
         <PDFViewer />
     {:else if /text/i.test(file?.mimeType)}
         text
+    {:else}
+        <div class="unavailable">
+            Preview Unavailable for this file type, <a
+                href={urlJoin("/downloads", file?.path || "/")}
+                download
+            >
+                download
+            </a>
+        </div>
     {/if}
     <BreadCrumbs />
 </div>
@@ -73,5 +82,15 @@
         gap: 10px;
         height: 100%;
         width: 100%;
+    }
+    .unavailable {
+        padding-top: 10%;
+        font-size: large;
+        text-align: center;
+    }
+    .unavailable a {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
     }
 </style>

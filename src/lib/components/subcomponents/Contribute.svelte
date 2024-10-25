@@ -57,6 +57,7 @@
 
     function createSparkle(x, y) {
         const { sparkles: s } = config;
+        
         return {
             x: randomSpread(x, s.initialSpread.x),
             y: randomSpread(y, s.initialSpread.y),
