@@ -1,4 +1,5 @@
 <script>
+    import DocsViewer from "./DocsViewer.svelte";
     import VideoViewer from "./VideoViewer.svelte";
     import urlJoin from "url-join";
     import PDFViewer from "./PDFViewer.svelte";
@@ -6,6 +7,7 @@
     import { page } from "$app/stores";
     import ImageViewer from "./ImageViewer.svelte";
     import AudioViewer from "./AudioViewer.svelte";
+    import TextViewer from "./TextViewer.svelte";
 
     $: file = $page.data;
 </script>
@@ -28,12 +30,14 @@
         <ImageViewer />
     {:else if /audio/i.test(file?.mimeType)}
         <AudioViewer />
-        <!-- {:else if /video/i.test(file?.mimeType)}
-        <VideoViewer /> -->
+    {:else if /video/i.test(file?.mimeType)}
+        <VideoViewer />
     {:else if /pdf/i.test(file?.mimeType)}
         <PDFViewer />
-    {:else if /text/i.test(file?.mimeType)}
-        text
+    <!-- {:else if /text/i.test(file?.mimeType)}
+        <TextViewer /> -->
+    {:else if /ms|openxmlformats|officedocument|google-apps/i.test(file?.mimeType)}
+        <DocsViewer />
     {:else}
         <div class="unavailable">
             Preview Unavailable for this file type, <a
