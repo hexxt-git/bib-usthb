@@ -8,8 +8,8 @@
     <a id="nav-logo" href="/">BiB-USTHB</a>
 
     <div id="right">
-        <a class="nav-button" href="/help">?</a>
         <Contribute />
+        <a class="nav-button" href="/help">?</a>
     </div>
 </nav>
 

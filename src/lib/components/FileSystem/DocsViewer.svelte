@@ -6,7 +6,7 @@
 </script>
 
 <main>
-    <p>loading in, this may take a while...</p>
+    <p>loading file, this may take a while...</p>
     <div>
         <iframe src="https://docs.google.com/gview?url={filePath}&embedded=true" title="viewing document"
         ></iframe>

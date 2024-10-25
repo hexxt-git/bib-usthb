@@ -10,7 +10,7 @@ export class FileService {
     public validatePath(path: string): void {
         const fullPath = Path.resolve(Path.join(this.baseDir, path));
         if (!fullPath.startsWith(this.baseDir) || path.includes("..")) {
-            const error = new Error("Unauthorized");
+            const error = new Error("Directory Unauthorized");
             error.statusCode = 401;
             throw error;
         }

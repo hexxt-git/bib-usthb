@@ -6,20 +6,41 @@ import { FileService } from "./services/fileService";
 import { authMiddleware } from "./middleware/auth";
 import { errorHandler, asyncHandler } from "./middleware/errorHandler";
 import { loggerMiddleware } from "./middleware/logger";
+import fsCB from "fs";
 import fs from "fs/promises";
 
-const BASE_DIR = Path.resolve("./uploads");
+const CONTENT_BASE_DIR = Path.resolve("./content");
+const UPLOADS_BASE_DIR = Path.resolve("./uploads");
+
+const getSaveToPath = (req: express.Request) => {
+    return Path.join(
+        UPLOADS_BASE_DIR,
+        `${req.body?.name.replaceAll(/\\|\//g, " ") || "Anonymous"} - ${new Date()
+            .toLocaleString("en-GB")
+            .replaceAll("/", "-")}`
+    );
+};
+
 const upload = multer({
-    dest: "temp/",
     limits: { fileSize: 12 * 1024 * 1024 }, // 12MB
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            const saveTo = getSaveToPath(req);
+            fsCB.mkdirSync(saveTo, { recursive: true });
+            cb(null, saveTo);
+        },
+        filename: (req, file, cb) => {
+            cb(null, file.originalname.replace(/\\|\//g, " "));
+        },
+    }),
 });
 
 const app = express();
 const db = new Database("./file_stats.db");
-const fileService = new FileService(BASE_DIR, db);
+const fileService = new FileService(CONTENT_BASE_DIR, db);
 
 // Middleware
-app.use(authMiddleware(process.env.secret || ""));
+app.use(authMiddleware);
 app.use(loggerMiddleware);
 
 declare global {
@@ -30,37 +51,28 @@ declare global {
 
 // Routes
 app.post(
-    "/upload/:path(*)?",
-    upload.single("file"),
+    "/upload",
+    upload.array("file"),
     asyncHandler(async (req, res) => {
-        const file = req.file;
-        const path = (req.params.path as string) || ".";
-
-        if (!file) {
-            const error = new Error("File Required");
+        if (!req.files) {
+            const error = new Error("Files Required");
             error.statusCode = 400;
             throw error;
         }
+        const saveTo = getSaveToPath(req);
+        let information = {
+            sender: {
+                name: req.body.name,
+                email: req.body.email,
+                isUsthbStudent: req.body.isUsthbStudent,
+                studyField: req.body.studyField,
+            },
+            files: (req.files as Express.Multer.File[])?.map(
+                (file: Express.Multer.File) => file.originalname
+            ),
+        };
 
-        const targetPath = Path.resolve(Path.join(BASE_DIR, path));
-        fileService.validatePath(targetPath);
-
-        const targetFilePath = Path.join(targetPath, file.originalname);
-        await fs.mkdir(Path.dirname(targetFilePath), { recursive: true });
-
-        if (
-            await fs
-                .access(targetFilePath)
-                .then(() => true)
-                .catch(() => false)
-        ) {
-            await fs.unlink(file.path);
-            const error = new Error("File already exists");
-            error.statusCode = 400;
-            throw error;
-        }
-
-        await fs.rename(file.path, targetFilePath);
+        await fs.writeFile(Path.join(saveTo, ".upload.json"), JSON.stringify(information, null, 4));
         res.send("ok");
     })
 );
@@ -76,7 +88,7 @@ app.get(
             throw error;
         }
 
-        const filePath = Path.resolve(Path.join(BASE_DIR, path));
+        const filePath = Path.resolve(Path.join(CONTENT_BASE_DIR, path));
         fileService.validatePath(filePath);
 
         const stat = await fs.stat(filePath);
