@@ -8,7 +8,6 @@
 	generate the icons with
 	    npx @vite-pwa/assets-generator --preset minimal .\static\favicon.png
     */
-
 </script>
 
 <main>
