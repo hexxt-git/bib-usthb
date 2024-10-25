@@ -36,7 +36,7 @@
         <PDFViewer />
     <!-- {:else if /text/i.test(file?.mimeType)}
         <TextViewer /> -->
-    {:else if /ms|openxmlformats|officedocument|google-apps/i.test(file?.mimeType)}
+    {:else if /ms|openxmlformats|officedocument|google-apps|zip|rar/i.test(file?.mimeType)}
         <DocsViewer />
     {:else}
         <div class="unavailable">
