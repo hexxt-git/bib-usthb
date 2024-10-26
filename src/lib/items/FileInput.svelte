@@ -30,6 +30,7 @@
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 10px;
+        margin: 5px 0;
     }
     div input{
         display: none;
@@ -44,7 +45,7 @@
         font-weight: 400;
         
     }
-    div label span:hover{
+    div label:hover span{
         text-decoration: underline;
     }
     div label div{

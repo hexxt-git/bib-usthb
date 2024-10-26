@@ -12,8 +12,10 @@
 </script>
 
 <div style={style}>
-    <label for={label}>topic:</label>
-    <select name={label} id={label} value="" on:input={handle_input} required>
+    {#if label}
+        <label for={label}>{label}:</label>
+    {/if}
+    <select name={label} id={label} value={$store} on:input={handle_input} required>
     {#each options as option}
         <option value={option}>{option}</option>
     {/each}

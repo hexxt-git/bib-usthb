@@ -1,5 +1,4 @@
 <script>
-    import { notify } from '$lib/components/notification_store'
     import { writable } from "svelte/store";
     import {shoot_confetti} from "$lib/components/confetti_store"
     import Main from "$lib/items/Main.svelte";
@@ -14,48 +13,84 @@
 	import CheckboxInput from "$lib/items/CheckboxInput.svelte";
 	import FileInput from '$lib/items/FileInput.svelte';
 
-    class Resource{
-        constructor(file){
+    class Resource {
+        constructor(file) {
             this.file_store = writable(file);
-            this.file = file
+            this.file = file;
+            this.file_store.subscribe(new_file => this.file = new_file);
             
-            this.file_store.subscribe(new_file => this.file = new_file)
-        
+            this.type_store = writable('');
+            this.type = '';
+            this.type_store.subscribe(new_type => this.type = new_type);
+
+            this.specialty = '';
+            this.module = '';
+            this.additional = '';
         }
     }
 
-    let personal_details = {}
+    class PersonalDetails {
+        constructor() {
+            this.name_store = writable('');
+            this.name = '';
+            this.name_store.subscribe(new_name => this.name = new_name);
+
+            this.email_store = writable('');
+            this.email = '';
+            this.email_store.subscribe(new_email => this.email = new_email);
+
+            this.domain_store = writable('');
+            this.domain = '';
+            this.domain_store.subscribe(new_domain => this.domain = new_domain);
+
+            this.usthb_student_store = writable(false);
+            this.usthb_student = false;
+            this.usthb_student_store.subscribe(new_status => this.usthb_student = new_status);
+
+            this.additional_store = writable('');
+            this.additional = '';
+            this.additional_store.subscribe(new_additional => this.additional = new_additional);
+        }
+    }
+
     let resources = [];
+    let personal_details = new PersonalDetails();
 
-    let name = writable('')
-    let email = writable('')
-    let domain = writable('')
-    let usthb_student = writable(false)
-    let additional = writable('')
-
-    name.subscribe(value => personal_details.name = value)
-    email.subscribe(value => personal_details.email = value)
-    domain.subscribe(value => personal_details.domain = value)
-    usthb_student.subscribe(value => personal_details.usthb_student = value)
-    additional.subscribe(value => personal_details.additional = value)
     
+    const FILE_TYPES = [
+        'TD / Exercises',
+        'TP / Practical',
+        'Cours / Lecture',
+        'PFE / Project',
+        'Notes / Résumé',
+        'Book',
+        'Other'
+    ]
+
     let string_trunc = (string, length) => string.length > length ? string.substr(0, length-3) + '...' : string;
 
     // files
-    let add_resource = (file=-1)=>{
-        let new_resource = new Resource(file)
+    let add_resource = (file=-1) => {
         if(resources.length > 0){
-            // copy last files settings
-        }
-        
-        resources = [...resources, new_resource]
+            let last_resource = resources[resources.length - 1];
+            let cloned_resource = new Resource(last_resource.file);
+            cloned_resource.type_store.set(last_resource.type);
+            cloned_resource.specialty = last_resource.specialty;
+            cloned_resource.module = last_resource.module;
+            cloned_resource.additional = last_resource.additional;
+            resources = [...resources, cloned_resource];
+        } else {
+            let new_resource = new Resource(file)
+            resources = [...resources, new_resource]
+        }    
     }
-    let prompt_for_file = ()=>{
+
+    let prompt_for_file = () => {
         let input = document.createElement('input');
         input.type = 'file';
         input.multiple = true;
         input.click();
-        input.onchange = (e)=>{
+        input.onchange = (e) => {
             let new_files = e.target.files;
             for (const file of new_files) {
                 let data_transfer = new DataTransfer();
@@ -64,7 +99,8 @@
             }
         }
     }
-    let handle_file_drop = (e)=>{
+
+    let handle_file_drop = (e) => {
         e.preventDefault();
         let dt = e.dataTransfer;
         let files = dt.files;
@@ -79,65 +115,54 @@
     let submitting = false;
 
     let submit = async (e) => {
-        console.log(personal_details, files)
-        if(files.length === 0) {
-            notify({state:'error', message:'please upload atleast one file', duration: 30*1000})
+        e.preventDefault()
+        if(resources.length < 1) return;
+        let data = new FormData()
+        data.append('name', personal_details.name);
+        data.append('email', personal_details.email);
+        data.append('domain', personal_details.domain);
+        data.append('usthb_student', personal_details.usthb_student);
+        data.append('additional', personal_details.additional);
 
-            e.preventDefault();
-            return;
-        }
-        if (!formElement.reportValidity()) {
-            e.preventDefault();
-            return;
-        } else {
-            submitting = true;
-            notify({state: "notification", message: "uploading files...", duration: 30*1000});
-            let allok = true;
+        resources.forEach((resource, index) => {
+            data.append(`file`, resource.file[0]);
+            data.append('file_data', JSON.stringify({
+                type: resource.type,
+                specialty: resource.specialty,
+                module: resource.module,
+                additional: resource.additional
+            }))
+        });
+        console.log(data)
+        submitting = true;
 
-            let successfull_uploads = []
-            
-            for (const file of files) {
-                console.log('trying to upload:', file, personal_details)
-                if(!file.file.length) continue;
+        try {
+            let response = await fetch('/upload', {
+                method: 'POST',
+                body: data
+            });
 
-                try {
-                    let response =  await upload(file, personal_details);
-                    
-                    if(!response.ok) { 
-                        allok = false;
-                        response.json().then(data => {
-                            console.log(file.file[0].name, data);
-                        });
-                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
-                    } else {
-                        successfull_uploads.push(file);
-                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 30*1000})
-                    }
-                } catch (error) {
-                    allok = false;
-                    console.error(error)
-                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
-                }
-            }
-            
-            submitting = false;
-            files = files.filter(file => !successfull_uploads.includes(file));
-            if(allok){
-                notify({state: 'success', message: 'all files uploaded successfully', duration: 30*1000})
-                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 30*1000})
-                shoot_confetti()
+            if (response.ok) {
+                shoot_confetti();
+                resources = [];
+                personal_details = new PersonalDetails();
+                formElement.reset();
             } else {
-                notify({state: 'error', message: 'some files failed to upload', duration: 30*1000});
+                console.error('Upload failed');
             }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            submitting = false;
         }
     }
 
-    let delte_resource = (resource) => {
+    let delete_resource = (resource) => {
         resources = resources.filter(r => r != resource);
     }
     
     let uploading_dots = '';
-    setInterval(()=>{
+    setInterval(() => {
         uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
     }, 500);
 </script>
@@ -154,10 +179,10 @@
             &ensp; adding personal details is optional but that is how we can get back to you on updates.
         </P>
         <div class="personal-detail-container">
-            <TextInput label='name' store={name} />
-            <TextInput label='email' store={email} style="grid-row:2/3; grid-column:1/2" />
-            <CheckboxInput label="are you a usthb student" store={usthb_student} />
-            <TextInput label='study field' store={domain} />
+            <TextInput label='name' store={personal_details.name_store} />
+            <TextInput label='email' store={personal_details.email_store} style="grid-row:2/3; grid-column:1/2" />
+            <CheckboxInput label="are you a usthb student" store={personal_details.usthb_student_store} />
+            <TextInput label='study field' store={personal_details.domain_store} />
         </div>
 
         <H2>file uploads</H2>
@@ -167,14 +192,23 @@
             {#each resources as resource, index (resource)}
             <div class="resource">
                 <FileInput store={resource.file_store} id={index} />
-                <SelectionInput options={[1,2,3]} />
-                <SelectionInput options={[1,2,3]} />
-                <SelectionInput options={[1,2,3]} />
-                <SelectionInput options={[1,2,3]} />
+                <SelectionInput label='file type*' options={FILE_TYPES} store={resource.type_store} />
+                <div class="resource-input">
+                    <label for="specialty-{index}">specialty: </label>
+                    <input type="text" name="specialty-{index}" bind:value={resource.specialty}>
+                </div>
+                <div class="resource-input">
+                    <label for="module-{index}">module*: </label>
+                    <input type="text" name="module-{index}" bind:value={resource.module} required>
+                </div>
+                <div class="resource-input">
+                    <label for="additional-{index}">additional info: </label>
+                    <input type="text" name="additional-{index}" bind:value={resource.additional}>
+                </div>
 
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <div class="resource-delete" on:click={() => delte_resource(resource)}>delete</div>
+                <div class="resource-delete" on:click={() => delete_resource(resource)}>delete</div>
             </div>
             {/each}
 
@@ -201,13 +235,13 @@
             &ensp; your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <A href="../help" target="_blank">help</A> page.
         </P>
         
-        <TextArea label="" placeholder="is there anything you would like to add" rows="4" store={additional}/>
+        <TextArea label="" placeholder="is there anything you would like to add" rows="4" store={personal_details.additional_store}/>
         <br>
-        {#if submitting} <Submit disabled={true}> uploading{uploading_dots} </Submit>
+        {#if submitting} <Submit disabled> uploading{uploading_dots} </Submit>
         {:else} <Submit> submit </Submit>{/if}
 
 
-        <!-- <button type="button" on:click={()=>{
+        <!-- <button type="button" on:click={() => {
             console.log(resources, personal_details);
         }}>log</button> -->
     </form>
@@ -231,8 +265,13 @@
     }
     .resources-container{
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 20px;
+    }
+    @media (max-width: 1800px) {
+        .resources-container{
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
     @media (max-width: 1200px) {
         .resources-container{
@@ -245,7 +284,7 @@
         }
     }
     .resource{
-        padding: 20px 20px 50px 20px;
+        padding: 10px 15px 25px 15px;
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         margin-top: 10px;
@@ -254,16 +293,31 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        min-height: 230px;
+        min-height: 260px;
+    }
+    .resource-input {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        margin: 3px 0;
+        gap: 10px;
+    }
+    .resource input {
+        border-radius: 9px;
+        border: solid 1px #444;
+        width: 100%;
+        padding: 0 5px;
+    }
+    .resource input:focus {
+        outline: none;
     }
     .resource-delete{
         position: absolute;
         bottom: 5px;
-        right: 10px;
-        color: rgb(245, 22, 59);
+        right: 15px;
+        color: rgb(241, 44, 77);
         cursor: pointer;
         text-decoration: underline;
-        font-size: var(--text-2);
+        font-size: var(--text-1);
         user-select: none;
         font-weight: 500;
     }
@@ -272,7 +326,7 @@
         box-shadow: var(--window-shadow);
         background-color: var(--background-1);
         margin-top: 10px;
-        min-height: 230px;
+        min-height: 260px;
         padding: 15px;
         color: var(--text-color-weak);
     }
