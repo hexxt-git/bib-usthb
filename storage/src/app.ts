@@ -15,7 +15,7 @@ const UPLOADS_BASE_DIR = Path.resolve("./uploads");
 const getSaveToPath = (req: express.Request) => {
     const directory = `${req.body?.name.replaceAll(/\\|\//g, " ") || "Anonymous"} - ${new Date()
         .toLocaleString("en-GB")
-        .replaceAll("/", "-")}`;
+        .replaceAll("/", "-")}`.replaceAll(/:|,/g, " ");
     const saveTo = Path.join(UPLOADS_BASE_DIR, directory);
     return saveTo;
 };
@@ -65,8 +65,8 @@ app.post(
             sender: {
                 name: req.body.name,
                 email: req.body.email,
-                isUsthbStudent: req.body.isUsthbStudent,
-                studyField: req.body.studyField,
+                usthb_student: req.body.usthb_student,
+                domain: req.body.domain,
             },
             files: [] as any[],
             additional: req.body.additional,

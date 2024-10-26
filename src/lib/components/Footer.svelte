@@ -1,6 +1,6 @@
 <footer id="footer">
     <div>
-        made by <a href="https://9EED.github.io/" target="_blank"> Zeghdani Salah </a> and <a href="https://laindev.me/" target="_blank"> Aymen charfaoui </a>
+        made by <a href="https://www.linkedin.com/in/zeghdani/" target="_blank"> Zeghdani Salah </a> and <a href="https://www.linkedin.com/in/aymen-charfaoui-15990828b/" target="_blank"> Aymen charfaoui </a>
     </div>
     <div>
         kept alive by your <a href="/contribute/">contributions</a> and <a href="/feedback/">feedback</a>
@@ -9,7 +9,7 @@
         refer to <a href="/help/">help</a> page for any issues
     </div>
     <div>
-        open-sourced on <a href="https://github.com/9EED/bib-usthb" target="_blank">github</a>
+        open-sourced on <a href="https://github.com/hexxt-git/bib-usthb" target="_blank">github</a>
     </div>
 </footer>
 

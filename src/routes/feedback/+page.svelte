@@ -43,7 +43,7 @@
 <Main>
     <H1>BiB-USTHB feedback and support page</H1>    
     <P>
-        &nbsp;&nbsp;&nbsp;In this page you can reach us, the developers and maintainers of the website. we're always looking for new ways to improve our service, so plesae write any suggestions or complaints you have on here. you can also reach us through email <A href="mailto:bibusthb@gmail.com" target="_blank">bibusthb@gmail.com</A> and github <A href="https://github.com/9EED/bib-usthb/issues" target="_blank">reports</A>.<br>
+        &nbsp;&nbsp;&nbsp;In this page you can reach us, the developers and maintainers of the website. we're always looking for new ways to improve our service, so plesae write any suggestions or complaints you have on here. you can also reach us through email <A href="mailto:zeghdns@gmail.com" target="_blank">zeghdns@gmail.com</A> and github <A href="https://github.com/hexxt-git/bib-usthb/issues" target="_blank">reports</A>.<br>
         &nbsp;&nbsp;&nbsp;adding personal details is optional but that is how we can get back to you on updates.
     </P>
     <H2>feedback form</H2>

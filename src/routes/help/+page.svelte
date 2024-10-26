@@ -41,7 +41,7 @@
         &ensp; If you have any questions, suggestions or issues, you may reach us through the dedicated <A
             href="/feedback/">feedback</A
         > page, email <A href="mailto:bibusthb@gmail.com" target="_blank">bibusthb@gmail.com</A> or through <A
-            href="https://github.com/9EED/BiB-USTHB/issues"
+            href="https://github.com/hexxt-git/bib-usthv/issues"
             target="_blank">github reports</A
         > we're are always happy to help and we are always looking for ways to improve the website.
     </P>
