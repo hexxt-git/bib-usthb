@@ -8,7 +8,6 @@ import { errorHandler, asyncHandler } from "./middleware/errorHandler";
 import { loggerMiddleware } from "./middleware/logger";
 import fsCB from "fs";
 import fs from "fs/promises";
-import cors from "cors";
 
 const CONTENT_BASE_DIR = Path.resolve("./content");
 const UPLOADS_BASE_DIR = Path.resolve("./uploads");
@@ -52,7 +51,6 @@ declare global {
 // Routes
 app.post(
     "/upload",
-    cors(),
     upload.array("file"),
     asyncHandler(async (req, res) => {
         console.log(req.body);

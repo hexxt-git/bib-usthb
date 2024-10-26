@@ -4,7 +4,6 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/mime-types": "^2.1.4",
     "@types/multer": "^1.4.12"
@@ -13,7 +12,6 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.21.1",
     "multer": "^1.4.5-lts.1",
     "sqlite3": "^5.1.7",

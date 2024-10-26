@@ -40,7 +40,7 @@
         background-image: url(/images/dots.webp);
         mix-blend-mode: darken;
         opacity: 8%;
-        background-size: cover;
+        background-size: 1500px cover;
         z-index: -1;
     }
     #nav-logo {
