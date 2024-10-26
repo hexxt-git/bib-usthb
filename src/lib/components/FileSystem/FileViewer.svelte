@@ -10,6 +10,7 @@
 
     let isMobile = false;
     import { onMount } from "svelte";
+    import { imageContainerSize } from "./imageContainerStore";
 
     onMount(() => {
         const checkMobile = () => {
@@ -33,6 +34,11 @@
             {file.label}
         </h2>
         <div id="buttons">
+            {#if /image/i.test(file?.mimeType)}
+                <button on:click={() => imageContainerSize.update((value) => !value)}>
+                    <img src="/images/containerSize{$imageContainerSize ? '' : 'Extend'}.svg" alt="" />
+                </button>
+            {/if}
             <a href={urlJoin("/downloads", file?.path || "/")} target="_blank">
                 <img src="/images/maximize.svg" alt="" />
             </a>
@@ -75,8 +81,10 @@
     #top img {
         padding: 5px;
         width: 32px;
+        height: 32px;
         background: #1e2f44;
         border-radius: 5px;
+        cursor: pointer;
     }
     #top img:hover {
         background: #273a55;
@@ -84,6 +92,9 @@
     #buttons {
         display: flex;
         gap: 8px;
+    }
+    #buttons button {
+        display: contents;
     }
     h2 {
         font-size: var(--text-0);

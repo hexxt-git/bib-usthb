@@ -127,6 +127,10 @@ app.get(
     })
 );
 
+app.get('/search', asyncHandler(async  (req, res) => {
+    const query = req.query.query
+}))
+
 // Error handler goes last
 app.use(errorHandler);
 

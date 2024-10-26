@@ -13,11 +13,11 @@
         margin: 0;
         padding: 25px 0px 0px 0px;
         text-decoration: var(--brand-color) underline;
-        user-select: none;
         cursor: pointer;
         width: fit-content;
         font-family: var(--title-font);
         font-size: var(--title-1);
         color: var(--title-color);
+        text-transform: capitalize;
     }
 </style>

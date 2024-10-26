@@ -13,10 +13,11 @@
     #container{
         display: flex;
         justify-content: center;
+        overflow: hidden;
     }
     video {
-        height: 100%;
         max-width: 100%;
+        max-height: 100%;
         float: 40%;
         border-radius: 5px;
     }

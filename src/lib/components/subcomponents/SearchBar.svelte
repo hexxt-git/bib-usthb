@@ -1,10 +1,10 @@
 <script>
     let query = "";
-    const searchPhrase = "search for files and modules";
+    const searchPhrase = "search for files and modules ";
     let placeholder = "se";
     let i = 0;
     setInterval(() => {
-        placeholder = searchPhrase.slice(0, i);
+        placeholder = searchPhrase.slice(0, i) + (Math.round(i / 6) % 2 ? "" : "|");
         i++;
         if (i > searchPhrase.length + 30) i = 0;
     }, 50);
