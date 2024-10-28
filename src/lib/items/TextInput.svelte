@@ -6,7 +6,7 @@
     export let value = "";
     export let style = "";
     export let placeholder = "";
-
+    export let required = false;
 
     const handle_input = (e) => {
         store.set(e.target.value);
@@ -28,6 +28,7 @@
             handle_input(event);
             onInput(event);
         }}
+        {required}
     />
 </div>
 
@@ -64,6 +65,6 @@
     }
     input::placeholder {
         color: var(--brand-color);
-        opacity: 0.8;
+        opacity: 0.5;
     }
 </style>

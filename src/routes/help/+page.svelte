@@ -80,7 +80,7 @@
     </div>
     <H2>Privacy</H2>
     <P>
-        &ensp; using this website you're completely anonymous, we don't collect any personal information about
+        &ensp; Using this website you're completely anonymous, we don't collect any personal information about
         you, and we don't track you. anonymous user analytics is kept for the sake of the websites
         development. and the only information we keep is the one you provide us with when you upload a file
         for the sake of communicating with you if you wish.

@@ -17,11 +17,11 @@ export async function GET({ params }) {
             headers: { "x-api-token": secret },
         });
 
-        if (response.status !== 200) throw response;
+        if (!response.ok) throw response;
 
         return response;
     } catch (err) {
         console.error(err);
-        throw error(500, "Failed to fetch data from the backend");
+        throw error(err.status ?? 500, err.statusText ?? "Failed to fetch data from the backend");
     }
 }
