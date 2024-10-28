@@ -9,8 +9,8 @@ import { loggerMiddleware } from "./middleware/logger";
 import fsCB from "fs";
 import fs from "fs/promises";
 
-const CONTENT_BASE_DIR = Path.resolve("./content");
-const UPLOADS_BASE_DIR = Path.resolve("./uploads");
+const CONTENT_BASE_DIR = Path.resolve("./bib_usthb_user_generated/content");
+const UPLOADS_BASE_DIR = Path.resolve("./bib_usthb_user_generated/uploads");
 
 const getSaveToPath = (req: express.Request) => {
     const directory = `${req.body?.name.replaceAll(/\\|\//g, " ") || "Anonymous"} - ${new Date()
@@ -35,7 +35,7 @@ const upload = multer({
 });
 
 const app = express();
-const db = new Database("./file_stats.db");
+const db = new Database("./bib_usthb_user_generated/file_stats.db");
 const fileService = new FileService(CONTENT_BASE_DIR, db);
 
 // Middleware

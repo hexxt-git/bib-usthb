@@ -28,6 +28,10 @@
     $: file = $page.data;
 </script>
 
+<svelte:head>
+    <title>BiB-USTHB | {file.label}</title>
+</svelte:head>
+
 <div id="container">
     <div id="top">
         <h2>
