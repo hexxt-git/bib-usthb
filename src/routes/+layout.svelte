@@ -44,6 +44,10 @@
     });*/
 </script>
 
+<svelte:head>
+    <title>BiB-USTHB</title>
+</svelte:head>
+
 {#if !mounted}
     <LoadingScreen />
 {/if}

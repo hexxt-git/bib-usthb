@@ -219,7 +219,7 @@
 <div class="file-item-container" on:contextmenu={handleContextMenu}>
     <a class="file-item-link" href={previewUrl}>
         <h2 class="file-title">
-            <img class="file-icon" src="/images/{fileTypeIcon}.svg" alt="go to {file.path}" />
+            <img class="file-icon" src="/icons/files/{fileTypeIcon}.svg" alt="go to {file.path}" />
             {file.label}
         </h2>
         <span class="file-stats">
@@ -245,7 +245,7 @@
                 }
             }}
         >
-            <img class="action-icon" src="/images/open.svg" alt="open menu" />
+            <img class="action-icon" src="/icons/navigation/open.svg" alt="open menu" />
         </button>
     </a>
 

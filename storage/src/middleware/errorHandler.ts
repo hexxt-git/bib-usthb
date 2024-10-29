@@ -8,6 +8,8 @@ export const asyncHandler = (fn: (req: Request, res: Response, next: NextFunctio
 };
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
+    if(process.env.errors) console.error(err)
+
     logger.error(`${req.method} ${req.originalUrl}`.padEnd(30, " ") + ` ${err.statusCode} ${err.message}`);
 
     const statusCode = err.statusCode || 500;

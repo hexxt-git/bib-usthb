@@ -19,7 +19,7 @@
 <main>
     <div
         id="background"
-        style="background-image: url(/images/FractalBackground{use_small_background ? 'Small' : 'Large'}.png)"
+        style="background-image: url(/images/backgrounds/FractalBackground{use_small_background ? 'Small' : 'Large'}.png)"
     ></div>
     <div id="text-container">
         <h1>Welcome to <span>BiB-USTHB</span></h1>

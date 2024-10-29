@@ -11,6 +11,7 @@ import fs from "fs/promises";
 
 const CONTENT_BASE_DIR = Path.resolve("./bib_usthb_user_generated/content");
 const UPLOADS_BASE_DIR = Path.resolve("./bib_usthb_user_generated/uploads");
+const DATABASE_DIR = Path.resolve("./bib_usthb_user_generated/file_stats.db")
 
 const getSaveToPath = (req: express.Request) => {
     const directory = `${req.body?.name.replaceAll(/\\|\//g, " ") || "Anonymous"} - ${new Date()
@@ -35,7 +36,7 @@ const upload = multer({
 });
 
 const app = express();
-const db = new Database("./bib_usthb_user_generated/file_stats.db");
+const db = new Database(DATABASE_DIR);
 const fileService = new FileService(CONTENT_BASE_DIR, db);
 
 // Middleware
@@ -159,7 +160,12 @@ app.get(
 app.get(
     "/search",
     asyncHandler(async (req, res) => {
-        const query = req.query.query;
+        const query = (req.query.query as string) || '';
+        const searchResult = await db.searchFile(query)
+        console.log(query)
+        console.table(searchResult)
+        
+        res.json(searchResult)
     })
 );
 

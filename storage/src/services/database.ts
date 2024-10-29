@@ -11,17 +11,38 @@ export class Database {
 
     private initialize(): void {
         this.db.run(
-            `
-            CREATE TABLE IF NOT EXISTS file_stats (
-                path TEXT PRIMARY KEY,
-                downloads INTEGER DEFAULT 0,
-                visits INTEGER DEFAULT 0
-            )
-        `,
+            `--sql
+                CREATE TABLE IF NOT EXISTS file_stats (
+                    path TEXT PRIMARY KEY,
+                    downloads INTEGER DEFAULT 0,
+                    visits INTEGER DEFAULT 0
+                )
+            `,
             (err) => {
                 if (err) console.error("Error initializing database:", err);
             }
         );
+    }
+
+    async searchFile(searchTerm: string): Promise<any[]> {
+        const sanitizedTerm = this.sanitizePath(searchTerm);
+
+        return new Promise((resolve, reject) => {
+            const sql = `--sql
+                SELECT 
+                    path,
+                    visits,
+                    downloads
+                FROM file_stats 
+                WHERE path LIKE '%' || ? || '%'
+                ORDER BY visits DESC, visits DESC
+                LIMIT 20
+            `;
+            this.db.all(sql, [sanitizedTerm], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows || []);
+            });
+        });
     }
 
     async incrementVisit(path: string): Promise<void> {

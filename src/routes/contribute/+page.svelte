@@ -233,10 +233,12 @@
                 <div class="resource">
                     <FileInput store={resource.file_store} id={index} />
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
                     <div class="resource-delete" on:click={() => delete_resource(resource)}>delete</div>
                 </div>
             {/each}
 
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div
                 on:dragover={(e) => e.preventDefault()}
                 on:dragenter={(e) => e.preventDefault()}
@@ -245,7 +247,7 @@
             >
                 <span
                     ><div>
-                        <img src="../images/upload.png" alt="" />
+                        <img src="/icons/upload.png" alt="" />
                         <p>drag and drop files</p>
                         <p>
                             or click

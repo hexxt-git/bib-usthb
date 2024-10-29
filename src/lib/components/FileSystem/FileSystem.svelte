@@ -4,7 +4,12 @@
     import H1 from "$lib/items/H1.svelte";
     import { page } from "$app/stores";
     import FileViewer from "./FileViewer.svelte";
+    
+    $: file = $page.data
 </script>
+<svelte:head>
+    <title>BiB-USTHB {file.label ? '| ' + file.label : ''} </title>
+</svelte:head>
 
 <main>
     <div id="fileFinder"></div>
@@ -12,8 +17,8 @@
         <H1 style="margin: 0 auto 15px auto">File Finder</H1>
     </a>
     <div id="container">
-        {#if !$page.data.error}
-            {#if $page.data.isDirectory}
+        {#if !file.error}
+            {#if file.isDirectory}
                 <Directory />
             {:else}
                 <FileViewer />
@@ -21,7 +26,7 @@
         {:else}
             <div>ERROR LOADING FILE</div>
             <div>
-                {$page.data.error}
+                {file.error}
             </div>
         {/if}
     </div>

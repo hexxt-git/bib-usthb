@@ -62,8 +62,8 @@
                 </li>
                 <li>You will find an install button you can click on to start the download.</li>
                 <div class="image-container">
-                    <img src="/images/mobile_download1.jpg" alt="screenshot of how to download on mobile" />
-                    <img src="/images/mobile_download2.jpg" alt="screenshot of how to download on mobile" />
+                    <img src="/images/download/mobile_1.jpg" alt="screenshot of how to download on mobile" />
+                    <img src="/images/download/mobile_2.jpg" alt="screenshot of how to download on mobile" />
                 </div>
             </div>
             <div class="item">
@@ -72,8 +72,8 @@
                 <li>you will find an install icon on the top right of the.</li>
                 <li>click the install button to start the downloading process.</li>
                 <div class="image-container">
-                    <img src="/images/desktop_download1.png" alt="screenshot of how to download on mobile" />
-                    <img src="/images/desktop_download2.png" alt="screenshot of how to download on mobile" />
+                    <img src="/images/download/desktop_1.png" alt="screenshot of how to download on mobile" />
+                    <img src="/images/download/desktop_2.png" alt="screenshot of how to download on mobile" />
                 </div>
             </div>
         </div>

@@ -1,15 +1,22 @@
 <script>
     let query = "";
+
     const searchPhrase = "search for files and modules ";
-    let placeholder = "se";
+    let placeholder = searchPhrase;
     let i = 0;
     setInterval(() => {
         placeholder = searchPhrase.slice(0, i) + (Math.round(i / 6) % 2 ? "" : "|");
         i++;
         if (i > searchPhrase.length + 30) i = 0;
     }, 50);
-    const search = async (text, type) => {
-        console.log(text, type);
+
+    const search = async (query) => {
+        if (query && query.trim().length > 0) {
+            const response = await fetch(`/search?query=${query}`);
+            const results = await response.json();
+            console.log({ query, results });
+            return results;
+        }
     };
 </script>
 
@@ -17,30 +24,16 @@
     <div class="input">
         <input type="text" bind:value={query} {placeholder} />
         {#if query == ""}
-            <img src="images/send.png" alt="" />
+            <img src="icons/navigation/send.png" alt="" />
         {/if}
     </div>
-    {#if query}
+    {#if query && query.trim().length}
         <hr />
         <div id="results">
-            {#await search(query, "module") then results}
-                {#if results && results.length > 0}
-                    <div>folders:</div>
-                    {#each results.splice(0, 5) as result}
-                        <a
-                            href={"https://drive.google.com/drive/folders/" + result.drive_id}
-                            class="result"
-                            target="_blank">{result.name}</a
-                        >
-                    {/each}
-                {/if}
-            {/await}
-
-            {#await search(query, "file") then results}
-                {#if results && results.length > 0}
-                    <div>files:</div>
-                    {#each results.splice(0, 30) as result}
-                        <a href={result.drive_link} class="result" target="_blank">{result.title}</a>
+            {#await search(query) then results}
+                {#if results && results.length >= 0}
+                    {#each results as result}
+                        <a href="/files/{result.path}" class="result">{result.path}</a>
                     {/each}
                 {/if}
             {/await}

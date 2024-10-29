@@ -30,6 +30,10 @@
         overflow: hidden;
         margin-bottom: 3px;
     }
+    label {
+        padding: 5px 0 0 0;
+        font-size: var(--text-0);
+    }
     select{
         max-width: 100%;
         box-sizing: border-box;

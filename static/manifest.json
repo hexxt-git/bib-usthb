@@ -9,7 +9,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080808",
-  "theme_color": "#283c57",
+  "theme_color": "#4584e2",
   "icons": [
       {
         "src": "pwa-64x64.png",

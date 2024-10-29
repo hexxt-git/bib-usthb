@@ -28,10 +28,6 @@
     $: file = $page.data;
 </script>
 
-<svelte:head>
-    <title>BiB-USTHB | {file.label}</title>
-</svelte:head>
-
 <div id="container">
     <div id="top">
         <h2>
@@ -40,14 +36,14 @@
         <div id="buttons">
             {#if /image/i.test(file?.mimeType)}
                 <button on:click={() => imageContainerSize.update((value) => !value)}>
-                    <img src="/images/containerSize{$imageContainerSize ? '' : 'Extend'}.svg" alt="" />
+                    <img src="/icons/navigation/containerSize{$imageContainerSize ? '' : 'Extend'}.svg" alt="" />
                 </button>
             {/if}
             <a href={urlJoin("/downloads", file?.path || "/")} target="_blank">
-                <img src="/images/maximize.svg" alt="" />
+                <img src="/icons/navigation/maximize.svg" alt="" />
             </a>
             <a href={urlJoin("/downloads", file?.path || "/")} download>
-                <img src="/images/download.svg" alt="" />
+                <img src="/icons/navigation/download.svg" alt="" />
             </a>
         </div>
     </div>

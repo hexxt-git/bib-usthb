@@ -35,10 +35,10 @@
     </div>
     <div id="buttons">
         <button on:click={goBack}>
-            <img src="/images/arrow.svg" alt="arrow" class="reverse" />
+            <img src="/icons/navigation/arrow.svg" alt="arrow" class="reverse" />
         </button>
         <button on:click={goForward}>
-            <img src="/images/arrow.svg" alt="arrow" />
+            <img src="/icons/navigation/arrow.svg" alt="arrow" />
         </button>
     </div>
 </nav>
