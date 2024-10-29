@@ -9,9 +9,9 @@ import { loggerMiddleware } from "./middleware/logger";
 import fsCB from "fs";
 import fs from "fs/promises";
 
-const CONTENT_BASE_DIR = Path.resolve("./bib_usthb_user_generated/content");
-const UPLOADS_BASE_DIR = Path.resolve("./bib_usthb_user_generated/uploads");
-const DATABASE_DIR = Path.resolve("./bib_usthb_user_generated/file_stats.db")
+const UPLOADS_BASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/uploads"));
+const CONTENT_BASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/content"));
+const DATABASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/file_stats.db"));
 
 const getSaveToPath = (req: express.Request) => {
     const directory = `${req.body?.name.replaceAll(/\\|\//g, " ") || "Anonymous"} - ${new Date()
@@ -90,7 +90,7 @@ app.post(
         for (let i = 0; i < files.length; i++) {
             let file = {
                 name: files[i].originalname,
-                size: formatBytes(files[i].size)
+                size: formatBytes(files[i].size),
             };
 
             information.files.push(file);
@@ -160,12 +160,12 @@ app.get(
 app.get(
     "/search",
     asyncHandler(async (req, res) => {
-        const query = (req.query.query as string) || '';
-        const searchResult = await db.searchFile(query)
-        console.log(query)
-        console.table(searchResult)
-        
-        res.json(searchResult)
+        const query = (req.query.query as string) || "";
+        const searchResult = await db.searchFile(query);
+        console.log(query);
+        console.table(searchResult);
+
+        res.json(searchResult);
     })
 );
 
@@ -175,4 +175,3 @@ app.use(errorHandler);
 app.listen(25565, () => {
     console.log("listening on http://localhost:25565");
 });
-

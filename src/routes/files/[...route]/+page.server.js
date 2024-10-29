@@ -1,5 +1,5 @@
 import path from "path";
-import { secret, backendBase } from "$env/static/private";
+import { secret, backendBase } from "$env/dynamic/private";
 import { error } from '@sveltejs/kit';
 
 const fetchWithTimeout = (url, options, timeout = 5000) => {
