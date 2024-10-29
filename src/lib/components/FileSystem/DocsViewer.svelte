@@ -2,7 +2,7 @@
     import { page } from "$app/stores";
     import urlJoin from "url-join";
 
-    $: filePath = urlJoin($page.url.origin || "https://bib-usthb.com", "/downloads/", $page.data.path || "/");
+    $: filePath = urlJoin("https://bib-usthb.com", "downloads", $page.data.path || "/");
 </script>
 
 <main>

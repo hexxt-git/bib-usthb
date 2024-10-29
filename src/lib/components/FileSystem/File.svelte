@@ -51,7 +51,11 @@
 
     let isShareAvailable = false;
     onMount(() => {
-        isShareAvailable = navigator?.canShare?.call() ?? false;
+        if (navigator?.canShare && navigator?.canShare()) {
+            isShareAvailable = true;
+        } else {
+            isShareAvailable = false;
+        }
 
         // Close context menu when clicking or right-clicking outside
         const handleOutsideInteraction = (event) => {

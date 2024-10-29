@@ -4,11 +4,12 @@
     import H1 from "$lib/items/H1.svelte";
     import { page } from "$app/stores";
     import FileViewer from "./FileViewer.svelte";
-    
-    $: file = $page.data
+
+    $: file = $page.data;
 </script>
+
 <svelte:head>
-    <title>BiB-USTHB {file.label ? '| ' + file.label : ''} </title>
+    <title>BiB-USTHB | {file.label}</title>
 </svelte:head>
 
 <main>
