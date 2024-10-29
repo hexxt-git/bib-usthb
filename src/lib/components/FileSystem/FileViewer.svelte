@@ -35,7 +35,7 @@
         </h2>
         <div id="buttons">
             {#if /image/i.test(file?.mimeType)}
-                <button on:click={() => imageContainerSize.update((value) => !value)}>
+                <button on:click={() => imageContainerSize.update((value) => !value)} tabindex="0">
                     <img src="/icons/navigation/containerSize{$imageContainerSize ? '' : 'Extend'}.svg" alt="" />
                 </button>
             {/if}

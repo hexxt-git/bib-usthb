@@ -10,14 +10,31 @@
         if (i > searchPhrase.length + 30) i = 0;
     }, 50);
 
-    const search = async (query) => {
+    function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            return new Promise((resolve) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(async () => {
+                    const result = await func.apply(this, args);
+                    resolve(result);
+                }, wait);
+            });
+        };
+    }
+
+    const debouncedSearch = debounce(async (query) => {
         if (query && query.trim().length > 0) {
             const response = await fetch(`/search?query=${query}`);
             const results = await response.json();
-            console.log({ query, results });
+            console.log({query, results})
             return results;
         }
-    };
+    }, 300);
+
+    let searchPromise;
+
+    $: searchPromise = debouncedSearch(query);
 </script>
 
 <div id="container">
@@ -30,12 +47,16 @@
     {#if query && query.trim().length}
         <hr />
         <div id="results">
-            {#await search(query) then results}
+            {#await searchPromise}
+                Loading...
+            {:then results}
                 {#if results && results.length >= 0}
                     {#each results as result}
                         <a href="/files/{result.path}" class="result">{result.path}</a>
                     {/each}
                 {/if}
+            {:catch error}
+                <div>Error: {error.message}</div>
             {/await}
         </div>
     {/if}
