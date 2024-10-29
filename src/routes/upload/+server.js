@@ -1,13 +1,13 @@
 import path from "path";
-import { secret, backendBase } from "$env/dynamic/private";
+import { env } from "$env/dynamic/private";
 import { error } from "@sveltejs/kit";
 
 export async function POST({ request }) {
     try {
         const formData = await request.formData();
-        const response = await fetch(path.join(backendBase, `upload`), {
+        const response = await fetch(path.join(env.backendBase, `upload`), {
             method: "POST",
-            headers: { "x-api-token": secret },
+            headers: { "x-api-token": env.secret },
             body: formData,
         });
 
