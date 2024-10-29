@@ -23,6 +23,9 @@
     div{
         display: grid;
     }
+    label {
+        font-size: var(--text-0);
+    }
     textarea{
         margin-top: 5px;
         width: 100%;
