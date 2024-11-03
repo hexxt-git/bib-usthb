@@ -1,12 +1,12 @@
 import { Resend } from "resend"
-import { resend_key } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 
 
 let actions = {default: async() => { console.error('resend api key not found') }};
 let resend;
 
-if((resend_key||'').slice(0, 6) === 're_GUz'){
-    resend = new Resend( resend_key );
+if((env.resend_key||'').slice(0, 6) === 're_GUz'){
+    resend = new Resend( env.resend_key );
     actions = {
        default: async({ request }) =>{ // it comes in a weird data struct and i convert it to an object
            const formData = [...await request.formData()].reduce((acc, arr)=>{

@@ -7,7 +7,7 @@ we currently host all files on google drive but intend to migrate to a custom so
 
 clone the github repository bu downloading it using the command prompt
 ```bash
-git clone https://github.com/9EED/bib-usthb
+git clone https://github.com/hexxt-git/bib-usthb
 ```
 install all the dependancies
 ```bash
