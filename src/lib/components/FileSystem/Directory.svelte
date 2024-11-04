@@ -4,7 +4,7 @@
     import TextInput from "$lib/items/TextInput.svelte";
     import File from "./File.svelte";
 
-    let sortMethods = ["time", "active", "a-z"];
+    let sortMethods = ["a-z", "active", "time"];
     let sortDirections = ["normal", "reverse"];
 
     import { page } from "$app/stores";
@@ -50,7 +50,7 @@
                 case "time":
                     return (new Date(b.lastModified) - new Date(a.lastModified)) * reverse;
                 case "active":
-                    return (b.downloads - a.downloads) * reverse;
+                    return (b.visits - a.visits) * reverse;
                 case "a-z":
                     return a.label.localeCompare(b.label) * reverse;
                 default:

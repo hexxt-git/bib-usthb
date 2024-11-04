@@ -27,7 +27,6 @@
         if (query && query.trim().length > 0) {
             const response = await fetch(`/search?query=${query}`);
             const results = await response.json();
-            console.log({query, results})
             return results;
         }
     }, 300);
