@@ -9,14 +9,14 @@
     import Nav from "$lib/components/Nav.svelte";
     import Footer from "$lib/components/Footer.svelte";
 
-    let mounted = true;
-    setTimeout(() => (mounted = false), 0);
+    // let mounted = true;
+    // setTimeout(() => (mounted = false), 0);
 
-    onMount(() => {
-        setTimeout(() => {
-            mounted = true;
-        }, 500);
-    });
+    // onMount(() => {
+    //     setTimeout(() => {
+    //         mounted = true;
+    //     }, 500);
+    // });
 
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
     injectSpeedInsights();
@@ -48,9 +48,9 @@
     <title>BiB-USTHB</title>
 </svelte:head>
 
-{#if !mounted}
+<!-- {#if !mounted}
     <LoadingScreen />
-{/if}
+{/if} -->
 
 <Nav />
 

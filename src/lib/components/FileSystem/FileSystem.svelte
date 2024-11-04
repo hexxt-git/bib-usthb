@@ -9,12 +9,18 @@
 </script>
 
 <svelte:head>
-    <title>BiB-USTHB | {file.label}</title>
+    <title>BiB-USTHB {file.label ? "| " + file.label : ""}</title>
+    <meta
+        name="description"
+        content={file.label
+            ? `Explore and view the file: ${file.label} on BiB-USTHB.`
+            : "Explore and view files on BiB-USTHB."}
+    />
 </svelte:head>
 
 <main>
     <div id="fileFinder"></div>
-    <a href="#fileFinder">
+    <a href="/files">
         <H1 style="margin: 0 auto 15px auto">File Finder</H1>
     </a>
     <div id="container">
@@ -31,6 +37,7 @@
             </div>
         {/if}
     </div>
+    <a id="contribute" href="/contribute">can't find what you're looking for? contribute when you find it!</a>
 </main>
 
 <style>
@@ -51,5 +58,16 @@
         #container {
             padding: 20px 20px 10px 20px;
         }
+    }
+    #contribute {
+        text-align: right;
+        display: block;
+        padding-top: 5px;
+        padding-right: 10px;
+        color: var(--text);
+        text-decoration: none;
+    }
+    #contribute:hover {
+        text-decoration: underline;
     }
 </style>

@@ -22,7 +22,7 @@ const getSaveToPath = (req: express.Request) => {
 };
 
 const upload = multer({
-    limits: { fileSize: 12 * 1024 * 1024 }, // 12MB
+    limits: { fileSize: 1024 * 1024 * 1024 }, // 1GB
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
             const saveTo = getSaveToPath(req);

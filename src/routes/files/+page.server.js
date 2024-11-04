@@ -1,3 +1,3 @@
-import {load} from './[...route]/+page.server'
+import { load } from "./[...route]/+page.server";
 
-export {load}
+export { load };
