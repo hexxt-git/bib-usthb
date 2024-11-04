@@ -7,7 +7,7 @@
 
 <main>
     <p>loading file, this may take a while...</p>
-    <div>
+    <div class="container">
         <iframe src="https://docs.google.com/gview?url={filePath}&embedded=true" title="viewing document"
         ></iframe>
     </div>
@@ -24,7 +24,7 @@
         width: 100%;
         z-index: 0;
     }
-    div {
+    .container {
         height: 100%;
         position: relative;
     }
