@@ -1,42 +1,54 @@
-
 {
-    "name": "bib-usthb",
-    "short": "bib-usthb",
-    "short_name": "bib-usthb",
-    "id": "com.bib-usthb",
-    "lang": "en",
-    "description": "BiB-USTHB (bibliothèque usthb) is the unofficial student resource sharing website for university of science and technology houari boumediene",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#080808",
-    "theme_color": "#283c57",
-    "icons": [
-        {
-          "src": "pwa-64x64.png",
-          "sizes": "64x64",
-          "type": "image/png",
-          "purpose": "any"
-        },
-        {
-          "src": "pwa-64x64.png",
-          "sizes": "64x64",
-          "type": "image/png"
-        },
-        {
-          "src": "pwa-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        },
-        {
-          "src": "pwa-512x512.png",
-          "sizes": "512x512",
-          "type": "image/png"
-        },
-        {
-          "src": "maskable-icon-512x512.png",
-          "sizes": "512x512",
-          "type": "image/png",
-          "purpose": "maskable"
-        }
-      ]
+  "name": "bib-usthb",
+  "short_name": "bib-usthb",
+  "id": "/",
+  "lang": "en",
+  "description": "BiB-USTHB (bibliothèque usthb) is the unofficial student resource sharing website for university of science and technology houari boumediene",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#4584e2",
+  "screenshots": [
+    {
+      "src": "images/screenshot.png",
+      "sizes": "1414x1072",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Home screen of bib-usthb"
+    },
+    {
+      "src": "images/screenshot_mobile.png",
+      "sizes": "413x896",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home screen of bib-usthb"
+    }
+  ],
+  "icons": [
+    {
+      "src": "pwa-64x64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }

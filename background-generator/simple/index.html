@@ -1,0 +1,43 @@
+<head>
+    <title>Background generator</title>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+    const SCALE = 0.9;
+
+    function radius(x, y){
+        let result = 12/Math.pow(x + y/3 , 0.18) + 0.45 + Math.random()*.6;
+        return Math.min(result, 9);
+    }
+
+    const container = document.getElementById('container');
+    
+    for(let x = 0 ; x < 250*SCALE ; x++){
+        for(let y = 0 ; y < 80*SCALE ; y++){
+            const child = document.createElement('div')
+            child.style = ` left: ${x*20*SCALE}px;
+                            top: ${y*20*SCALE}px;
+                            padding: ${radius(x/SCALE,y/SCALE)*SCALE}px;
+                          `
+            child.className = 'dot'
+            container.appendChild(child)
+        }
+    }
+
+</script>
+
+<style>
+    body{
+        margin: 0;
+        box-sizing: border-box;
+    }
+    .dot{
+        position: absolute;
+        background: #000;
+        border-radius: 100%;
+    }
+</style>

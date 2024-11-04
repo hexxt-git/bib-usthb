@@ -1,337 +1,288 @@
 <script>
-    import {onMount} from 'svelte';
-    import {load, upload} from "/src/components/api-calls";
-    import {notify, delete_notification} from '/src/components/notification_store'
-    import { Confetti } from "svelte-confetti"
+    import { writable } from "svelte/store";
+    import { shoot_confetti } from "$lib/components/confetti_store";
+    import Main from "$lib/items/Main.svelte";
+    import H1 from "$lib/items/H1.svelte";
+    import H2 from "$lib/items/H2.svelte";
+    import P from "$lib/items/P.svelte";
+    import A from "$lib/items/A.svelte";
+    import TextInput from "$lib/items/TextInput.svelte";
+    import TextArea from "$lib/items/TextArea.svelte";
+    import Submit from "$lib/items/Submit.svelte";
+    import CheckboxInput from "$lib/items/CheckboxInput.svelte";
+    import FileInput from "$lib/items/FileInput.svelte";
 
-    let faculties = []
-    onMount(async ()=>{
-        try{
-            faculties = await load('https://walrus-app-mwr59.ondigitalocean.app/api/fac/all')
-            faculties = faculties.map(fac => {
-                fac.groups = fac.modules?.reduce((acc, module) => {
-                    if(!acc.some(group => group.id === module.group.id)) acc.push(module.group);
-                    return acc;
-                }, []);
-                return fac;
-            });
-        } catch (error) {
-            notify({state: 'error', message: 'error loading page \nreload and try again later', duration: 30*1000});
-        }
-        console.log(faculties);
-    });
-
-    class File{
-        constructor(file=-1, faculty=-1, group=-1, module=-1, type=-1){
+    class Resource {
+        constructor(file) {
+            this.file_store = writable(file);
             this.file = file;
-            this.faculty = faculty;
-            this.group = group;
-            this.module = module;
-            this.type = type // exam or lesson ..
-            //console.log(this)
+            this.file_store.subscribe((newFile) => (this.file = newFile));
         }
     }
 
-    let personal_details = {}
-    let files = [];
-    
-    let add_file = (file=-1)=>{
-        let copy_file = files.length != 0 ? new File(
-            file,
-            files[files.length - 1].faculty,
-            files[files.length - 1].group,
-            files[files.length - 1].module,
-            files[files.length - 1].type,
-        ): new File(file);
-        
-        files = [...files, copy_file];
+    class FileInfo {
+        constructor() {
+            this.specialty_store = writable("");
+            this.year_store = writable("");
+            this.module_store = writable("");
+
+            this.specialty = "";
+            this.year = "";
+            this.module = "";
+
+            this.specialty_store.subscribe((newSpecialty) => (this.specialty = newSpecialty));
+            this.year_store.subscribe((newYear) => (this.year = newYear));
+            this.module_store.subscribe((newModule) => (this.module = newModule));
+        }
+
+        isValid() {
+            return this.specialty.trim() !== "" && this.year.trim() !== "" && this.module.trim() !== "";
+        }
     }
-    let prompt_new_file = ()=>{
-        let input = document.createElement('input');
-        input.type = 'file';
+
+    class PersonalDetails {
+        constructor() {
+            this.name_store = writable("");
+            this.email_store = writable("");
+            this.domain_store = writable("");
+            this.usthb_student_store = writable(false);
+            this.additional_store = writable("");
+
+            this.name = "";
+            this.email = "";
+            this.domain = "";
+            this.usthb_student = false;
+            this.additional = "";
+
+            this.name_store.subscribe((newName) => (this.name = newName));
+            this.email_store.subscribe((newEmail) => (this.email = newEmail));
+            this.domain_store.subscribe((newDomain) => (this.domain = newDomain));
+            this.usthb_student_store.subscribe((newStatus) => (this.usthb_student = newStatus));
+            this.additional_store.subscribe((newAdditional) => (this.additional = newAdditional));
+        }
+    }
+
+    let resources = [];
+    let file_info = new FileInfo();
+    let personal_details = new PersonalDetails();
+
+    let add_resource = (file = null) => {
+        let new_resource = new Resource(file);
+        resources = [...resources, new_resource];
+    };
+
+    let prompt_for_file = () => {
+        let input = document.createElement("input");
+        input.type = "file";
         input.multiple = true;
         input.click();
-        input.onchange = (e)=>{
+        input.onchange = (e) => {
             let new_files = e.target.files;
-            //console.log(new_files);
             for (const file of new_files) {
                 let data_transfer = new DataTransfer();
                 data_transfer.items.add(file);
-                add_file(data_transfer.files);
+                add_resource(data_transfer.files);
             }
-        }
-    }
-    let handleDrop = (e)=>{
+        };
+    };
+
+    let handle_file_drop = (e) => {
         e.preventDefault();
         let dt = e.dataTransfer;
         let files = dt.files;
-        //console.log(e.dataTransfer.files)
-        for (const file of files) { // this breaks them to lists of files so it works with svelte bind
+        for (const file of files) {
             let data_transfer = new DataTransfer();
             data_transfer.items.add(file);
-            add_file(data_transfer.files);
+            add_resource(data_transfer.files);
         }
-    }
+    };
 
     let formElement;
     let submitting = false;
-    let confetti = false;
+
     let submit = async (e) => {
-        if(files.length === 0) {
-            notify({state:'error', message:'please upload atleast one file', duration: 30*1000})
+        e.preventDefault();
+        if (resources.length < 1) return;
 
-            e.preventDefault();
+        // Validate file info
+        if (!file_info.isValid()) {
+            alert("Please fill in all required file information");
             return;
         }
-        if (!formElement.reportValidity()) {
-            e.preventDefault();
-            return;
-        } else {
-            submitting = true;
-            notify({state: "notification", message: "uploading files...", duration: 30*1000});
-            let allok = true;
 
-            let successfull_uploads = []
-            for (const file of files) {
-                console.log(file, personal_details)
-                if(!file.file.length) continue;
-                try {
-                    let response =  await upload(file, personal_details);
-                    
-                    if(!response.ok) { 
-                        allok = false;
-                        response.json().then(data => {
-                            console.log(file.file[0].name, data);
-                        });
-                        notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
-                    } else {
-                        successfull_uploads.push(file);
-                        notify({state: 'success', message: `successfully uploaded file ${file.file[0].name}`, duration: 30*1000})
-                    }
+        let data = new FormData();
+        // Add personal details
+        data.append("name", personal_details.name);
+        data.append("email", personal_details.email);
+        data.append("domain", personal_details.domain);
+        data.append("usthb_student", personal_details.usthb_student);
+        data.append("additional", personal_details.additional);
 
-                } catch (error) {
-                    allok = false;
-                    // response.json().then(data => { // this caused a fatal error once so i disabled it
-                    //     console.log(file.file[0].name, data);
-                    // });
-                    notify({state: 'error', message: `error uploading file ${file.file[0].name}`, duration: 30*1000})
-                }
+        // Add file info once
+        data.append("specialty", file_info.specialty);
+        data.append("year", file_info.year);
+        data.append("module", file_info.module);
+
+        // Add files
+        resources.forEach((resource, index) => {
+            data.append("files", resource.file[0]);
+        });
+
+        submitting = true;
+
+        try {
+            let response = await fetch("/upload", {
+                method: "POST",
+                body: data,
+            });
+
+            if (response.ok) {
+                shoot_confetti();
+                resources = [];
+                file_info = new FileInfo();
+                personal_details = new PersonalDetails();
+                formElement.reset();
+            } else {
+                console.error("Upload failed");
+                alert("Upload failed. Please try again.");
             }
-            
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while uploading. Please try again.");
+        } finally {
             submitting = false;
-            if(allok){
-                notify({state: 'success', message: 'all files uploaded successfully', duration: 30*1000})
-                notify({state: 'notification', message: 'we thank you very much for your contributions', duration: 30*1000})
-                files = files.filter(file => !successfull_uploads.includes(file));
-                confetti = true;
-                setTimeout(()=>{
-                    confetti = false;
-                }, 8000);
-            } else if(files.length > 1){
-                notify({state: 'error', message: 'some files failed to upload', duration: 30*1000});
-            }
         }
-    }
-    
-    let uploading_dots = '';
-    setInterval(()=>{
-        uploading_dots = uploading_dots.length < 5 ? uploading_dots + '.' : '';
+    };
+
+    let delete_resource = (resource) => {
+        resources = resources.filter((r) => r != resource);
+    };
+
+    let uploading_dots = "";
+    setInterval(() => {
+        uploading_dots = uploading_dots.length < 5 ? uploading_dots + "." : "";
     }, 500);
 </script>
-{#if confetti}
-<div style="
-    position: fixed;
-    top: -50px;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 10;
-    "
- ><Confetti x={[-5, 5]} y={[-1, 2]} amount=300 fallDistance="400px" /></div>
-{/if}
 
-<main>
-    <h1><span>BiB-USTHB</span> contribution page&nbsp;</h1>
-    <p>
-        &nbsp;&nbsp;&nbsp;This website is ran and maintained all thanks to student contributions. please don't shy away from sharing any resources you have. If you can't find a module or faculty that is because the website is still in its early phase and we're looking for people to help us fill them up, you can help us with that on the <a href="/feedback/">feedback</a> page.
-    </p>
+<Main>
+    <H1><span>BiB-USTHB</span> contribution page&nbsp;</H1>
+    <P>
+        &ensp; This website is ran and maintained all thanks to student contributions. please don't shy away
+        from sharing any resources you have. If you can't find a module or faculty that is because the website
+        is still in its early phase and we're looking for people to help us fill them up, you can help us with
+        that on the <A href="/feedback/">feedback</A> page.
+    </P>
     <form bind:this={formElement} on:submit={submit}>
-        <h2>personal details</h2>
-        <p>
-            adding personal details is optional but that is how we can get back to you on updates.
-        </p>
-        <div class="personal-detail-container">
-            <div class="text-input">
-                <label for="name">name:</label>
-                <input type="text" id="name" name="name" bind:value={personal_details.name}>
-            </div>
-            <div class="email-input">
-                <label for="email">email:</label>
-                <input type="email" id="email" name="email" bind:value={personal_details.email}>
-            </div>
-            <div class="checkbox-input">
-                <label for="usthb_student">are you a USTHB student: </label>
-                <input type="checkbox" id="usthb_student" name="usthb_student" bind:checked={personal_details.usthb_student}>
-            </div>
-            <div class="text-input">
-                <label for="domain">study field:</label>
-                <input type="text" id="domain" name="domain" bind:value={personal_details.domain}>
-            </div>
+        <H2>personal details</H2>
+        <P>&ensp; Adding personal details is optional but that is how we can get back to you on updates.</P>
+        <div class="form-container">
+            <TextInput
+                label="name"
+                store={personal_details.name_store}
+                placeholder={["John Doe", "Jane Smith", "Alex Johnson"][Math.floor(Math.random() * 3)]}
+            />
+            <TextInput
+                label="email"
+                store={personal_details.email_store}
+                placeholder={["john@example.com", "jane@example.com", "alex@example.com"][
+                    Math.floor(Math.random() * 3)
+                ]}
+            />
+            <CheckboxInput label="are you a usthb student" store={personal_details.usthb_student_store} />
+            <TextInput
+                label="study field"
+                store={personal_details.domain_store}
+                placeholder={["Informatique", "Biologie", "Science technologie"][
+                    Math.floor(Math.random() * 3)
+                ]}
+            />
         </div>
-        <h2>file uploads</h2>
-        <!-- <button type="button" on:click={()=>{
-            console.log(files);
-        }}>log</button> -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div class="file-container">
-            {#each files as file, index}
-            <div class="file">
 
-                <div class="file-input">
-                    <label for="file-{index}">file:
-                        {#if !file.file[0]}<span>upload</span>
-                        {:else}
-                            <span>change</span>
-                            {#if file.file[0].name.length > 83}
-                                <div>{file.file[0].name.slice(0, 80)}...</div>
-                            {:else}
-                                <div>{file.file[0].name}</div>
-                            {/if}
-                        {/if}
-                    </label>
-                    <input type="file" id="file-{index}" name="file-{index}" bind:files={file.file}>
+        <H2>file information</H2>
+        <P>
+            &ensp; What kind of files will you be contributing. please correctly label your files and upload
+            them in batches. this helps us better organize the website.
+        </P>
+
+        <div class="form-container">
+            <TextInput
+                label="specialty"
+                store={file_info.specialty_store}
+                placeholder={["Informatique", "Biologie", "Science technologie"][
+                    Math.floor(Math.random() * 3)
+                ]}
+                required
+            />
+            <TextInput
+                label="year"
+                store={file_info.year_store}
+                placeholder={["Licence 1", "Master 2", "Engineer 3"][Math.floor(Math.random() * 3)]}
+                required
+            />
+            <TextInput
+                label="module"
+                store={file_info.module_store}
+                placeholder={["Math 1", "Algorithm 2", "Entrepreneurship 1"][Math.floor(Math.random() * 3)]}
+                required
+            />
+        </div>
+
+        <H2>uploads</H2>
+        <div class="resources-container">
+            {#each resources as resource, index (resource)}
+                <div class="resource">
+                    <FileInput store={resource.file_store} id={index} />
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
+                    <!-- svelte-ignore a11y-no-static-element-interactions -->
+                    <div class="resource-delete" on:click={() => delete_resource(resource)}>delete</div>
                 </div>
-                {#if file.file !== -1}
-                    <div class="select-input">
-                        <label for="file_faculty">faculty:</label>
-                        <select name="file_faculty" id="file_faculty" bind:value={file.faculty} required>
-                            {#each faculties.filter(faculty => faculty.short != 'other') as faculty}
-                                <option value={faculty.id}>{
-                                    faculty.name.substring(0, 30) +
-                                    (faculty.name.length>27?'...':'')
-                                }</option>
-                            {/each}
-                        </select>
-                    </div>
-                    {#if file.faculty !== -1}
-                        {#if (faculties.find(fac => fac.id === file.faculty)?.groups).length > 2}
-                        <div class="select-input">
-                            <label for="file_module">module:</label>
-                            <select name="file_module" id="file_module" bind:value={file.group} required>
-                                {#each (faculties.find(fac => fac.id === file.faculty)?.groups||[]).filter(group => group.short != 'other') as group}
-                                    <option value={group.id}>{group.name}</option>
-                                {/each}
-                            </select>
-                        </div>
-                            {#if file.group !== -1}
-                            <div class="select-input">
-                                <label for="file_module">semester:</label>
-                                <select name="file_module" id="file_module" bind:value={file.module} required>
-                                    {#each faculties.find(fac => fac.id === file.faculty)?.modules.filter(module => module.group.id === file.group && module.short != 'other')||[] as module}
-                                        <option value={module.id}>{module.name}</option>
-                                    {/each}
-                                </select>
-                            </div>
-                                {#if file.module !== -1}
-                                <div class="select-input">
-                                    <label for="file_type">type:</label>
-                                    <select name="file_type" id="file_type" bind:value={file.type} required>
-                                        <option value="exam">exam</option>
-                                        <option value="cour">lesson</option>
-                                        <option value="td">directed work (TD)</option>
-                                        <option value="tp">practical work (TP)</option>
-                                        <option value="other">other</option>
-                                    </select>
-                                </div>
-                                {/if}
-                            {/if}
-                        {:else}
-                            <p style="color: #e23131;">no modules have been inserted to this faculty yet. you can help us fill it up on the <a href="/feedback/" target="_blank" style="color: #e23131;">feedback</a> page</p>
-                        {/if}
-                    {/if}
-                {/if}
-
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <div class="file-delete" on:click={()=>{
-                    files.splice(index, 1);
-                    files = [...files];
-                }}>delete</div>
-            </div>
             {/each}
+
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div
-                on:dragover="{(e) => e.preventDefault()}"
-                on:dragenter="{(e) => e.preventDefault()}"
-                on:drop="{handleDrop}"
-                class="file-drop"
+                on:dragover={(e) => e.preventDefault()}
+                on:dragenter={(e) => e.preventDefault()}
+                on:drop={handle_file_drop}
+                class="resource-drop"
             >
-                <span><div>
-                    <img src="../images/upload.png" alt="" />
-                    <p>drag and drop files</p>
-                    <p>or click <button type="button" on:click={prompt_new_file}>here</button> to upload</p>
-                </div></span>
+                <span
+                    ><div>
+                        <img src="/icons/upload.png" alt="" />
+                        <p>drag and drop files</p>
+                        <p>
+                            or click
+                            <button type="button" on:click={prompt_for_file}>here</button>
+                            to upload
+                        </p>
+                    </div></span
+                >
             </div>
         </div>
-        <h2>submission</h2>
-        <p>
-            &ensp; your contribution are greatly appreciated. it may take a little while for your files to be reviewed and added to the website. you will be notified by email when your files are added. for more details read <a href="../help" target="_blank">help</a> page.
-        </p>
-        <textarea name="message" id="message" cols="80" rows="3" placeholder="any additional feedback" bind:value={personal_details.additional}></textarea>
+
+        <H2>submission</H2>
+        <P>
+            &ensp; Your contribution are greatly appreciated. it may take a little while for your files to be
+            reviewed and added to the website. you will be notified by email when your files are added. for
+            more details read <A href="../help" target="_blank">help</A> page.
+        </P>
+
+        <TextArea
+            label=""
+            placeholder="is there anything you would like to add"
+            rows="4"
+            store={personal_details.additional_store}
+        />
+        <br />
         {#if submitting}
-            <button type="submit" disabled>
-                uploading{uploading_dots}
-            </button>
+            <Submit disabled>uploading{uploading_dots}</Submit>
         {:else}
-            <button type="submit">
-                submit
-            </button>
+            <Submit>submit</Submit>
         {/if}
     </form>
-</main>
+</Main>
 
 <style>
-    main {
-        padding: 0 var(--side-margin) 30px var(--side-margin);
-        min-height: calc(100vh - 187px);
-        font-family: var(--main-font);
-        background-color: var(--background-0);
-        color: var(--text-color);
-    }
-    h1{
-        margin: 0;
-        padding: 20px 0px 10px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-1);
-        color: var(--title-color);
-    }
-    h2{
-        margin: 10px 0px 10px 0px;
-        text-decoration: var(--brand-color) underline;
-        user-select: none;
-        cursor: pointer;
-        width: fit-content;
-        font-family: var(--title-font);
-        font-size: var(--title-2);
-        color: var(--title-color);
-    }
-    p{
-        margin: 0;
-        font-size: var(--text-1);
-        word-spacing: 1px;
-    }
-    a{
-        color: var(--brand-color);
-        text-decoration: underline;
-    }
-    .personal-detail-container{
+    .form-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
         background-color: var(--background-1);
@@ -341,82 +292,33 @@
         box-shadow: var(--window-shadow);
         margin-top: 10px;
     }
-    .email-input{
-        grid-area: 2 / 1 / 3 / 2;
-    }
     @media (max-width: 925px), (orientation: portrait) {
-        .personal-detail-container{
+        .form-container {
             grid-template-columns: 1fr;
         }
     }
-    .text-input, .email-input{
+    .resources-container {
         display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-    }
-    .checkbox-input{
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .text-input input, .email-input input{
-        border: none;
-        border-bottom: 2px solid var(--brand-color);
-        font-family: var(--main-font);
-        font-size: var(--text-1);
-        padding: 5px 5px 0 10px;
-        border-radius: calc(var(--element-radius)/2) calc(var(--element-radius)/2) 0 0;
-        background-color: var(--background-2);
-        color: var(--highlight-color);
-    }
-    .text-input label, .email-input label{
-        padding: 5px 0 0 0;
-    }
-    .text-input input:focus, .email-input input:focus{
-        outline: none;
-    }
-    .file-input {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-    }
-    .file-input input{
-        display: none;
-    }
-    .file-input label span{
-        padding: 0 5px;
-        margin-left: 5px;
-        border: solid 1px #444;
-        border-radius: 8px;
-        cursor: pointer;
-        user-select: none;
-        font-weight: 400;
-        
-    }
-    .file-input label span:hover{
-        text-decoration: underline;
-    }
-    .file-input label div{
-        display: inline;
-        font-weight: 400;
-    }
-    .file-container{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 20px;
     }
+    @media (max-width: 1800px) {
+        .resources-container {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
     @media (max-width: 1200px) {
-        .file-container{
+        .resources-container {
             grid-template-columns: 1fr 1fr;
         }
     }
     @media (max-width: 800px), (orientation: portrait) {
-        .file-container{
+        .resources-container {
             grid-template-columns: 1fr;
         }
     }
-    .file{
-        padding: 20px 20px 50px 20px;
+    .resource {
+        padding: 10px 15px 25px 15px;
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         margin-top: 10px;
@@ -425,71 +327,40 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        min-height: 230px;
+        min-height: 260px;
     }
-    .file label{
-        font-weight: 500;
-    }
-    .file div{
-        padding-bottom: 5px;
-        display: grid;
-        grid-template-columns: auto 1fr;
-        height: fit-content;
-    }
-    .select-input{
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 10px;
-        overflow: hidden;
-    }
-    .select-input select{
-        max-width: 100%;
-        box-sizing: border-box;
-        outline: none;
-        border: solid 1px #444;
-        border-radius: 8px;
-    }
-    .file-delete{
+    .resource-delete {
         position: absolute;
         bottom: 5px;
-        right: 10px;
-        color: rgb(245, 22, 59);
+        right: 15px;
+        color: rgb(241, 44, 77);
         cursor: pointer;
         text-decoration: underline;
-        font-size: var(--text-2);
+        font-size: var(--text-1);
         user-select: none;
         font-weight: 500;
     }
-    /* .file-text{
-        display: flex;
-        gap: 10px;
-    }
-    .file-text input{
-        border-radius: var(--element-radius);
-    }
-    .file-text input:focus{
-        outline: none;
-    } */
-    .file-drop{
+    .resource-drop {
         border-radius: var(--element-radius);
         box-shadow: var(--window-shadow);
         background-color: var(--background-1);
         margin-top: 10px;
-        min-height: 230px;
+        min-height: 260px;
         padding: 15px;
         color: var(--text-color-weak);
     }
-    .file-drop span, .file-drop div{
+    .resource-drop span,
+    .resource-drop div {
         pointer-events: none;
     }
-    .file-drop span{
+    .resource-drop span {
         border: var(--brand-color) 2px dashed;
         border-radius: var(--element-radius);
         display: block;
-        widows: 100%;
+        width: 100%;
         height: 100%;
     }
-    .file-drop div{
+    .resource-drop div {
         width: 100%;
         height: 100%;
         display: flex;
@@ -498,14 +369,14 @@
         justify-content: center;
         gap: 10px;
     }
-    .file-drop p{
+    .resource-drop p {
         margin: 0;
     }
-    .file-drop img{
+    .resource-drop img {
         height: 80px;
         filter: var(--icon-filter-weak);
     }
-    .file-drop button{
+    .resource-drop button {
         border-radius: 8px;
         border: solid 1px var(--text-color-weak);
         padding: 0 5px;
@@ -516,40 +387,7 @@
         pointer-events: all !important;
         background-color: var(--background-3);
     }
-    .file-drop button:hover{
+    .resource-drop button:hover {
         text-decoration: underline;
-    }
-    textarea{
-        margin-top: 10px;
-        width: 100%;
-        max-width: 100%;
-        background-color: var(--background-1);
-        border-radius: var(--element-radius);
-        color: var(--highlight-color);
-        font-family: var(--main-font);
-        font-size: var(--text-1);
-        padding: 10px;
-        border-color: var(--text-color-weak);
-    }
-    textarea:focus{
-        outline: none;
-    }
-    textarea::placeholder{
-        color: var(--text-color-weak);
-    }
-    button[type="submit"]{
-        padding: 10px 20px;
-        border: none;
-        border-radius: var(--element-radius);
-        box-shadow: var(--weak-shadow);
-        cursor: pointer;
-        user-select: none;
-        font-size: var(--text-1);
-        color: var(--background-0);
-        font-weight: 600;
-        margin-top: 20px;
-        margin-left: auto;
-        display: block;
-        background-color: var(--brand-color);
     }
 </style>
