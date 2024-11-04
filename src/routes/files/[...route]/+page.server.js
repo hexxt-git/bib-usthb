@@ -1,6 +1,6 @@
 import path from "path";
 import { env } from "$env/dynamic/private";
-import { error } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 
 const fetchWithTimeout = (url, options, timeout = 5000) => {
     return Promise.race([
@@ -41,6 +41,12 @@ export async function load({ params }) {
         return data;
     } catch (err) {
         console.error(err);
-        throw error(err.status ?? 500, err.statusText ?? "Failed to fetch data from the backend");
+        if (params.route) {
+            throw error(err.status ?? 500, err.statusText ?? "Failed to fetch data from the backend");
+        } else {
+            return {
+                isDirectory: true
+            };
+        }
     }
 }
