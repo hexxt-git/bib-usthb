@@ -9,6 +9,11 @@ import { loggerMiddleware } from "./middleware/logger";
 import fsCB from "fs";
 import fs from "fs/promises";
 
+if (!process.env.user_generated_repo) {
+    console.error("Environment variable 'user_generated_repo' is not set.");
+    process.exit(1);
+}
+
 const UPLOADS_BASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/uploads"));
 const CONTENT_BASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/content"));
 const DATABASE_DIR = Path.resolve(Path.join(process.env.user_generated_repo, "/file_stats.db"));

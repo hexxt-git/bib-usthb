@@ -30,7 +30,7 @@
         setTimeout(()=>
             notify({
                 state: "notification",
-                message: "The website is currently down, we are very sorry for the inconvenience. the new version will be up soon",
+                message: "welcome amongst the first visitors of this website, please be patient as we are still in development.",
                 duration: 20*1000
             }),
         1000);
