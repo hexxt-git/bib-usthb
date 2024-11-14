@@ -15,8 +15,18 @@ export class Database {
                 CREATE TABLE IF NOT EXISTS file_stats (
                     path TEXT PRIMARY KEY,
                     downloads INTEGER DEFAULT 0,
-                    visits INTEGER DEFAULT 0
+                    visits INTEGER DEFAULT 0,
+                    checked BOOLEAN DEFAULT 0
                 )
+            `,
+            (err) => {
+                if (err) console.error("Error initializing database:", err);
+            }
+        );
+        this.db.run(
+            `--sql
+            UPDATE file_stats
+            SET checked = false
             `,
             (err) => {
                 if (err) console.error("Error initializing database:", err);
@@ -32,16 +42,43 @@ export class Database {
                 SELECT 
                     path,
                     visits,
-                    downloads
+                    downloads,
+                    checked
                 FROM file_stats 
-                WHERE path LIKE '%' || ? || '%'
-                ORDER BY visits DESC, visits DESC
+                WHERE checked = true AND
+                LOWER(path) LIKE '%' || LOWER(?) || '%'
+                ORDER BY visits DESC, downloads DESC
                 LIMIT 20
             `;
             this.db.all(sql, [sanitizedTerm], (err, rows) => {
                 if (err) reject(err);
                 else resolve(rows || []);
             });
+        });
+    }
+
+    async insertFile(fileStats: {
+        path: string;
+        checked?: boolean;
+        downloads?: number;
+        visits?: number;
+    }): Promise<void> {
+        const sanitizedPath = this.sanitizePath(fileStats.path);
+
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                `INSERT INTO file_stats (path, checked, downloads, visits) 
+                SELECT ?, ?, ?, ?
+                WHERE NOT EXISTS (SELECT 1 FROM file_stats WHERE path = ?);`,
+                [
+                    sanitizedPath,
+                    fileStats.checked ?? 0,
+                    fileStats.downloads ?? 0,
+                    fileStats.visits ?? 0,
+                    sanitizedPath,
+                ],
+                (err) => (err ? reject(err) : resolve())
+            );
         });
     }
 

@@ -5,9 +5,32 @@ import type { FileInfo } from "../models/FileInfo";
 import { Database } from "./database";
 
 export class FileService {
-    constructor(private readonly baseDir: string, private readonly db: Database) {}
+    constructor(private readonly baseDir: string, private readonly db: Database) {
+        // make sure to restart file server after updating files
+        this.initPath("/").then(() => {
+            console.log("DATABASE UP TO DATE");
+        });
+    }
 
-    public validatePath(path: string): void {
+    private async initPath(path: string) {
+        if (path.split(/\/|\\/).length <= 3) console.log("initializing path", path);
+        try {
+            const entries = await fs.readdir(Path.join(this.baseDir, path), { withFileTypes: true });
+            for (const entry of entries) {
+                if (entry.isDirectory()) {
+                    await this.initPath(Path.join(path, entry.name));
+                }
+                await this.db.insertFile({
+                    path: Path.join(path, entry.name),
+                    checked: true,
+                });
+            }
+        } catch (error) {
+            console.error(`Error initializing path ${path}:`, error);
+        }
+    }
+
+    public validatePath(path: string): void | never {
         const fullPath = Path.resolve(Path.join(this.baseDir, path));
         if (!fullPath.startsWith(this.baseDir) || path.includes("..")) {
             const error = new Error("Directory Unauthorized");

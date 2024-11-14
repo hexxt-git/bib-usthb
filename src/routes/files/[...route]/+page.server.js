@@ -10,7 +10,7 @@ const fetchWithTimeout = (url, options, timeout = 5000) => {
 };
 
 const cache = new Map(); // piii map
-const CACHE_TTL = 20 * 60 * 1000; // 20 minutes
+const CACHE_TTL = 1 * 60 * 1000; // 1 minute
 
 export async function load({ params }) {
     try {
