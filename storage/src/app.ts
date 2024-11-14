@@ -42,6 +42,7 @@ const upload = multer({
 
 const app = express();
 const db = new Database(DATABASE_DIR);
+await new Promise(res => setTimeout(res, 5000)) // scuffed waiting for db to init
 const fileService = new FileService(CONTENT_BASE_DIR, db);
 
 // Middleware

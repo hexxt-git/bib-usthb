@@ -32,6 +32,8 @@ export class Database {
                 if (err) console.error("Error initializing database:", err);
             }
         );
+        
+        console.log('database initialized')
     }
 
     async searchFile(searchTerm: string): Promise<any[]> {
@@ -64,18 +66,16 @@ export class Database {
         visits?: number;
     }): Promise<void> {
         const sanitizedPath = this.sanitizePath(fileStats.path);
-
         return new Promise((resolve, reject) => {
             this.db.run(
                 `INSERT INTO file_stats (path, checked, downloads, visits) 
-                SELECT ?, ?, ?, ?
-                WHERE NOT EXISTS (SELECT 1 FROM file_stats WHERE path = ?);`,
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(path) DO UPDATE SET checked = true;`,
                 [
                     sanitizedPath,
                     fileStats.checked ?? 0,
                     fileStats.downloads ?? 0,
                     fileStats.visits ?? 0,
-                    sanitizedPath,
                 ],
                 (err) => (err ? reject(err) : resolve())
             );

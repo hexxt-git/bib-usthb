@@ -12,3 +12,4 @@ package-lock.json
 bun.lockb
 /storage/uploads
 storage/file_stats.db
+*.log

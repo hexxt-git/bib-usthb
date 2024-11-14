@@ -17,13 +17,13 @@ export class FileService {
         try {
             const entries = await fs.readdir(Path.join(this.baseDir, path), { withFileTypes: true });
             for (const entry of entries) {
-                if (entry.isDirectory()) {
-                    await this.initPath(Path.join(path, entry.name));
-                }
                 await this.db.insertFile({
                     path: Path.join(path, entry.name),
                     checked: true,
                 });
+                if (entry.isDirectory()) {
+                    await this.initPath(Path.join(path, entry.name));
+                }
             }
         } catch (error) {
             console.error(`Error initializing path ${path}:`, error);
