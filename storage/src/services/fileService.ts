@@ -3,17 +3,18 @@ import Path from "path";
 import { lookup } from "mime-types";
 import type { FileInfo } from "../models/FileInfo";
 import { Database } from "./database";
+import logger from "./logger";
 
 export class FileService {
     constructor(private readonly baseDir: string, private readonly db: Database) {
         // make sure to restart file server after updating files
         this.initPath("/").then(() => {
-            console.log("DATABASE UP TO DATE");
+            logger.info("DATABASE UP TO DATE");
         });
     }
 
     private async initPath(path: string) {
-        if (path.split(/\/|\\/).length <= 3) console.log("initializing path", path);
+        if (path.split(/\/|\\/).length <= 3) logger.info("Initializing path", path);
         try {
             const entries = await fs.readdir(Path.join(this.baseDir, path), { withFileTypes: true });
             for (const entry of entries) {
@@ -26,7 +27,7 @@ export class FileService {
                 }
             }
         } catch (error) {
-            console.error(`Error initializing path ${path}:`, error);
+            logger.error(`Error initializing path ${path}:`, error);
         }
     }
 

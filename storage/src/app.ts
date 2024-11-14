@@ -8,6 +8,7 @@ import { errorHandler, asyncHandler } from "./middleware/errorHandler";
 import { loggerMiddleware } from "./middleware/logger";
 import fsCB from "fs";
 import fs from "fs/promises";
+import logger from "./services/logger";
 
 if (!process.env.user_generated_repo) {
     console.error("Environment variable 'user_generated_repo' is not set.");
@@ -168,8 +169,8 @@ app.get(
     asyncHandler(async (req, res) => {
         const query = (req.query.query as string) || "";
         const searchResult = await db.searchFile(query);
-        console.log(query);
-        console.table(searchResult);
+        // console.log(query);
+        // console.table(searchResult);
 
         res.json(searchResult);
     })
@@ -179,5 +180,5 @@ app.get(
 app.use(errorHandler);
 
 app.listen(25565, () => {
-    console.log("listening on http://localhost:25565");
+    logger.info("listening on http://localhost:25565");
 });

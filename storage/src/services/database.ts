@@ -1,5 +1,6 @@
 import sqlite3 from "sqlite3";
 import type { FileStats } from "../models/FileStats";
+import logger from "./logger";
 
 export class Database {
     private db: sqlite3.Database;
@@ -20,7 +21,7 @@ export class Database {
                 )
             `,
             (err) => {
-                if (err) console.error("Error initializing database:", err);
+                if (err) logger.error("Error initializing database:", err);
             }
         );
         this.db.run(
@@ -29,11 +30,11 @@ export class Database {
             SET checked = false
             `,
             (err) => {
-                if (err) console.error("Error initializing database:", err);
+                if (err) logger.error("Error initializing database:", err);
             }
         );
         
-        console.log('database initialized')
+        logger.info('Database Initialized')
     }
 
     async searchFile(searchTerm: string): Promise<any[]> {
@@ -114,7 +115,7 @@ export class Database {
                 [path],
                 (err, row: FileStats) => {
                     if (err) {
-                        console.error(`Error getting file stats for ${path}:`, err);
+                        logger.error(`Error getting file stats for ${path}:`, err);
                         resolve({ path, visits: 0, downloads: 0 });
                     } else {
                         resolve(row ?? ({ path, visits: 0, downloads: 0 } as FileStats));
