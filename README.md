@@ -1,11 +1,12 @@
 # bib-usthb
 this is the public repository for [bib-usthb](https://bib-usthb.com) website.
-it is a students resouce sharing platform targeted to the university of science and technology houari boumediene students. 
-we currently host all files on google drive but intend to migrate to a custom solution soon.
+it is a students resouce sharing platform targeted to the university of science and technology houari boumediene students.
 
 # running locally
 
 clone the github repository bu downloading it using the command prompt
+
+## the frontend 
 ```bash
 git clone https://github.com/hexxt-git/bib-usthb
 ```
@@ -16,16 +17,22 @@ npm install
 start a development server
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-To create a production version of your app:
+## the backend
+
 ```bash
-npm run build
+cd storage
 ```
-You can preview the production build with `npm run preview`.
+install all the dependencies (uses bun)
+```bash
+bun install
+
+```
+run
+```bash
+bun .
+```
 
 # contribution
 
